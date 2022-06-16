@@ -763,9 +763,6 @@ def writeInstaJson(upc, product_name, product_description, product_image, produc
     
     return
 
-
-
-
 def writeAllDetailsInCSV(upc, product_name, product_description, product_image, product_price, disc, stock, employee):
 
     
@@ -1172,11 +1169,6 @@ def target():
                                categories=categories,
                                categoryFoundFlag=categoryFoundFlag,
                                discount=discountPercent)
-
-
-
-
-
 
 if __name__ == '__main__':
     app.run(debug=True)
