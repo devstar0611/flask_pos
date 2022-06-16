@@ -1,0 +1,44 @@
+{
+    "upc_details": [
+        {
+            "upc": "041554544619",
+            "product_name": "Maybelline Super Stay 24 2-Step Liquid Lipstick",
+            "product_description": "Stretch the limits of long-wearing liquid lipstick kit with Maybelline New York' s Superstay 24 Liquid Lipstick. This dual ended lipstick features a longwear liquid lipstick and ultra-conditioning balm. This long wear liquid lipstick formula features Microflex technology that won't cake, flake or dry, keeping lips looking & feeling freshly applied through 200 bites, 120 sips, and countless kisses. Conditioning lip balm seals in moisture and keeps lips moisturized. Available in a collection of all-day fresh shades ranging from seductive Keep It Red to timeless So Pearly Pink.\n\nPackaging May Vary\n\nStep 1. Apply liquid lipstick to clean, bare lips.\nStep 2. Allow two minutes to dry, then apply the ultra-conditioning balm to seal in moisture.\nStep 3. Reapply balm as needed.\nStep 4. Remove with an oil-based makeup remover.\n\nCaution: Flammable until dry. Do not use near fire, flame, or heat.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 8.99,
+            "disc": "37",
+            "stock": "1",
+            "employee": "janeth"
+        },
+        {
+            "upc": "800897004071",
+            "product_name": "NYX Professional Makeup Lip Lingerie XXL Smooth Matte Liquid Lipstick - 16hr Longwear - 0.13 fl oz",
+            "product_description": "Introducing Lip Lingerie XXL, our new Xtra Xtra Long-lasting liquid lipstick with 16HR wear! This sensational vegan lippie delivers full-bodied smooth matte color, molding onto your lips and accentuating your natural lip shape, creating the appearance of fuller-looking lips!\nThis type of lingerie stretches and moves with you, no matter what your lips do! No crack, no-bleed, no fade, and no transfer for up to 16 hours!\nJust like your favorite shapewear this liquid lipstick feels lightweight & comfortable all-day and is available in 24 color-saturated hues designed to enhance all complexions!\nConfidently mold your lips with ease with our Lip Lingerie XXL Matte Liquid Lipstick's vegan formula, free of animal-derived ingredients.\n\nPRO TIP: Use the precise applicator to mold your lips starting with the cupid\u2019s bow and the outer line of your lips then fill-in for full-bodied smooth matte lips. Pair with favorite NYX Suede Matte Lip Liner.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 8.99,
+            "disc": "37",
+            "stock": "1",
+            "employee": "janeth"
+        },
+        {
+            "upc": "800897129972",
+            "product_name": "NYX Professional Makeup Plump Right Back Plumping Makeup Setting Spray",
+            "product_description": "Plump up your look with our new setting spray that is drippin' in 5 electrolytes + vitamin. Formulated with Aloe, Magnesium, Zinc, Citric Acid, and Biotin, the supercharged formula provides up to 24Hr makeup extension, and an all day plumping look. Skin instantly feels hydrated and looks moisturized all day. And yas queen the lightweight formula is vegan & cruelty-free too! Brought to you by NYX Professional Makeup.\n\nHow to use: Drench your skin in electrolytes and vitamins ! Hold six to eight inches away from face. Use after applying makeup or throughout the day.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 9.49,
+            "disc": "37",
+            "stock": "1",
+            "employee": "janeth"
+        },
+        {
+            "upc": "792850155008",
+            "product_name": "Burt's Bees Lip Balm - 2 Pack",
+            "product_description": "Burt's Bees Moisturizing Lip Balm nourishes and makes your lips feel luxurious. Infused with power packed Beeswax to condition skin and antioxidant Vitamin E to richly moisturize and soften lips, this lip balm nourishes dry lips while keeping them revitalized and hydrated. With a matte finish and moisturizing balm texture, this tube of soothing lip balm glides on smoothly with a hint of Peppermint Oil which leaves your lips with a refreshing tingle. Conveniently tuck this tube into a pocket or purse, so that you can keep natural, nurturing lip care handy. This 100% natural beauty product is free of parabens, phthalates, petrolatum and SLS and will beautify and revitalize your lips. Use this natural Burt's Bees Moisturizing Lip Balm to make lips feel their best.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 8.29,
+            "disc": "40",
+            "stock": "2",
+            "employee": "janeth"
+        }
+    ]
+}

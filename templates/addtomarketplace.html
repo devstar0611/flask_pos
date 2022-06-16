@@ -1,0 +1,355 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Product Scrapper - Add to Marketplace</title>
+
+
+    <!-- Custom fonts for this template -->
+    <link href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='css/sb-admin-2.min.css') }}" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="{{ url_for('static', filename='vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+
+        <style>
+            .mt-100 {
+                margin-top: 100px
+            }
+
+            .container-fluid {
+                margin-top: 50px
+            }
+
+            body {
+                background-color: #f2f7fb
+            }
+
+            .card {
+                border-radius: 5px;
+                -webkit-box-shadow: 0 0 5px 0 rgba(43, 43, 43, 0.1), 0 11px 6px -7px rgba(43, 43, 43, 0.1);
+                box-shadow: 0 0 5px 0 rgba(43, 43, 43, 0.1), 0 11px 6px -7px rgba(43, 43, 43, 0.1);
+                border: none;
+                margin-bottom: 30px;
+                -webkit-transition: all 0.3s ease-in-out;
+                transition: all 0.3s ease-in-out
+            }
+
+            .card .card-header {
+                background-color: transparent;
+                border-bottom: none;
+                padding: 20px;
+                position: relative
+            }
+
+            .card .card-block {
+                padding: 1.25rem
+            }
+
+            .table-responsive {
+                display: inline-block;
+                width: 100%;
+                overflow-x: auto
+            }
+
+            .card .card-block table tr {
+                padding-bottom: 20px
+            }
+
+            .table>thead>tr>th {
+                border-bottom-color: #ccc
+            }
+
+            .table th {
+                padding: 1.25rem 0.75rem
+            }
+
+            td,
+            th {
+                white-space: nowrap
+            }
+
+            .tabledit-input:disabled {
+                display: none
+            }
+
+            .btn-primary,
+            .sweet-alert button.confirm,
+            .wizard>.actions a {
+                background-color: #4099ff;
+                border-color: #4099ff;
+                color: #fff;
+                cursor: pointer;
+                -webkit-transition: all ease-in 0.3s;
+                transition: all ease-in 0.3s
+            }
+
+            .btn {
+                border-radius: 2px;
+                text-transform: capitalize;
+                font-size: 15px;
+                padding: 10px 19px;
+                cursor: pointer
+            }
+
+            
+        </style>
+
+        <script>
+            function printDiv(divName){
+                var printContents = document.getElementById(divName).innerHTML;
+                var originalContents = document.body.innerHTML;
+
+                document.body.innerHTML = printContents;
+
+                window.print();
+
+                document.body.innerHTML = originalContents;
+
+            }
+            
+        </script>
+
+        
+	</head>
+
+    <body>
+        <div id="content">
+
+    
+            <div id="wrapper">
+    
+                <!-- Sidebar -->
+                <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        
+                    <!-- Sidebar - Brand -->
+                    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url_for('target') }}">
+                        <div class="sidebar-brand-icon rotate-n-15">
+                            <i class="fas fa-laugh-wink"></i>
+                        </div>
+                        <div class="sidebar-brand-text mx-3">MESA LIQUIDATION</div>
+                    </a>
+        
+                    <!-- Divider -->
+                    <hr class="sidebar-divider my-0">
+        
+                    <!-- Nav Item - Dashboard -->
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('homepage') }}">
+                            <i class="fas fa-fw fa-tachometer-alt"></i>
+                            <span>Fetch Products</span></a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('target') }}">
+                            <i class="fas fa-fw fa-tachometer-alt"></i>
+                            <span>Fetch Target</span></a>
+                    </li>
+                    <li class="nav-item">
+                       <a class="nav-link" href="{{ url_for('add_produtcs') }}">
+                           <i class="fas fa-fw fa-cog"></i>
+                           <span>Add New Products</span></a>
+                   </li>
+
+                   <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('add_to_marketplace') }}">
+                        <i class="fas fa-fw fa-cog"></i>
+                        <span>Add to Marketplace</span></a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('amazon') }}">
+                            <i class="fas fa-fw fa-table"></i>
+                            <span>Amazon - Add New</span></a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('amazon_add_multiple') }}">
+                            <i class="fas fa-fw fa-table"></i>
+                            <span>Amazon - Add Multiple</span></a>
+                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('configuration') }}">
+                            <i class="fas fa-fw fa-table"></i>
+                            <span>Configuration</span></a>
+                     </li>
+                    
+                </ul>
+                <!-- End of Sidebar -->
+        
+                <!-- Content Wrapper -->
+                <div id="content-wrapper" class="d-flex flex-column">
+        
+                    <!-- Main Content -->
+                    <div id="content">
+        
+                        <!-- Topbar -->
+                        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+        
+                            <!-- Sidebar Toggle (Topbar) -->
+                            <form class="form-inline">
+                                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                                    <i class="fa fa-bars"></i>
+                                </button>
+                            </form>
+        
+                            <h1 class="h4 mb-2 text-gray-800">ADD PRODUCTS TO MARKETPLACE</h1>
+                            
+        
+                        </nav>
+                        <!-- End of Topbar -->
+        
+                        <!-- Begin Page Content -->
+                        <div class="container-fluid">
+
+                            <div class="row">
+
+                                
+        
+                                <div class="col-lg-3">
+                                    <form action="" method='POST' enctype="multipart/form-data">
+                                    <div class="card shadow mb-4">
+                                        <div class="card-header py-3">
+                                            <h6 class="m-0 font-weight-bold text-primary">Product Details</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-row mb-4">		
+                                                <div class="col">
+                                                    <label for="Name"  class="control-label ">Product Name</label>
+                                                    <input type="text" name="Name" class="form-control" placeholder="Product Name" value="TARGET OVERSTOCK AT MESA LIQUIDATON" autocomplete="off" required>
+                                                </div>                                                        
+                                            </div>
+                                            <div class="form-row mb-4">		                                                        
+                                                <div class="col">
+                                                    <label for="Price"  class="control-label ">Price <i>(in usd)</i></label>
+                                                    <input type="number" min="0" name="Price" class="form-control" placeholder="Price" value="10" required>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-row mb-4">		
+                                                <div class="col">
+                                                    <!--label for="Description"  class="control-label ">Product Descripton</label-->
+                                                    <textarea type="text" id="Description_ID" name="Description" cols="30" rows="5" class="form-control" 
+                                                                placeholder="Product Description" value="{{ request.form['Description'] }}" ></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-row mb-4">		
+                                                <div class="col">
+                                                    <label for="CoverImagePath"  class="control-label ">Image Path</label>
+                                                    <input type="text" name="CoverImagePath" class="form-control"  value="{{ config['Cover Image Path'] }}" autocomplete="off">                                                
+                                                </div>                                                
+                                            </div>
+
+                                                
+                                                <div class="form-row mb-4">
+                                                    <div class="col">
+                                                        <input class="btn btn-primary btn-lg btn-block form-control" type ="submit" name="btn" value="Publish">
+                                                    </div>
+
+                                                </div>
+                                                
+                                                <!--p>Generating ZPL commands for Zebra Printer*</p-->
+                                            </form>
+                                        </div>
+                                    </div>
+        
+                                </div>
+
+                                
+        
+                            </div>
+
+                        </div>
+                        <!-- /.container-fluid -->
+        
+                    </div>
+                    <!-- End of Main Content -->
+        
+                    <!-- Footer -->
+    
+                        <!-- Footer -->
+                      <footer class="sticky-footer bg-white">
+                         <div class="container my-auto">
+                             <div class="copyright text-center my-auto">
+                                 
+                                 <span>Copyright &copy; <a href="https://origamiitlab.com/">Origami IT Lab</a>  2020 |    
+                                    <a href="https://www.linkedin.com/in/riteshkawadkar/"><i class="fab fa-linkedin-in"></i></a> |     
+                                    <a href="https://www.facebook.com/riteshkawadkar/"><i class="fab fa-facebook-f"></i></a> 
+                                </span>
+                             </div>
+                         </div>
+                     </footer>
+                    <!-- End of Footer -->
+     
+                <!-- End of Content Wrapper -->
+        
+            </div>
+
+        </div>
+    
+        
+        
+        <!-- Bootstrap core JavaScript-->
+        <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    
+        <!-- Core plugin JavaScript-->
+        <script src="{{ url_for('static', filename='vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+    
+        <!-- Custom scripts for all pages-->
+        <script src="{{ url_for('static', filename='js/sb-admin-2.min.js') }}"></script>
+    
+        <!-- Page level plugins -->
+        <script src="{{ url_for('static', filename='vendor/datatables/jquery.dataTables.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+    
+        <!-- Page level custom scripts -->
+        <script src="{{ url_for('static', filename='js/demo/datatables-demo.js') }}"></script>
+        
+        
+        </div>
+
+        <script>
+            document.getElementById('Description_ID').value = `EVERYTHING 20% OFF!! ONLY SATURDAY AUG 14!
+
+Www.Facebook.com/MesaLiquidation
+Www.instagram.com/MesaLiquidation
+
+COSMETICS-MAKE-UP: ONLY $1.00 EACH FOR 100 PIECES+, otherwise $2 EACH. LOWEST PRICE IN ENTIRE VALLEY! 
+
+ALL SHOES - $5.99 pair ONLY!!
+
+15% OFF ON ENTIRE PURCHASE, IF PAID VIA CRYPTO. 
+
+Must present this coupon.
+
+MESA LIQUIDATION
+Address: 2665 E Broadway Road. B109, Mesa, AZ 85204
+
+BUSINESS HOURS: 
+Mon to Fri - 10 AM to 8PM.
+Sat - 10 AM to 6 PM.
+Sunday - closed. 
+
+We carry Target Overstock. 
+Categories: Books, Clothing, Shoes, Jewelry & Watches, Cosmetics, General merchandise, Pet Supplies, Purses, Toys, Kids & Baby, Sports, Outdoors and much more.
+
+Our Prices are generally 40% to 90% off MSRP. 
+
+Please let us know if you have any questions. 
+MESA LIQUIDATION`
+          
+        </script>
+      </body>
+    </html>
+
+
+</html>
+

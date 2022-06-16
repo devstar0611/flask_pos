@@ -1,0 +1,20 @@
+
+.card-box:hover .user-pic {
+    transform: rotate(0deg);
+    transform: scale(1.1);
+}
+.card-box {
+    padding: 15px;
+    background-color: #fdfdfd;
+    border-radius: 10px;
+    border: 1px solid #eee;
+    box-shadow: 0px 0px 8px 0px #d4d4d4;
+    transition: 0.5s;
+}
+.card-box:hover {
+	border: 1px solid #007bff;
+}
+.card-box p {
+    color: #808080;
+}
+

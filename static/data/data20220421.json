@@ -1,0 +1,494 @@
+{
+    "upc_details": [
+        {
+            "upc": "849114994894",
+            "product_name": "Sienna Mid Century Club Chair - Christopher Knight Home",
+            "product_description": "This Christopher Knight Home Sienna Mid Century Club Chair is perfect for apartment living or as an addition to any living space in your home. With clean lines, this mid century modern chair provides both comfort and style. Use it as the focal point of your living room to provide extra seating or create a quiet spot to enjoy a book in any room of your home. This Christopher Knight Home Sienna Mid Century Club Chair is sure to become a favorite chair that you can enjoy for years to come.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 208.79,
+            "disc": "79",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "191360258689",
+            "product_name": "French Seam Ottoman in Nautical Stripe Navy - Skyline Furniture",
+            "product_description": "This square shaped ottoman is as smart looking as it is functional. Hand upholstered in rich fabric it is custom made and thoughtfully appointed, featuring a flush to the floor design and French seaming along the edges. In addition to its obvious good looks, the sturdy construction of this ottoman is second to none. The delightful piece blends in well with any overall design, regardless of whether your style is upscale and dressy or simple and chic.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 231.99,
+            "disc": "81",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "634680297285",
+            "product_name": "Fabric Snap Closure Lined Journal Gray - Gartner Studios",
+            "product_description": "Everything you need to write down all your thoughts and ideas is in this Gray felt journal with pen. Features classic felt material with a vegan leather strap closure and marbled designed inside cover. Includes 120 college ruled lined sheets. The smaller size is makes it the perfect writing accessory when you\u2019re on the go..",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 14.99,
+            "disc": "50",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "323900006171",
+            "product_name": "Vicks BabyRub Chest Rub Soothing Ointment - 1.76oz",
+            "product_description": "As a parent, you want to do everything you can to soothe and comfort your baby. The gentle Vicks BabyRub formula is non-medicated and specially formulated for babies. It contains petrolatum and Aloe to leave your baby's skin feeling soft and comfortable. Vicks BabyRub contains the aromatic fragrances of Eucalyptus, Rosemary and Lavender. Combined with your loving touch, it's the perfect ointment to calm, soothe, and relax your baby. From the Makers of Vicks VapoRub. For use on babies 3 months and older. Gently massage on the chest, neck, and back to help soothe and comfort. Ointment contains Petrolatum, Fragrance, Aloe Extract, Eucalyptus Oil, Lavender Oil, and Rosemary Oil. Non-medicated. Not intended to treat cold or flu symptoms.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 7.49,
+            "disc": "30",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "195995582904",
+            "product_name": "Matte Speckled Claw Hair Clip - Universal Thread\u2122",
+            "product_description": "Give your hair a brand-new look with this Matte Speckled Claw Clip from Universal Thread\u2122. This patterned claw clip adds a fashionable touch to your hairstyling accessories. Made of lightweight material in a matte finish, it features a speckled design for a fun, on-trend look you'll love. The interlocking clamp teeth provide a non-slip grip that lets you pull your hair up or back with ease in style, and it works well with all hair types.\n\nUniversal Thread\u2122: The denim collection that's true to you.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 5.0,
+            "disc": "40",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "628319670648",
+            "product_name": "Fulton Bag Co. Upright Lunch Bag",
+            "product_description": "Say goodbye to a squished lunch! The crush resistant Fulton Bag Co. Upright HardBody Lunch Box is sturdy and practical.\n\nThe interior features a hard liner with an adjustable divider designed to keep soft foods like sandwiches separated from hard items like food containers or drinks.\n\nHigh density thermal insulation keeps your food and drinks cold longer and the Ultra Safe easy clean lining has Microban to protect against bacterial odors and stains. The exterior of the lunch box features a zippered pocket and padded handle. The handle includes a Swing Clip that attaches to backpacks or other bags for hands-free carrying.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 15.99,
+            "disc": "30",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "857828007144",
+            "product_name": "Minnidip Pool - That's Banana(leave)s",
+            "product_description": "Designed in Chicago by Emily Vaca of La Vaca, the THAT'S BANANA(LEAVE)S! Minnidip Luxe Inflatable Pool brings tropic vibes wherever you dip... backyards, patios, and rooftops. Just bust out your pineapple tumblers and feel the palm breeze! At 5.5 feet wide and 1.5 feet tall, the Original \u201cAdult Kiddie Pool\u201d is big enough for a minnidipping pool party with your faves! Perfect for adults and children ages 6 and up. Dip Dip Hooray!",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 42.99,
+            "disc": "40",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "817387023276",
+            "product_name": "Bentgo Kids' Stainless Steel Leak-Proof Lunch Box",
+            "product_description": "Bentgo Kids Stainless Steel is the first stainless steel bento-style lunchbox with leak-resistant technology. This durable lunch solution makes packing healthy meals easier for the family and better for the environment. It\u2019s a sleek solution for sending your child to school with a fresh, healthy, portion-perfect lunch.\n\nEASY CLEAN UP: Place the lunch box and bonus container on the top rack of the dishwasher for quick cleaning. Hand washing is recommended to preserve the life of the lunch box.\n\nKID-FRIENDLY LOCKING CLIPS: Two kid-friendly locking clips on the front of the lunch box are easy for small hands to open and close.\n\nWHAT\u2019S IN THE BOX: Bentgo Kids Stainless Steel Leak-Resistant Lunch Box, user manual, industry-leading 5 Year Warranty, and caring customer support.\n\nPRODUCT SPECIFICATIONS: Size: 9.8\u201d x 7.6\u201d x 2.2\u201d | Tray Volume: Main - 2.25 cups; Top: 1/2 cup; Bottom: 1.3 cups | Materials: 18/8 Stainless Steel & Silicone",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 49.99,
+            "disc": "40",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "074590507942",
+            "product_name": "Remington 1 3/4\" Flat Iron with Anti-Static Technology - Gray - S5520TA",
+            "product_description": "Boost your styling control with the REMINGTON\u00ae 1 3/4\u201d Anti-Static Flat Iron. Anti-Static Technology reduces the amount of negatively charged particles during styling for 50% less static* and flyaways. The ceramic plates with titanium protection coating heat up fast to create a smooth glide. The 1 3/4\u201d ceramic floating plates are 30% longer1 for quick styling and easy control. The digital controls with LCD screen make it easy for you to find the temperature you prefer for your hair type, with a range of eight heat settings from 310\u00b0F to 450\u00b0F.\n\n*vs. Remington\u00ae standard ceramic straightener\n1vs. 85mm straightener plates\n",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 22.99,
+            "disc": "30",
+            "stock": "2",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "191908691800",
+            "product_name": "Outdoor Stoneware Ceramic Planter with Stand White - Threshold\u2122",
+            "product_description": "Showcase your favorite potted plants in your front yard or patio with this Outdoor Stoneware Ceramic Planter from Threshold\u2122. Its large size and gorgeous solid white color help you show off a large array of foliage or colorful flowers. This ceramic pot comes with a metal stand so you can adjust its height for versatile placement options. Place it in your front yard to display your plants to passersby, or set it on your patio or deck for a cozy, natural vibe.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 60.0,
+            "disc": "55",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "086279166432",
+            "product_name": "Cuisinart 6qt Stainless Steel Stockpot with Cover - 8366-22",
+            "product_description": "From one-dish meals like hearty stews to slow-simmered homemade stock, the Cuisinart 6qt Stainless Steel Stockpot is ideal for \u201cbig\u201d cooking jobs, like preparing pastas. Wide-grip stainless steel handles make it easy to hold, and the tight-fitting cover seals in flavors. Exceptional Performance - Premium stainless steel for professional quality performance.\u00a0 Perfect Balance - Stainless steel handles are professionally riveted to ensure a lifetime of perfect balance. Versatile Performance - Oven safe to 500\u00b0F. Glass lids are oven safe to 350\u00b0F. Cook on the stovetop, in the oven, or under the broiler. Freezer safe for easy food storage.\n\nBrand Overview\nSavor the Good Life\u00ae. Cuisinart\u2019s Mission as a Brand is to develop and market, innovative, high-end kitchen products that enable consumers to quickly and easily provide their family with home cooked foods from a cup of coffee to an extravagant holiday meal.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 54.99,
+            "disc": "46",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "195994222221",
+            "product_name": "Soft Satchel Handbag - A New Day\u2122",
+            "product_description": "Bring on-trend flair to your everyday look with this Soft Satchel Handbag from A New Day\u2122. This satchel handbag features a main zippered compartment with an interior zip pocket and accessory pockets to safely carry your wallet, ID, credit cards and more. It's designed with double top handles and a removable and adjustable shoulder strap to offer you multiple carrying options. Featuring a faux-leather finish in black with metal zippers, it's sure to bring a chic update to your everyday style.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 28.0,
+            "disc": "45",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "810017183340",
+            "product_name": "Sky Rocket Crystalina Rose Quartz Doll",
+            "product_description": "Crystalina dolls light up when you shake them! Each doll has a different primary color that embodies a specific crystal power (love, wisdom, luck or healing) but are capable of all colors. Comes with an amulet that can pass colorful light patterns back and forth with Crystalina doll. The amulet is wearable so you can take Crystalina's power with you. You can even pass colors back and forth from doll to amulet or connect additional dolls!",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 9.09,
+            "disc": "35",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "630996500927",
+            "product_name": "Kindi Kids Minis - Rainbow Kate",
+            "product_description": "Yay! Let\u2019s Play\u2026 Mini!\nWelcome to the Wonderful Lil\u2019 World of Kindi Kids Minis! Bobble along with Rainbow Kate on her mini adventures! Rainbow Kate is still BIG in cuteness but has been made Mini! There's never a dull moment around this colorful cutie who can't stay still, she's always bobbling along with positive vibes! Join her as her mini world comes alive! All your favorite best friends that you\u2019ve met in the Rainbow Kindi are here and they\u2019re ready to take you on some wild imaginary adventures! Full of Bobbly-Wobbly fun, Rainbow Kate comes to life in the palm of your hand as her little head moves about! Pop her into your pocket or take the whole squad in your backpack because these fun filled girls are the perfect size for a take-anywhere playdate.\nMarsha Mello still has the same big glittery eyes and multi-coloured rainbow hair, just like her larger version! Plus her head, arms and legs are all posable! Stand her, sit her or pose and play with her and collect all of her friends.\nBuild up the Kindi Kids Minis' World with new fun accessories and vehicles. These Lil\u2019 Besties can\u2019t wait to get together to bring you into their colorful land of fun in the Rainbow Kindi. With these adorable little toys, girls will discover how much fun can fit into the smallest places!",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 4.99,
+            "disc": "35",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "810017183319",
+            "product_name": "Sky Rocket Crystalina Turquoise Doll",
+            "product_description": "Crystalina dolls light up when you shake them! Each doll has a different primary color that embodies a specific crystal power (love, wisdom, luck or healing) but are capable of all colors. Comes with an amulet that can pass colorful light patterns back and forth with Crystalina doll. The amulet is wearable so you can take Crystalina's power with you. You can even pass colors back and forth from doll to amulet or connect additional dolls!",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 9.09,
+            "disc": "35",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "071249152874",
+            "product_name": "L'Oreal Paris Collagen Moisture Filler Day/Night Cream 1.7oz",
+            "product_description": "A dose of intense hydration and natural Collagen in Collagen Filler Moisture Day Lotion and Day/Night Cream is essential for younger-looking skin. Rich moisture instantly restores skin's cushion and bounce. Over time, the powerful natural Collagen helps fill in lines and wrinkles, leaving your skin smooth and plump. Use it for a complete collagen-infused skincare regimen. In just 4 weeks 78% of women saw filled in wrinkles*. *Based on a consumer evaluation of 50 women.\n\nPackaging May Vary. What you receive may not be what is reflected on site.\n\nEvery night, smooth gently over the entire face after cleansing.\n\nFor External Use Only. Avoid Contact With Eyes. Discontinue Use If Signs Of Irritation Or Rash Appear. Keep Out Of Sight Of Children.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 10.99,
+            "disc": "30",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "191908047300",
+            "product_name": "Felt Basket with Stitching - Brightroom\u2122",
+            "product_description": "Keep your clothes and other accessories organized in one spot with this Felt Basket with Stitching from Brightroom\u2122. Made with felt for a lightweight design, this rectangle basket comes with an open top to help provide easy access to the contents. It's designed with stitching for a finished look. Functional enough to use in a kids' room, laundry area or any other area, this felt basket can be placed on a shelf or on the floor.\n\nBrightroom\u2122 started with a simple truth: When you\u2019ve got it together, you feel better. Our versatile designs reveal the possibility in every closet, cupboard and drawer, and work together to create brilliant ways to organize your every day.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 9.8,
+            "disc": "45",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "829576078394",
+            "product_name": "6Cup Dog Bowl with Resist Pattern - Matte Black - Boots & Barkley\u2122",
+            "product_description": "Feed your pooch their favorite food and treats in style with this Dog Bowl With Resist Pattern from Boots & Barkley\u2122. Crafted from sturdy stoneware for long-lasting use, this dog food bowl features a rounded shape with spacious interior that provides your pooch with easy access to everyday meals, while a non-slip base helps you avoid food spills and accidentally tipping the bowl over. You'll surely love the overall matte look and glossy edge detailing in black and the contrasting white lettering that reads \"CHOW DOWN\" for a charming touch. Just pair it with a coordinating stoneware drinking bowl for an attractive set that looks great in your home.\n\nLoving your pet from head to tail.\u2122\n\n100% satisfaction guaranteed or your money back.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 9.99,
+            "disc": "50",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "191907191950",
+            "product_name": "heyday\u2122 Car Vent Mount - Wild Dove",
+            "product_description": "Keep your hands free while driving when you use the Car Vent Mount from heyday\u2122. This cellphone holder mounts to your vehicle's venting for easy installation, providing you a spot to rest your phone as you drive \u2014 perfect for making hands-free calls or for checking GPS directions without looking down at your phone in your hand. Padded sides and bottom help keep your phone securely in place without damaging it, and the arms are adjustable to make this car cellphone holder compatible with a variety of devices.\n\nhey, you. It\u2019s time to make your day. So take a minute to live out loud, to power your look, and let your style speak volumes.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 10.0,
+            "disc": "30",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "190198001696",
+            "product_name": "Apple Wired EarPods with Lightning Connector",
+            "product_description": "Unlike traditional, circular earbuds, the design of the EarPods is defined by the geometry of the ear. Which makes them more comfortable for more people than any other earbud-style headphones.\n\nThe speakers inside the EarPods have been engineered to maximize sound output and minimize sound loss, which means you get high-quality audio.\n\nThe EarPods with Lightning Connector also include a built-in remote that lets you adjust the volume, control the playback of music and video, and answer or end calls with a pinch of the cord.\n\nSystem Requirements\nWorks with all devices that have a Lightning connector and support iOS 10 or later, including iPod touch, iPad, and iPhone.\nAlso works with iPad models with iPadOS.\n\nCompatibility\n\niPhone Models\n\u2022 iPhone 13 mini\n\u2022 iPhone 13\n\u2022 iPhone 13 Pro\n\u2022 iPhone 13 Pro Max\n\u2022 iPhone 12 Pro Max\n\u2022 iPhone 12 Pro\n\u2022 iPhone 12\n\u2022 iPhone 12 mini\n\u2022 iPhone 11 Pro\n\u2022 iPhone 11 Pro Max\n\u2022 iPhone 11\n\u2022 iPhone SE (1st and 2nd generation)\n\u2022 iPhone XS\n\u2022 iPhone XS Max\n\u2022 iPhone XR\n\u2022 iPhone X\n\u2022 iPhone 8\n\u2022 iPhone 8 Plus\n\u2022 iPhone 7\n\u2022 iPhone 7 Plus\n\u2022 iPhone 6s\n\u2022 iPhone 6s Plus\n\u2022 iPhone 6\n\u2022 iPhone 6 Plus\n\u2022 iPhone 5s\n\u2022 iPhone 5c\n\u2022 iPhone 5\n\niPad Models\n\u2022 iPad Pro 12.9-inch (1st and 2nd generation)\n\u2022 iPad Pro 10.5-inch\n\u2022 iPad Pro 9.7-inch\n\u2022 iPad (5th, 6th, 7th, and 8th generation)\n\u2022 iPad Air (3rd generation)\n\u2022 iPad Air 2\n\u2022 iPad Air (1st generation)\n\u2022 iPad mini (5th generation)\n\u2022 iPad mini 4\n\u2022 iPad mini 3\n\u2022 iPad mini 2\n\u2022 iPad mini (1st generation)\n\niPod Models\n\u2022 iPod touch (6th and 7th generation)\n",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 19.99,
+            "disc": "30",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "125700003899",
+            "product_name": "Ziploc Freezer Gallon Bags",
+            "product_description": "Ziploc\u00ae brand Freezer Bags helps provide unbeatable freezer protection from freezer burn with new Grip \u2018n Seal technology. Our triple system seal features an extended tab, new, easy grip texture and a double zipper. The extended tab and new, easy grip seal make it easier to open and close the bag, while the airtight double zipper ensures that each plastic plastic freezer bag blocks out air, which means less wasted food and more money saved.\n\nDIRECTIONS FOR USE: Ziploc Bags are reusable after hand-washing and drying! We do not recommend reusing Ziploc bags after storing raw meat, fish, eggs, or potentially allergy triggering foods. Microwave Defrost & Reheat - Open zipper one inch to vent.\n\nUSES: Ziploc Freezer bags are perfect for freezing meat, chicken, fish and vegetables\n\nWARNINGS: When using in microwave, place bag on a microwave-safe dish. Handle with care. Vent bag 1 inch. Bag and contents may be hot. Do not overheat contents as bag may melt.\n\nINGREDIENTS: Polyethylene, Polypropylene, Dye, and Ink.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 3.79,
+            "disc": "37",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "818009028235",
+            "product_name": "Apple Watch Silicone Band - All in Motion\u2122",
+            "product_description": "Why we're ALL IN:\n\nYour activewear will get a touch of stylish convenience from triangular cutouts and round grooves in a two-tone color. The band's silicone material offers a design that won't easily slide down your arm or wrist during your morning run or afternoon exercise, and an adjustable strap lets you find a comfortable, secure fit.\n\nWhen families come together to discover the joy of staying active, All in Motion is there to make it easy and comfortable to embrace a bustling lifestyle. From running errands to running intervals, the collection AIMs to propel you forward with thoughtfully designed pieces that fit and feel great \u2014 movement is the core of this performance line, with a 100% satisfaction guarantee.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 14.99,
+            "disc": "40",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "818009027498",
+            "product_name": "Essential Oil Diffuser Black Terrazzo - Project 62\u2122",
+            "product_description": "With Essential Oil Diffuser Black Terrazzo - Project 62\u2122 from Project 62\u2122, you can create your very own in-house spa any day of the week. Featuring a black terrazzo finish, this essential oil diffuser makes an appealing addition to your space while effectively diffusing your favorite oils and adding a soothing aroma to your home. This design and small size blend easily with a variety of decor styles, and the five-hour run time with automatic shut-off means you can relax and enjoy your day without having to worry about turning it off.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 15.0,
+            "disc": "30",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "033991052635",
+            "product_name": "Scosche Universal Vent Mount for Smartphones HVM2",
+            "product_description": "The dashMOUNT\u2019s cradle arms extend up to 3.5\u201d, allowing the mount to accommodate the ever growing phone sizes in today's market. It\u2019s not always easy finding a mount that will hold the iPhone 6s Plus. With this universal window/dash mount for smartphones,, that is the least of your worries. This universal vent mount for smartphones utilizes our convenient vent clips. When space is limited on your dash or windshield(hopefully that\u2019s not the case), this ventMOUNT is the perfect solution. Simply slide the mount onto your vent slats and you\u2019re good to go. If you\u2019re a constant traveler,, this mount works great for swapping from your daily driver, to your rental car due to it\u2019s simple install.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 7.99,
+            "disc": "30",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "888462322997",
+            "product_name": "Apple Lightning to USB Cable",
+            "product_description": "\nThis 2-meter USB 2.0 cable connects your iPhone, iPad, or iPod with Lightning connector to your computer\u2019s USB port for syncing and charging. Or you can connect to the Apple USB Power Adapter for convenient charging from a wall outlet.*\n\nCompatibility\n\niPhone Models\n\u2022 iPhone 13 mini\n\u2022 iPhone 13\n\u2022 iPhone 13 Pro\n\u2022 iPhone 13 Pro Max\n\u2022 iPhone 12 Pro Max\n\u2022 iPhone 12 Pro\n\u2022 iPhone 12\n\u2022 iPhone 12 mini\n\u2022 iPhone 11 Pro\n\u2022 iPhone 11 Pro Max\n\u2022 iPhone 11\n\u2022 iPhone SE (1st and 2nd generation)\n\u2022 iPhone XS\n\u2022 iPhone XS Max\n\u2022 iPhone XR\n\u2022 iPhone X\n\u2022 iPhone 8\n\u2022 iPhone 8 Plus\n\u2022 iPhone 7\n\u2022 iPhone 7 Plus\n\u2022 iPhone 6s\n\u2022 iPhone 6s Plus\n\u2022 iPhone 6\n\u2022 iPhone 6 Plus\n\u2022 iPhone 5s\n\u2022 iPhone 5c\n\u2022 iPhone 5\n\niPad Models\n\u2022 iPad Pro 12.9-inch (1st and 2nd generation)\n\u2022 iPad Pro 10.5-inch\n\u2022 iPad Pro 9.7-inch\n\u2022 iPad (5th, 6th, 7th, and 8th generation)\n\u2022 iPad Air (3rd generation)\n\u2022 iPad Air 2\n\u2022 iPad Air (1st generation)\n\u2022 iPad mini (5th generation)\n\u2022 iPad mini 4\n\u2022 iPad mini 3\n\u2022 iPad mini 2\n\u2022 iPad mini (1st generation)\n\nMac Models\n\u2022 MacBook Air (13-inch, Early 2015\u20132017)\n\u2022 MacBook Air (11-inch, Early 2015)\n\u2022 MacBook Pro (Retina, 13-inch, Late 2012\u20132015)\n\u2022 MacBook Pro (Retina, 15-inch, Mid 2012\u20132015)\n\u2022 iMac (Retina 4.5k, 24-inch, 2021)\n\u2022 iMac (Retina 5K, 27-inch, 2020)\n\u2022 iMac (Retina 4K, 21.5-inch, 2019)\n\u2022 iMac (Retina 5K, 27-inch, 2019)\n\u2022 iMac (Retina 4K, 21.5-inch, 2017)\n\u2022 iMac (Retina 5K, 27-inch, 2017)\n\u2022 iMac (Retina 4K, 21.5-inch, Late 2015)\n\u2022 iMac (Retina 5K, 27-inch, Late 2014\u20132015)\n\u2022 iMac Pro (2017)\n\u2022 Mac Pro (2019)\n\u2022 Mac Pro (Late 2013)\n\u2022 Mac mini (M1, 2020)\n\u2022 Mac mini (2018)\n\u2022 Mac mini (Late 2014)\n\niPod Models\n\u2022 iPod touch (5th, 6th, and 7th generation)\n\u2022 iPod nano (7th generation)\n\nAirPods Models\n\u2022 AirPods Max\n\u2022 AirPods Pro\n\u2022 AirPods with Wireless Charging Case (2nd generation)\n\u2022 AirPods with Charging Case (2nd generation)\n\u2022 AirPods (1st generation)\n\u2022 Wireless Charging Case for AirPods\n\nLegal\n*Does not support audio or video output.\n",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 29.99,
+            "disc": "30",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "667902086404",
+            "product_name": "Animal Adventure Book Soldier Stuffed Animal Wondershop\u2122",
+            "product_description": "Animal Adventure Wondershop Plush, Soldier is sure to play a starring role in so many happy childhood memories! This character was thoughtfully crafted for a lifetime of love, designed to ignite a child\u2019s imagination and bring joy to the ones that love their littles most. Covered in the most irresistibly soft fabrics and given the sweetest of expressions, this beautiful soft toy is the perfect addition to a room or nursery or to be given as a present for birthdays or other special occasions! The happiness team at Animal Adventure believes that there are no compromises when it comes to kids and the soft goods they cherish, which is why each plush lovie is stitched and stuffed with care, assuring the utmost softness, safety and quality.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 9.99,
+            "disc": "40",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "042897660431",
+            "product_name": "Big League Chew Easter Baseball - 0.63oz",
+            "product_description": "Get ready for the Spring baseball season! The Big League Chew\u00ae Baseball looks like a real baseball, but contains three individually wrapped Big League Chew Gumballs and a fun sticker sheet. A perfect basket filler for your little leaguer, offering great play value! Fun for all! Bubble Gum made in the USA.\n\n",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 1.0,
+            "disc": "40",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "812887018418",
+            "product_name": "JLab Studio Wired On-Ear Headphones - Black",
+            "product_description": "Studio comfort, with studio sound. Plug in and GO anywhere with the Studio Headphones, the braided nylon cord is durable to use all day, everyday. C3 Sound delivers crystal, clear, clarity audio so your music sounds perfect every time you plug in. Fold the earcups in for compact size to fit in any bag. These are the perfect go-to headphone.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 15.99,
+            "disc": "30",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "847626002397",
+            "product_name": "j5create USB-C to 4K HDMI Cable",
+            "product_description": "Connect a MacBook, Chromebook, or other USB-C equipped laptop, tablet, smartphone to a TV, monitor, projector with this USB-C to 4K HDMI Cable. Now you can see videos, presentations, games and more in resolutions up to 4K at 60 Hz. Plug-and-play technology makes the connection simple. Just connect and share!",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 34.99,
+            "disc": "30",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "191908666808",
+            "product_name": "60ct Dinnerware Cutlery Set - Spritz\u2122",
+            "product_description": "Give your celebrations the perfect finishing touch with the 60ct Dinnerware Cutlery Set from Spritz. They're a classy gold color that won't clash with your table cover or other d\u00e9cor elements, while switching up the overall look. The set is disposable, so you can just round them up and toss them in the bin when the party's over.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 3.0,
+            "disc": "40",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "492450705701",
+            "product_name": "Vinyl Exam Gloves - 50ct - up & up\u2122",
+            "product_description": "Medical Disposable Powder-free Vinyl Gloves from up & up\u2122 are FDA approved for medical use, providing effective barrier against dirt and germs for surgery and other medical procedures. Vinyl gloves offer stronger perform than polyethylene gloves and avoid latex allergic reactions and skin irritation in users or patients. The gloves are lighter and softer than the standard vinyl gloves. Powder-free leaves no residue, helping to reduce the spread of bacteria, irritation and dermatitis.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 6.59,
+            "disc": "50",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "079346023073",
+            "product_name": "Buffalo Games Art of Play: Stained Glass Aquarium Puzzle 2000pc",
+            "product_description": "This 2000-piece jigsaw puzzle titled Stained Glass Aquarium features a beautiful stained-glass window of aquatic animals! Dolphins, Lionfish, Seahorses, Turtles, Starfish, Clown Fish and more all make an appearance in this vibrant glass collage. Explore the mysteries of the deep as you piece together this lively puzzle.\nEvery Buffalo Games jigsaw puzzle is manufactured from recycled puzzle board. A precision cutting technique guarantees that every piece will fit soundly with the company's signature Perfect Snap\u2122. A bonus puzzle poster is also included so that you have a handy reference of what the completed puzzle should look like while you put yours together.\n",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 12.99,
+            "disc": "40",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "086861200360",
+            "product_name": "Simply Glass Torch - TIKI",
+            "product_description": "Entertain in style by adding one or more TIKI\u00ae Brand Easy Install Glass and Metal Torches to your backyard. The easy install lever provides a simple, one-step installation. This torch can be used in two ways: as a 65-inch full-size torch or a 50-inch mid-size garden torch. The clear glass torch is durable enough to stand up to the elements. Each TIKI\u00ae Brand Easy Install Glass and Metal Torches comes with a long-lasting fiberglass wick, a 4-piece pole with an easy install lever and a metal snuffer to extinguish the flame at the end of the evening. For proven mosquito repellency*, use with TIKI\u00ae Brand BiteFighter\u00ae Torch Fuel, and enjoy up to 11 hours of burn time with each 10-ounce fill. TIKI\u00ae Brand BiteFighter\u00ae Torch Fuel sold separately. *Based on studies using CO2-emitting mosquito traps which demonstrated over 50% reduction in captured mosquitoes compared to untreated controls. Use as directed. Efficacy may be affected by weather conditions, torch placement, and individual physical factors.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 21.99,
+            "disc": "40",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "810655168310",
+            "product_name": "'Have a Cup of Cheer' Reusable Bag Red",
+            "product_description": "Skip the plastic bags and checkout in style with the 'Have a Cup of Cheer' Reusable Bag Red. Made with sturdy, textured polypropylene material for reliable use you're sure to appreciate. This reusable shopper tote features a fun design and color that is sure to catch a shopper's attention. Bring this reusable tote bag with you on your next grocery run, or keep it in the car so you're always prepared to take home your latest shopping haul.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 4.99,
+            "disc": "50",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "025947446629",
+            "product_name": "6 Compartment Organizer White - Brightroom\u2122",
+            "product_description": "Add a functional organization solution to your kitchen or pantry with this Six-Compartment Organizer in White from Brightroom\u2122. Featuring six divided compartments with raised sides, this sleek organizer helps keep your flatware, utensils and more easily accessible while preventing them from mixing with each other. It\u2019s made with plastic in a stackable design for space-saving storage. You can use this plastic organizer in a drawer or cabinet as well as on a shelf or countertop for easy and convenient kitchen utensil storage.\n\nBrightroom\u2122 started with a simple truth: When you\u2019ve got it together, you feel better. Our versatile designs reveal the possibility in every closet, cupboard and drawer, and work together to create brilliant ways to organize your every day.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 9.6,
+            "disc": "30",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "191908657684",
+            "product_name": "51oz Glass Potomac Beverage Pitcher - Threshold\u2122",
+            "product_description": "Make your family conversations more interesting with a refreshing drink served from this 51-Ounce Glass Potomac Beverage Pitcher from Threshold\u2122. Made with glass, this beverage pitcher features a tumbler-like shape in a green hue that pops at the bottom for a lively look on your table. It comes with a fish-shaped spout and a handle to make pouring more convenient. Ideal for cold beverages, this glass beverage dispenser is perfect to serve fresh-squeezed lemonade, soda drinks and more during the warmer days \u2014 just add green glasses to create a coordinated look on your table.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 13.0,
+            "disc": "40",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "795516300866",
+            "product_name": "Stomp Rocket Xtreme Super High Flying Rockets with Launch Pad",
+            "product_description": "Your kid will love playing outside with the Xtreme Rocket Stomp Rocket. This educational STEM toy teaches them about gravity, trajectory, force and the power of air in an exciting and interactive way, as they stomp on the projectile launcher to propel the rockets up to 400 feet in the sky. Including the rocket launcher toy and six rockets, it's perfect for your child to enjoy a day of fun outside with friends.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 19.99,
+            "disc": "35",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "062243296152",
+            "product_name": "Our Generation Audra with Pierced Ears 18\" Jewelry Doll",
+            "product_description": "Sweet and sparkly style is even more fun with Our Generation Jewelry Doll Audra, a beautiful 18-inch doll with long, light-brown hair and unique gray-blue eyes. What makes Audra special? She is great at decorating cakes, can do a handstand, and she has pierced ears that can really wear earrings! Audra wears a lovely pink dress with a sparkly gold sequin shrug. Her accessories include two pairs of earrings with removable hoop pendants to mix and match, a variety of bracelets, hair clips, and headbands. Best of all, Audra comes with six adorable charms that you can mix and match on either a necklace, earrings, or bracelet to create different styles. Audra is looking forward to a fashion adventure! (Compatible with American Girl dolls)",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 29.99,
+            "disc": "35",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "191908387161",
+            "product_name": "Chunky Knit Throw Blanket - Threshold\u2122",
+            "product_description": "Snuggle up on chilly evenings with this Chunky Knit Throw Blanket from Threshold\u2122. Crafted from lightweight fabric with a backing for lasting comfort, this blanket showcases a cable knit design for a stylish look and cozy feel, making it the perfect piece when sitting down to enjoy a good read or cozying up to enjoy an afternoon nap. Add comfort and style to your fave chair or sofa with this knitted throw blanket.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 35.0,
+            "disc": "50",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "191904867636",
+            "product_name": "Jacquard Print Blanket Tote Handbag - Shade & Shore\u2122",
+            "product_description": "Lend a cozy touch to your accessory collection with this Jacquard Print Blanket Tote Handbag from Shade & Shore\u2122. Beautifully woven with zigzags, a diamond pattern and more, this bucket-like handbag brings extra visual interest to your on-the go looks. It features multiple interior pockets to give you plenty of space for your cell phone, wallet and other accessories. Carry it along to the farmers market, the beach or any other place with ease using the built-in double handles.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 35.0,
+            "disc": "50",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "035051576761",
+            "product_name": "Rainbow High Art of Fashion Doll Collector's Edition",
+            "product_description": "Rainbow High is a modern fashion doll brand that sparks imagination and encourages creativity. With Grit, Love, Action and Moxie (G.L.A.M), the students of Rainbow High combine their unique creative skills and work together to achieve their unlimited dreams today. #COLLECTTHERAINBOW\n\nIntroducing Our \u201cArt of Fashion\u201d Designer Collector Doll featuring Jett Dawson a fashion major at Rainbow High, standing next to her first couture fashion design. A must-add to every doll collector\u2019s collection. Rainbow High Collector Doll Jett Dawson comes with 2 Premium one-of-a-kind doll outfits, 2 pairs of trendy shoes with 2 clear fashion trunks to store shoes and accessories. The first outfit is her fashion croquis inspired everyday wearable outfit with screen printed Black Cropped Hooded Sweater, a White Denim Jacket, fitted Brocade Black Skirt and Sheer Stretch Tights Printed with Black Sketch lines and finished with Black Stretch Gloves. The second outfit is a Breath-Taking \u201cArt of Fashion\u201d Designer dress-form wrapped in fabric commemorating 2021, the year of release. The Brocade Red Silk Mermaid Style Gown has Metallic Silver and Black graffiti elements woven into the fabric with added sparkle touches. Beneath the flare of her skirt is a black to red ombre georgette lining creating an eye-catching display on the hanger. Her premium heels have designer satin ribbon to tie around her ankle in beautiful bows and sculpted R and H in metallic gold for a premium touch. She also comes with premium collector fashion accessories that work, like a Mini Sewing Machine featuring moveable pieces like a spin dial that mimics a real sewing machine; the needle even moves up and down, a Mannequin that you can roll around, and to measure fabric, she comes with her Mini Measuring Tape. Her extra-long hair is as stunning as her outfits; she has long, brushable trend-setting half black and half rainbow hair. When first unboxing the doll, if you want to brush it, wash her hair thoroughly to remove styling gel and let hair dry completely. Then, her hair is ready to brush and style. The Limited Edition Packaging is a Trunk like package. It has three tabs at the top to unlock the \u201clid\u201d then you can easily remove the insert to release the doll, the dress and the rest of the accessories. It has molded corner pieces on each corner to really give that real trunk like look. It has a special hangtag with collector edition number on it along with a real molded wax seal with the RH embossed on it. Jett is fully articulated and posable, her arms and legs bend for so many glamourous poses or you can display her on the included doll stand. Get to know Jett and her friends from Rainbow High on the animated series on YouTube. Collect the rainbow! NEW Twins - Laurel & Holly De'Vious, Krystal Bailey, Amaya Raine, Stella Monroe, Bella Parker, Karma Nichols, River Kendall\n\nHow to Wash Your Rainbow High Doll\u2019s Hair\n1. To keep your doll\u2019s clothes from getting wet, either remove them or cover clothes with a towel.\n2. Wet your doll\u2019s hair completely with water.\n3. Lather in a little shampoo or dish soap to wash out any product or residue.\n4. Optional: To soften hair even more, add a bit of conditioner, work in with fingers or comb through hair, then rinse out.\n5. Let hair air dry completely.\n6. Hair is ready to brush & style.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 36.99,
+            "disc": "35",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "010343908239",
+            "product_name": "Epson 200 Single, 2pk, 3pk, & 4pk Ink Cartridges - Black, Yellow, Magenta, Cyan, Multicolor",
+            "product_description": "Replace only the color you need with individual ink cartridges. Best of all, only one set of cartridges is needed to print amazing documents and great photos. There\u2019s no need to spend additional money on specialized cartridges to print on either plain or photo paper. Epson\u2019s revolutionary DURABrite Ultra Ink produces smudge, fade and water resistant prints that look brilliant on both plain and glossy photo paper.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 57.99,
+            "disc": "60",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "490530110322",
+            "product_name": "XSmall Gift Bag Clear - Spritz\u2122",
+            "product_description": "Give each guest at the party one of the XSmall Gift Bags from Spritz\u2122 to take home their party favors. The bags are clear so they can see their swag, and twist-ties are included to keep the candy and treats inside all the way home. These party favor bags can be used for all sorts of themed parties thanks to their simple and versatile design.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 2.5,
+            "disc": "50",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "810036770880",
+            "product_name": "Motorola 5\" WiFi HD Video Baby Monitor w/2 Cameras & PTZ - VM65-2CONNECT",
+            "product_description": "Monitor your nursery in a sleek, sophisticated fashion with the Motorola VM65-2 Connect. While at home, use the large 5\u201d display to get a clear view of your little one. Download the Motorola Nursery app on your smartphone or tablet to stream video in Full HD (1080p) when you\u2019re out and about and on-the-go. With two cameras you can keep on eye on multiple rooms from one place, and easily switch between the cameras to see what\u2019s going on in different parts of your home. Oversee the entire room with the digital pan and tilt functionality and get a close-up view using the digital zoom. Monitor the room temperature to ensure the nursery is comfortable for your baby. Speak to and hear your little one from home or on-the-go with the two-way talk feature and soothe your little one to sleep with a lullaby, soothing sound or audiobook, without stepping foot in the nursery.\n",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 229.99,
+            "disc": "40",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "085239259924",
+            "product_name": "Dog and Cat Sweater - Ochre - Boots & Barkley\u2122",
+            "product_description": "Dress up your furry friend's cool-weather look with this Ochre Dog and Cat Sweater from Boots & Barkley\u2122. This dog and cat sweater makes a great choice for chilly days. It features a black, pink, lilac and cream design on an ochre yellow backdrop for an attractive look, and a cozy knitted construction to keep them warm and comfortable. The ribbed texture and finish gives a snug fit, while the simple pull-on style allows for easy dressing. Plus, the slit on the back allows for easy leash attachment, and it can be hand washed for stress-free care.\n\nLoving your pet from head to tail.\u2122\n\n100% satisfaction guaranteed or your money back.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 13.0,
+            "disc": "50",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "085239210406",
+            "product_name": "Color Block Option Dog Puffer - Boots & Barkley\u2122",
+            "product_description": "From early morning or evening walks in the chilly weather to playing in the backyard, keep your pet equipped for the cooler weather in this Colorblock Dog Puffer Jacket from Boots & Barkley\u2122. Boasting a quilted construction with a sherpa-like lining, this puffer jacket for dogs feels soft against their skin and offers them cozy comfort when the temps dip. Designed with cutouts for the front legs, it features a hook-and-loop closure for a secure fit, while a slit in the back allows for easy leash attachment. Showcasing a colorblock scheme, it's sure to add a fun pop of color to their look.\n\nLoving your pet from head to tail.\u2122\n\n100% satisfaction guaranteed or your money back.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 12.74,
+            "disc": "50",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "649532933082",
+            "product_name": "heyday\u2122 6-Outlet Surge Protector with 6' Extension Cord - Deep Teal",
+            "product_description": "It's easy to convert one outlet into six with the 6-Outlet Surge Protector with 6-Foot Extension Cord from heyday\u2122. This powerful extension cord provides more outlets where you need them most, all while keeping your electronics protected from power surges thanks to a 1,500 joule rating. The six-foot cord is connected to a flat plug that easily fits behind desks, sofas and other pieces of furniture, with a main rectangular base featuring the six outlets, as well as a four-foot cord leading to a two-port USB dock for added convenience. The teal and white color palette blends in nicely with the rest of your decor for a seamless aesthetic, and the surge protector comes equipped with a $100,000 connected equipment guarantee.\n\nhey, you. It\u2019s time to make your day. So take a minute to live out loud, to power your look, and let your style speak volumes.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 29.99,
+            "disc": "30",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "047485133991",
+            "product_name": "11oz 3-Wick Candle Blueberry Cobbler",
+            "product_description": "The scented candle infuses your home with a scrumptious layering of ripe blueberries and fruity nuances of dark plum and black cherries are tossed with warm cinnamon, Tahitian vanilla, and buttery graham crackers. While the gentle light flickers and sends shadows across the walls, the glass exterior and round lid add to the overall vibe. Easy to display on a mantel or a side table, this scented candle is a must-have essential you\u2019ll want to keep handy.",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 4.0,
+            "disc": "40",
+            "stock": "1",
+            "employee": "Chanelle"
+        },
+        {
+            "upc": "764195899015",
+            "product_name": "Interlocking Drawer Organizer Set - White - Room Essentials\u2122",
+            "product_description": "The Interlocking Drawer Organizer Set from Room Essentials\u2122 features eight versatile bins of different sizes with clean, simple lines. The walls can interlock for mixing and matching to suit your own unique storage needs, and the bins are dishwasher-safe for easy upkeep. Perfect for storing flatware, utensils and more, they can also be used in a home workshop or craft room to provide easy access tools, pencils, markers and other essentials.\n\nRoom Essentials\u2122: Everyday Value",
+            "product_image": "https://origamiitlab.com/wp-content/uploads/2018/12/bird.png",
+            "product_price": 9.0,
+            "disc": "40",
+            "stock": "1",
+            "employee": "Chanelle"
+        }
+    ]
+}
