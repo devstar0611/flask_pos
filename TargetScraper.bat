@@ -1,5 +1,4 @@
 @echo off
-start chrome 127.0.0.1:5000
-c:
-cd "c:\Users\justs\Documents\target"
+start chrome 127.0.0.1:8000
+
 python app.py
