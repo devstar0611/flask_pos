@@ -276,7 +276,7 @@ async def get_price_name_OLD_OLD(upc, stock, disc, employee):
     
 
 def get_price_name(target_url): 
-    print("def get_price_name(target_url): ")
+    print("def get_price_name(target_url): " + target_url)
     product_name = 'Not Found'
     product_price = 'Not Found'
     product_description = 'Not Found'

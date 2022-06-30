@@ -7,8 +7,6 @@ from marketplace import uploadToMP, publish
 from printzpls import printlabel, open_acrobat_print
 from openpyxl import load_workbook
 from ig import postInstagram
-
-import time
 import os
 import pandas as pd
 
