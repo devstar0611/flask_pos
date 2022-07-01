@@ -3,13 +3,14 @@ from bs4 import BeautifulSoup
 from urllib.request import urlopen
 
 TARGET_HOME = "https://www.target.com"
+TARGET_ALL_CATEGORIES = "https://www.target.com/c/shop-all-categories/-/N-5xsxf"
 
-target_url = TARGET_HOME
+target_url = TARGET_ALL_CATEGORIES
 
 page = urlopen(target_url)
 html = page.read().decode("utf-8")
 
 soup = BeautifulSoup(html, "html.parser")
-body = soup.body
-print(body)
+divs = soup.div
+print(divs)
 
