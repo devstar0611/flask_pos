@@ -11,6 +11,6 @@ page = urlopen(target_url)
 html = page.read().decode("utf-8")
 
 soup = BeautifulSoup(html, "html.parser")
-divs = soup.div
-print(divs)
+items = soup.select("div.h-padding-h-tight")
+print(items)
 
