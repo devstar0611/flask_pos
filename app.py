@@ -951,6 +951,7 @@ def upload_products_to_ig():
 def target():
     
     global upcDetails
+    print(datetime.date.today())
     
     if request.method == "POST":
         link=request.form["TargetLink"]
