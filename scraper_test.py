@@ -12,5 +12,6 @@ html = page.read().decode("utf-8")
 
 soup = BeautifulSoup(html, "html.parser")
 items = soup.select("div.h-padding-h-tight")
-print(items)
+file = open('html.txt', 'rw', encoding='uft-8')
+file.write(items)
 
