@@ -10,3 +10,4 @@ pip install labelary-mwisslead
 pip install psutil
 pip install openpyxl
 pip install pandas
+pip install bs4
