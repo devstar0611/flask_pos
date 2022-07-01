@@ -1,13 +1,17 @@
+from attr import attr
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 
-target_url = input("target_url:")
+TARGET_HOME = "https://www.target.com/"
+
+target_url = TARGET_HOME
 
 page = urlopen(target_url)
 html = page.read().decode("utf-8")
 
 soup = BeautifulSoup(html, "html.parser")
-span_categories = soup.find_all(
+categoryMenu = soup.find_all("div", attrs={"data-test": "@web/CategoryMenu"})
+span_categories = categoryMenu.find_all(
     "span", attrs={"class": "CellSkinny__TextWrapper-sc-117d15w-0 bcbdds"})
 for category in span_categories:
     print(category.string)
