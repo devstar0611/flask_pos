@@ -14,10 +14,14 @@ import datetime
 import json
 import asyncio
 import urllib.request
+import sqlite3
 
 import csv
 import time
 timestr = time.strftime("%Y%m%d")
+
+conn = sqlite3.connect('mydb.db')
+cur = conn.cursor()
 
 
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
