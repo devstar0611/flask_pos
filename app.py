@@ -1162,7 +1162,8 @@ def target():
         
         return render_template('target.html', 
                                details=default_details,
-                               duration=0,counter=0,
+                               duration=0,
+                               counter=0,
                                walmart=0,
                                amazon=0,
                                categories=categories,

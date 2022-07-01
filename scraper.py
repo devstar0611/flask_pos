@@ -21,6 +21,17 @@ from selectorlib import Extractor
 
 import urllib.request
 
+## start mine
+from bs4 import BeautifulSoup
+from urllib import urlopen
+
+
+## end mine
+
+
+
+
+
 profilePath= "C:\\Users\\justs\\AppData\\Local\\Google\\Chrome\\User Data"
 
 options = Options()
@@ -40,6 +51,117 @@ config_url = os.path.join(SITE_ROOT, "static/data", "config.json")
 # my_api_key = "AIzaSyAqKIVgIszDr31O03_FmZ0zvJ_KN2y2UUM"
 # my_cse_id = "6e8803333f47a47db"
 
+#############
+def get_price_name(target_url): 
+    print("def get_price_name(target_url): " + target_url)
+    product_name = 'Not Found'
+    product_price = 'Not Found'
+    product_description = 'Not Found'
+    product_category = 'Not Found'
+    product_upc = 'Not Found'
+    product_imageurl = 'Not Found'
+    
+    page = urlopen(target_url)
+    html = page.read().decode("utf-8")
+    
+    soup = BeautifulSoup(html, "html.parser")
+    print(soup.prettify())
+    
+    try:
+        driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+        driver.get(target_url)
+        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, "//h1[@data-test = 'product-title']/span")))
+        print("PAGE IS READY = " + target_url)
+    except TimeoutException:
+        print("Loading took too much time!")
+
+    try:
+        product_name = driver.find_element(By.XPATH, "//h1[@data-test = 'product-title']/span").text
+    except NoSuchElementException as e:
+        product_name = 'Not Found'
+
+    # print("Product Name = " + product_name)
+
+    try:      
+        product_description = driver.find_element(By.XPATH, "//h3[text() = 'Description']/parent::div/div[1]").get_attribute("innerText")
+    except NoSuchElementException as e:
+        product_description = 'Not Found'
+
+    # print("Product Description = " + product_description)
+
+    try:
+        print("first price try")   
+        time.sleep(2)   
+        product_price = driver.find_element(By.XPATH, "//div[@data-test = 'product-price']").text
+        print("Product Price =- " + product_price)
+    except NoSuchElementException as e:
+        product_price = 'Not Found'
+
+    if product_price == 'Not Found':
+        print("second price try")    
+        time.sleep(2)    
+        try:      
+            product_price = driver.find_element(By.CSS_SELECTOR, ".kfATIS").text
+            print("Product Price =% " + product_price)
+        except NoSuchElementException as e:
+            product_price = 'Not Found'
+
+    if product_price == 'Not Found' or product_price=='See price in cart':
+        try:      
+            ship_button = driver.find_element(By.XPATH, "//button[@data-test = 'shipItButton']")
+            ship_button.click()
+            try:
+                WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.XPATH, "//button[@data-test = 'espModalContent-declineCoverageButton']")))
+                decline_coverage_button = driver.find_element(By.XPATH, "//button[@data-test = 'espModalContent-declineCoverageButton']")
+                decline_coverage_button.click()
+            except Exception as e2:
+                pass
+            WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.XPATH, "//p[@data-test = 'addToCartModalPrice']/span")))
+            product_price = driver.find_element(By.XPATH, "//p[@data-test = 'addToCartModalPrice']/span").get_attribute("innerText")
+        except Exception as e:
+            product_price = 'Not Found'
+
+    print("Product Price =+= " + product_price)
+
+    # print("Product Price = " + product_price)
+
+    try:      
+        product_category = driver.find_element(By.CSS_SELECTOR, ".PWWrr:nth-child(2) span").text
+        print("product_category =# " + product_category)
+    except NoSuchElementException as e:
+        product_category = 'Not Found'
+
+    print("Product Category === " + product_category)
+
+    try:
+        product_upc = driver.find_element(By.XPATH, "//h3[text() = 'Specifications']/parent::div//b[text() = 'UPC']/parent::div").get_attribute('innerText')
+        product_upc = product_upc.replace("UPC:", "");
+        product_upc = product_upc.strip()
+    except NoSuchElementException as e:
+        product_upc = 'Not Found'
+
+    # print("Product UPC = " + product_upc)
+
+    try:      
+        product_imageurl = driver.find_element(By.XPATH, "//div[@class = 'slide--active']//div[@class = 'slideDeckPicture']//img").get_attribute('src') 
+        # product_image_name= 'Test1.png'
+        # urllib.request.urlretrieve(product_imageurl, "C:\\Users\\justs\\OneDrive\\Pictures\\ProductImages\\Test1.png")   
+    except NoSuchElementException as e:
+        product_imageurl = 'https://origamiitlab.com/wp-content/uploads/2018/12/bird.png'
+        # product_image_name= 'Test_default.png'
+
+    # print("Product Image URL = " + product_imageurl)
+
+    driver.close()
+    driver.quit()
+
+    return {"upc":product_upc,
+            "product_name":product_name,
+            "product_price":product_price.replace('$', ''),
+            "product_image" : product_imageurl,
+            "product_description" : product_description,
+            "product_category": product_category
+            }
 
 def google_search(search_term, api_key, cse_id, **kwargs):
     service = build("customsearch", "v1", developerKey=api_key)
@@ -274,111 +396,6 @@ async def get_price_name_OLD_OLD(upc, stock, disc, employee):
             "product_category": product_category
             }
     
-
-def get_price_name(target_url): 
-    print("def get_price_name(target_url): " + target_url)
-    product_name = 'Not Found'
-    product_price = 'Not Found'
-    product_description = 'Not Found'
-    product_category = 'Not Found'
-    product_upc = 'Not Found'
-    product_imageurl = 'Not Found'
-    
-    try:
-        driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
-        driver.get(target_url)
-        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, "//h1[@data-test = 'product-title']/span")))
-        print("PAGE IS READY = " + target_url)
-    except TimeoutException:
-        print("Loading took too much time!")
-
-    try:
-        product_name = driver.find_element(By.XPATH, "//h1[@data-test = 'product-title']/span").text
-    except NoSuchElementException as e:
-        product_name = 'Not Found'
-
-    # print("Product Name = " + product_name)
-
-    try:      
-        product_description = driver.find_element(By.XPATH, "//h3[text() = 'Description']/parent::div/div[1]").get_attribute("innerText")
-    except NoSuchElementException as e:
-        product_description = 'Not Found'
-
-    # print("Product Description = " + product_description)
-
-    try:
-        print("first price try")   
-        time.sleep(2)   
-        product_price = driver.find_element(By.XPATH, "//div[@data-test = 'product-price']").text
-        print("Product Price =- " + product_price)
-    except NoSuchElementException as e:
-        product_price = 'Not Found'
-
-    if product_price == 'Not Found':
-        print("second price try")    
-        time.sleep(2)    
-        try:      
-            product_price = driver.find_element(By.CSS_SELECTOR, ".kfATIS").text
-            print("Product Price =% " + product_price)
-        except NoSuchElementException as e:
-            product_price = 'Not Found'
-
-    if product_price == 'Not Found' or product_price=='See price in cart':
-        try:      
-            ship_button = driver.find_element(By.XPATH, "//button[@data-test = 'shipItButton']")
-            ship_button.click()
-            try:
-                WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.XPATH, "//button[@data-test = 'espModalContent-declineCoverageButton']")))
-                decline_coverage_button = driver.find_element(By.XPATH, "//button[@data-test = 'espModalContent-declineCoverageButton']")
-                decline_coverage_button.click()
-            except Exception as e2:
-                pass
-            WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.XPATH, "//p[@data-test = 'addToCartModalPrice']/span")))
-            product_price = driver.find_element(By.XPATH, "//p[@data-test = 'addToCartModalPrice']/span").get_attribute("innerText")
-        except Exception as e:
-            product_price = 'Not Found'
-
-    print("Product Price =+= " + product_price)
-
-    # print("Product Price = " + product_price)
-
-    try:      
-        product_category = driver.find_element(By.CSS_SELECTOR, ".PWWrr:nth-child(2) span").text
-        print("product_category =# " + product_category)
-    except NoSuchElementException as e:
-        product_category = 'Not Found'
-
-    print("Product Category === " + product_category)
-
-    try:
-        product_upc = driver.find_element(By.XPATH, "//h3[text() = 'Specifications']/parent::div//b[text() = 'UPC']/parent::div").get_attribute('innerText')
-        product_upc = product_upc.replace("UPC:", "");
-        product_upc = product_upc.strip()
-    except NoSuchElementException as e:
-        product_upc = 'Not Found'
-
-    # print("Product UPC = " + product_upc)
-
-    try:      
-        product_imageurl = driver.find_element(By.XPATH, "//div[@class = 'slide--active']//div[@class = 'slideDeckPicture']//img").get_attribute('src') 
-        # product_image_name= 'Test1.png'
-        # urllib.request.urlretrieve(product_imageurl, "C:\\Users\\justs\\OneDrive\\Pictures\\ProductImages\\Test1.png")   
-    except NoSuchElementException as e:
-        product_imageurl = 'https://origamiitlab.com/wp-content/uploads/2018/12/bird.png'
-        # product_image_name= 'Test_default.png'
-
-    # print("Product Image URL = " + product_imageurl)
-
-    driver.close()
-    driver.quit()
-
-    return {"upc":product_upc,
-            "product_name":product_name,
-            "product_price":product_price.replace('$', ''),
-            "product_image" : product_imageurl,
-            "product_description" : product_description,
-            "product_category": product_category
-            }
 
    
 
