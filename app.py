@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect
+from soupsieve import select
 from werkzeug.datastructures import Range
 from sheets import update_details
 from scraper import get_amazon_price_by_link, get_price_name, get_walamart_price, get_amazon_price
@@ -955,7 +956,6 @@ def upload_products_to_ig():
 def target():
     
     global upcDetails
-    print(datetime.date.today())
     
     if request.method == "POST":
         link=request.form["TargetLink"]
@@ -992,6 +992,7 @@ def target():
             
             lowest_price = 0
             upcDetails = upcDetailsTarget
+
             try:                
                 target_product_price = upcDetailsTarget["product_price"]
                 upc = upcDetailsTarget["upc"]
@@ -1004,8 +1005,15 @@ def target():
             if 'Not Found' in upcDetails["product_name"]:
                 print('Not found in Target')
                 target_product_price="0"
-                                
-
+            else:
+                sql_query = "SELECT original_discount, set_discount FROM discounts WHERE category_name=" + "'" + upcDetails["product__category"] + "'"
+                results = cur.execute(sql_query).fetchall()
+                if len(results):
+                    if results[0][1]:
+                        upcDetails['discount'] = results[0][1]
+                    else:
+                        upcDetails['discount'] = results[0][0]
+                
                 
             end = time.time()
             
@@ -1025,7 +1033,9 @@ def target():
                 if name in upcDetails["product_category"]:  
                     categoryFoundFlag = 1   
                     discountPercent = discount
-                       
+
+            discountPercent = upcDetails['discount']
+
             return render_template('target.html', 
                                    lowest_price = lowest_price,
                                    details=upcDetails, 
@@ -1052,6 +1062,52 @@ def target():
             product_category = upcDetails["product_category"]
             product_image = upcDetails["product_image"]
             disc= request.form['Discount']
+            sql_query = "UPDATE discounts SET set_discount=" + str(disc) + " WHERE category_name=" + "'" + upcDetails["product_category"] + "'"
+            cur.execute(sql_query)
+            conn.commit()
+            
+            
+            if not 'Not Found' in upcDetails["product_name"]:
+                table_name = "data" + \
+                    (datetime.datetime.today().strftime("%Y%m%d"))
+                sql_query = "CREATE TABLE IF NOT EXISTS " + table_name + \
+                    """ (
+                        id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
+                        upc TEXT NOT NULL,
+                        product_name TEXT NOT NULL,
+                        product_description TEXT,
+                        product_image TEXT,
+                        product_price REAL,
+                        product_category TEXT,
+                        disc REAL,
+                        stock INTEGER,
+                        employee TEXT
+                        );"""
+                cur.execute(sql_query)
+                conn.commit()
+                sql_query = "INSERT INTO " + table_name + \
+                    """ (
+                        upc,
+                        product_name,
+                        product_description,
+                        product_image,
+                        product_price,
+                        product_category,
+                        disc,
+                        stock,
+                        employee
+                        ) VALUES (""" + \
+                    "'" + upcDetails['upc'] + "', " + \
+                    "'" + upcDetails['product_name'] + "', " + \
+                    "'" + upcDetails['product_description'] + "', " + \
+                    "'" + upcDetails['product_image'] + "', " + \
+                    upcDetails['product_price'] + ", " + \
+                    "'" + upcDetails['product_category'] + ", " + \
+                    str(disc) + \
+                    str(stock) + ", " + \
+                    "'" + employee + "');"
+                cur.execute(sql_query)
+                conn.commit()
 
 
             writeAllDetailsInCSV(upc, product_name, product_description, product_image, product_price, disc, stock, employee)
