@@ -1,4 +1,6 @@
+from threading import main_thread
 from googleapiclient.discovery import build
+from pip import main
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -54,7 +56,7 @@ config_url = os.path.join(SITE_ROOT, "static/data", "config.json")
 #############
 
 
-async def scrap_upc_details(target_url):
+async def get_price_name(target_url):
     print("def get_price_name(target_url): " + target_url)
     product_name = 'Not Found'
     product_price = 'Not Found'
@@ -63,7 +65,9 @@ async def scrap_upc_details(target_url):
     product_upc = 'Not Found'
     product_imageurl = 'Not Found'
     
-    browser = await pyppeteer.launch()
+    browser = await pyppeteer.launch(handleSIGINT=False,
+                                     handleSIGTERM=False,
+                                     handleSIGHUP=False)
     page = await browser.newPage()
     await page.goto(target_url)
     content = await page.content()
@@ -149,7 +153,7 @@ async def scrap_all_products(target_url):
             "product_category": product_category
             }
     
-def get_price_name(target_url): 
+# def get_price_name(target_url): 
     # print("def get_price_name(target_url): " + target_url)
     # product_name = 'Not Found'
     # product_price = 'Not Found'
@@ -247,7 +251,7 @@ def get_price_name(target_url):
     # driver.quit()
     
     
-    return asyncio.run(scrap_upc_details(target_url))
+    # return asyncio.run(scrap_upc_details(target_url))
 
 def google_search(search_term, api_key, cse_id, **kwargs):
     service = build("customsearch", "v1", developerKey=api_key)
@@ -719,3 +723,7 @@ def scrape(url):
     #     return None
     # Pass the HTML of the page and create 
     # return e.extract(r.text)
+
+
+if __name__ == '__main__':
+    
