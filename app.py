@@ -21,10 +21,6 @@ import csv
 import time
 timestr = time.strftime("%Y%m%d")
 
-conn = sqlite3.connect('mydb.db')
-cur = conn.cursor()
-
-
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 json_url = os.path.join(SITE_ROOT, "static/data", "categories.json")
 config_url = os.path.join(SITE_ROOT, "static/data", "config.json")
@@ -33,6 +29,7 @@ data_url = os.path.join(SITE_ROOT, "static/data", "data.json")
 data_ig_url = os.path.join(SITE_ROOT, "static/data", "data_ig.json")
 
 upcDetails=""
+isAvailable = 1
 
 
 app = Flask(__name__)
@@ -41,10 +38,10 @@ app = Flask(__name__)
 @app.route('/add', methods = ['GET', 'POST'])
 def add_produtcs():
     if request.method == "POST":
-        try:
-            stock=request.form["Stock"]
-        except:
-            stock=0
+        # try:
+        #     stock=request.form["Stock"]
+        # except:
+        #     stock=0
         
         try:
             printlabels = int(request.form["printlabels"])
@@ -56,12 +53,12 @@ def add_produtcs():
         if request.form["btn"] == 'Print New Label':
             product_name = request.form["Name"]  
             product_price = '$'+request.form["Price"]  
-            description = request.form["Description"] 
+            # description = request.form["Description"] 
             #category = request.form["Category"] 
-            category = "Miscellaneous"
-            condition = request.form["Condition"]             
+            # category = "Miscellaneous"
+            # condition = request.form["Condition"]             
             upc = datetime.datetime.now().strftime('%Y%m%d%H%M')
-            stock = request.form["Stock"] 
+            # stock = request.form["Stock"] 
             imgpath = request.files["filename"].filename
             
             try:
@@ -70,22 +67,22 @@ def add_produtcs():
                 addFBListing = 'off'
                 
             if(addFBListing=='on'):
-                link_to_mp_post = uploadToMP(product_name, product_price, description, upc, category, condition, imgpath)
+                link_to_mp_post = uploadToMP(product_name, product_price, "", upc, "", "New", imgpath)
                 
 
-            add_to_square(product_name, upc, str(product_price) + "00", employee, stock)
+            add_to_square(product_name, upc, str(product_price) + "00", employee, 0)
             print('Posted to Square')
 
-            itemCounter = update_details(upc, product_name, product_price, stock, "0", employee, link_to_mp_post['link'], link_to_mp_post['imglink'], description)
+            itemCounter = update_details(upc, product_name, product_price, 0, "0", employee, link_to_mp_post['link'], link_to_mp_post['imglink'], "")
             print('Posted to Catalog')
 
             count = itemCounter["count"]
             zpl = printlabel(upc, product_name, product_price, "0")
             
             if "." in request.form["Price"]:
-                add_to_square(product_name, upc, request.form["Price"], employee, stock)
+                add_to_square(product_name, upc, request.form["Price"], employee, 0)
             else:
-                add_to_square(product_name, upc, request.form["Price"] + "00", employee, stock)
+                add_to_square(product_name, upc, request.form["Price"] + "00", employee, 0)
             
             imgname = open_acrobat_print(printlabels)
             
@@ -954,7 +951,26 @@ def upload_products_to_ig():
 
 @app.route('/', methods = ['GET', 'POST'])
 def target():
+    conn = sqlite3.connect('mydb.db')
+    cur = conn.cursor()
     
+    today_m = int(datetime.datetime.today().strftime("%m"))
+    sql_query = "SELECT close_date, open_date, upc, last_sold FROM products"
+    results = cur.execute(sql_query).fetchall()
+    for row in results:
+        if row[0]:
+            diff_m = (today_m + 12 - int(row[0].split('-')[1])) % 12
+            if diff_m > 6:
+                sql_query = "DELETE FROM products WHERE upc=" + "'" + row[2] + "'"
+                cur.execute(sql_query)
+                conn.commit()
+        if row[3]:
+            diff_m = (today_m + 12 - int(row[3].split('-')[1])) % 12
+            if diff_m > 3:
+                sql_query = "DELETE FROM products WHERE upc=" + "'" + row[2] + "'"
+                cur.execute(sql_query)
+                conn.commit()
+        
     global upcDetails
     
     if request.method == "POST":
@@ -997,28 +1013,33 @@ def target():
                 target_product_price = upcDetailsTarget["product_price"]
                 upc = upcDetailsTarget["upc"]
                 lowest_price = float(target_product_price)
-                upcDetails["lowest_price"] = lowest_price
             except:
                 target_product_price = 0
                 
+            upcDetails["lowest_price"] = lowest_price
+            categoryFoundFlag = 0
             
             if 'Not Found' in upcDetails["product_name"]:
                 print('Not found in Target')
                 target_product_price="0"
+                discountPercent = 0
+                upcDetails['discount'] = 0
             else:
+                sql_query = "SELECT is_available FROM products WHERE product_name=" + "'" + upcDetails['product_name'] + "'"
+                isAvailable = cur.execute(sql_query).fetchall()[0][0]
                 sql_query = "SELECT original_discount, set_discount FROM discounts WHERE category_name=" + "'" + upcDetails["product__category"] + "'"
                 results = cur.execute(sql_query).fetchall()
                 if len(results):
+                    categoryFoundFlag = 1
                     if results[0][1]:
                         upcDetails['discount'] = results[0][1]
                     else:
                         upcDetails['discount'] = results[0][0]
+                    discountPercent = upcDetails['discount']
                 
-                
-            end = time.time()
+            # end = time.time()
             
-            runtime = end - start
-            dur='%.2f' % runtime
+            # runtime = end - start
             
                            
             for filename in os.listdir('static/'):
@@ -1026,16 +1047,132 @@ def target():
                     imgname = filename
             
            
-            categories = json.load(open(json_url))    
-            categoryFoundFlag = 0
-            discountPercent = 0
-            for name, discount in categories.items():
-                if name in upcDetails["product_category"]:  
-                    categoryFoundFlag = 1   
-                    discountPercent = discount
+            # categories = json.load(open(json_url))  
+            # print(categories)  
+            # categoryFoundFlag = 0
+            # discountPercent = 0
+            # for name, discount in categories.items():
+            #     if name in upcDetails["product_category"]:  
+            #         categoryFoundFlag = 1   
+            #         discountPercent = discount
+            categories = {}
+            sql_query = "SELECT category_name, original_discount FROM discounts"
+            results = cur.execute(sql_query).fetchall()
+            for row in results:
+                categories[row[0]] = row[1]
 
-            discountPercent = upcDetails['discount']
 
+            # auto start
+            upc = upcDetails["upc"]
+            product_name = upcDetails["product_name"]
+            product_price = upcDetails["lowest_price"]
+            product_description = upcDetails["product_description"]
+            product_category = upcDetails["product_category"]
+            product_image = upcDetails["product_image"]
+            disc = upcDetails["discount"]
+            
+            if not 'Not Found' in upcDetails["product_name"]:
+                table_name = "data" + \
+                    (datetime.datetime.today().strftime("%Y%m%d"))
+                sql_query = "CREATE TABLE IF NOT EXISTS " + table_name + \
+                    """ (
+                        id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
+                        upc TEXT NOT NULL,
+                        product_name TEXT NOT NULL,
+                        product_description TEXT,
+                        product_image TEXT,
+                        product_price REAL,
+                        product_category TEXT,
+                        disc REAL,
+                        stock INTEGER,
+                        employee TEXT
+                        );"""
+                cur.execute(sql_query)
+                conn.commit()
+                sql_query = "INSERT INTO " + table_name + \
+                    """ (
+                        upc,
+                        product_name,
+                        product_description,
+                        product_image,
+                        product_price,
+                        product_category,
+                        disc,
+                        stock,
+                        employee
+                        ) VALUES (""" + \
+                    "'" + upcDetails['upc'] + "', " + \
+                    "'" + upcDetails['product_name'] + "', " + \
+                    "'" + upcDetails['product_description'] + "', " + \
+                    "'" + upcDetails['product_image'] + "', " + \
+                    upcDetails['product_price'] + ", " + \
+                    "'" + upcDetails['product_category'] + ", " + \
+                    str(disc) + ", " + \
+                    str(stock) + ", " + \
+                    "'" + employee + "');"
+                cur.execute(sql_query)
+                conn.commit()
+
+            # writeAllDetailsInCSV(upc, product_name, product_description,
+            #                      product_image, product_price, disc, stock, employee)
+
+                sql_query = "SELECT * FROM products WHERE product_name=" + "'" + upcDetails['product_name'] + "'"
+                results = cur.execute().fetchall()
+                if not len(results):
+                    sql_query = """INSERT INTO products (
+                        upc, name, description, image, price, disc, stock, employee, last_sold, last_price) 
+                        VALUES (""" + \
+                            "'" + upcDetails["upc"] + "', " + \
+                            "'" + upcDetails["product_name"] + "', " + \
+                            "'" + upcDetails['product_description'] + "', " + \
+                            "'" + upcDetails["product_image"] + "', " + \
+                            str(upcDetails["product_price"]) + ", " + \
+                            str(disc) + ", " + \
+                            str(stock) + ", " + \
+                            "'" + employee + "', " + \
+                            "'" + datetime.datetime.today().strftime("%Y%m%d%H%M%S") + "', " + \
+                            str(upcDetails['lowest_price']) + ");"
+                    cur.execute(sql_query)
+                    conn.commit()
+                else:
+                    sql_query = "UPDATE products SET " + \
+                        "disc=" + str(disc) + ", " + \
+                        "stock=" + str(stock) + ", " + \
+                        "employee=" + "'" + employee + "', " +  \
+                        "last_sold=" + "'" + datetime.datetime.today().strftime("%Y%m%d%H%M%S") + "', " + \
+                        "last_price=" + str(upcDetails['lowest_price']) + \
+                        " WHERE name=" + "'" + upcDetails['product_name'] + "'"
+                    cur.execute(sql_query)
+                    conn.commit()
+                
+                zpl = printlabel(upc, product_name, product_price, disc)
+
+                try:
+                    printlabels = int(request.form["printlabels"])
+                except:
+                    printlabels = 1
+
+                imgname = open_acrobat_print(printlabels)
+                
+                
+                sql_query = "SELECT * FROM " + table_name
+                results = cur.execute(sql_query).fetchall()
+                if len(results) >= 100:
+                    for row in results:
+                        link_to_mp_post = uploadToMP(row[2], row[5], row[3], row[1], row[6], "New", row[4])
+                        
+                        add_to_square(row[2], row[1], str(row[5]) + "00", row[9], row[8])
+                        print('Posted to Square ' + row[0])
+
+                # auto end
+                
+            # end time
+            end = time.time()
+            runtime = end - start
+            dur='%.2f' % runtime
+            
+            conn.close()
+            
             return render_template('target.html', 
                                    lowest_price = lowest_price,
                                    details=upcDetails, 
@@ -1062,12 +1199,12 @@ def target():
             product_category = upcDetails["product_category"]
             product_image = upcDetails["product_image"]
             disc= request.form['Discount']
-            sql_query = "UPDATE discounts SET set_discount=" + str(disc) + " WHERE category_name=" + "'" + upcDetails["product_category"] + "'"
-            cur.execute(sql_query)
-            conn.commit()
             
             
             if not 'Not Found' in upcDetails["product_name"]:
+                sql_query = "UPDATE discounts SET set_discount=" + str(disc) + " WHERE category_name=" + "'" + upcDetails["product_category"] + "'"
+                cur.execute(sql_query)
+                conn.commit()
                 table_name = "data" + \
                     (datetime.datetime.today().strftime("%Y%m%d"))
                 sql_query = "CREATE TABLE IF NOT EXISTS " + table_name + \
@@ -1108,8 +1245,8 @@ def target():
                     "'" + employee + "');"
                 cur.execute(sql_query)
                 conn.commit()
-
-
+            
+            
             writeAllDetailsInCSV(upc, product_name, product_description, product_image, product_price, disc, stock, employee)
 
             zpl = printlabel(upc, product_name, product_price, disc)
@@ -1122,7 +1259,15 @@ def target():
             
             imgname = open_acrobat_print(printlabels)
             
-            
+            sql_query = "UPDATE products SET " + \
+                        "disc=" + str(disc) + ", " + \
+                        "stock=" + str(stock) + ", " + \
+                        "employee=" + "'" + employee + "', " +  \
+                        "last_sold=" + "'" + datetime.datetime.today().strftime("%Y%m%d%H%M%S") + "', " + \
+                        "last_price=" + str(upcDetails['lowest_price']) + \
+                        " WHERE name=" + "'" + upcDetails['product_name'] + "'"
+            cur.execute(sql_query)
+            conn.commit()
             
             # end time
             end = time.time()
@@ -1130,13 +1275,37 @@ def target():
             runtime = end - start
             print('runtime')
             print(runtime)
-            categories = json.load(open(json_url))
+            
             categoryFoundFlag = 0
-            discountPercent = 0
-            for name, discount in categories.items():
-                if name in upcDetails["product_category"]:  
+
+            if 'Not Found' in upcDetails["product_name"]:
+                print('Not found in Target')
+                discountPercent = 0
+                upcDetails['discount'] = 0
+            else:
+                sql_query = "SELECT original_discount, set_discount FROM discounts WHERE category_name=" + \
+                    "'" + upcDetails["product__category"] + "'"
+                results = cur.execute(sql_query).fetchall()
+                if len(results):
                     categoryFoundFlag = 1
-                    discountPercent = discount
+                    if results[0][1]:
+                        upcDetails['discount'] = results[0][1]
+                    else:
+                        upcDetails['discount'] = results[0][0]
+                    discountPercent = upcDetails['discount']
+                    
+            categories = {}
+            sql_query = "SELECT category_name, original_discount FROM discounts"
+            results = cur.execute(sql_query).fetchall()
+            for row in results:
+                categories[row[0]] = row[1]
+            # categories = json.load(open(json_url))
+            # categoryFoundFlag = 0
+            # discountPercent = 0
+            # for name, discount in categories.items():
+            #     if name in upcDetails["product_category"]:  
+            #         categoryFoundFlag = 1
+            #         discountPercent = discount
                     
             default_details =   {"upc":upc,
                                     "product_name":product_name,

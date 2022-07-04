@@ -262,14 +262,14 @@
                                                     <label for="Price"  class="control-label ">Price <i>(in usd)</i></label>
                                                     <input type="number" min="0" name="Price" class="form-control" placeholder="Price" value="{{ request.form['Price'] }}" required>
                                                 </div>
-                                                <div class="col">
+                                                <div class="col" style="display: none">
                                                     <label for="Stock"  class="control-label">Stock</label>
                                                     <input type="number" min="1" name="Stock" class="form-control" placeholder="1" value="{{ request.form['Stock'] }}" required>
                                                 </div>
                                             </div>
                                             
-                                            <div class="form-row mb-4">		
-                                                <div class="col">
+                                            <div class="form-row mb-4" style="display: none">		
+                                                <div class="col" >
                                                     <!--label for="Description"  class="control-label ">Product Descripton</label-->
                                                     <textarea type="text" name="Description" cols="30" rows="5" class="form-control" placeholder="Product Description" value="{{ request.form['Description'] }}" ></textarea>
                                                 </div>
@@ -283,7 +283,7 @@
                                                 
                                             </div>
 
-                                            <div class="form-row mb-4">		                                                
+                                            <div class="form-row mb-4" style="display: none">		                                                
                                                 <div class="col">
                                                     <label for="Condition"  class="control-label ">Condition</label>
                                                     <select class="form-control" id="Condition" name="Condition">
