@@ -54,7 +54,7 @@ config_url = os.path.join(SITE_ROOT, "static/data", "config.json")
 #############
 
 
-async def main(target_url):
+async def scrap_upc_details(target_url):
     print("def get_price_name(target_url): " + target_url)
     product_name = 'Not Found'
     product_price = 'Not Found'
@@ -247,7 +247,7 @@ def get_price_name(target_url):
     # driver.quit()
     
     
-    return asyncio.run(main(target_url))
+    return asyncio.run(scrap_upc_details(target_url))
 
 def google_search(search_term, api_key, cse_id, **kwargs):
     service = build("customsearch", "v1", developerKey=api_key)

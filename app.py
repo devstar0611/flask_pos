@@ -954,22 +954,22 @@ def target():
     conn = sqlite3.connect('mydb.db')
     cur = conn.cursor()
     
-    today_m = int(datetime.datetime.today().strftime("%m"))
-    sql_query = "SELECT close_date, open_date, upc, last_sold FROM products"
-    results = cur.execute(sql_query).fetchall()
-    for row in results:
-        if row[0]:
-            diff_m = (today_m + 12 - int(row[0].split('-')[1])) % 12
-            if diff_m > 6:
-                sql_query = "DELETE FROM products WHERE upc=" + "'" + row[2] + "'"
-                cur.execute(sql_query)
-                conn.commit()
-        if row[3]:
-            diff_m = (today_m + 12 - int(row[3].split('-')[1])) % 12
-            if diff_m > 3:
-                sql_query = "DELETE FROM products WHERE upc=" + "'" + row[2] + "'"
-                cur.execute(sql_query)
-                conn.commit()
+    # today_m = int(datetime.datetime.today().strftime("%m"))
+    # sql_query = "SELECT close_date, open_date, upc, last_sold FROM products"
+    # results = cur.execute(sql_query).fetchall()
+    # for row in results:
+    #     if row[0]:
+    #         diff_m = (today_m + 12 - int(row[0].split('-')[1])) % 12
+    #         if diff_m > 6:
+    #             sql_query = "DELETE FROM products WHERE upc=" + "'" + row[2] + "'"
+    #             cur.execute(sql_query)
+    #             conn.commit()
+    #     if row[3]:
+    #         diff_m = (today_m + 12 - int(row[3].split('-')[1])) % 12
+    #         if diff_m > 3:
+    #             sql_query = "DELETE FROM products WHERE upc=" + "'" + row[2] + "'"
+    #             cur.execute(sql_query)
+    #             conn.commit()
         
     global upcDetails
     
@@ -1004,7 +1004,8 @@ def target():
             start = time.time()
             
             
-            upcDetailsTarget = get_price_name(link)
+            upcDetailsTarget = asyncio.run(get_price_name(link))
+            print(upcDetailsTarget)
             
             lowest_price = 0
             upcDetails = upcDetailsTarget
