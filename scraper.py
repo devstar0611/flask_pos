@@ -723,7 +723,3 @@ def scrape(url):
     #     return None
     # Pass the HTML of the page and create 
     # return e.extract(r.text)
-
-
-if __name__ == '__main__':
-    
