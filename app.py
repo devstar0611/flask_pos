@@ -1439,13 +1439,14 @@ def target():
 
 async def get_upc():
     browser = await pyppeteer.launch(headless=False,
-                                     executablePath="C:/Program Files/Google/Chrome/Application/chrome.exe",
+                                    #  executablePath="C:/Program Files/Google/Chrome/Application/chrome.exe",
                                      handleSIGINT=False,
                                      handleSIGTERM=False,
                                      handleSIGHUP=False)
-    endpoint = browser.wsEndpoint()
-    pyppeteer.connect(browserWSEndpoint=endpoint)
-    page = await browser.newPage()
+    # endpoint = browser.wsEndpoint()
+    # pyppeteer.connect(browserWSEndpoint=endpoint)
+    page = pyppeteer.connect(browserURL='http://127.0.0.1:9222')
+    # page = await browser.newPage()
     await page.goto("https://www.target.com")
     while True:
         try:
