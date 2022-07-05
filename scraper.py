@@ -120,8 +120,8 @@ async def get_target(upc_number):
         content = await page.content()
         soup = bs4.BeautifulSoup(content, features="lxml")
         url = soup.select('section a')
-    print(type(url[0]))
-    
+    print(url[0].get('href'))
+    url = url[0].get('href')
     return asyncio.run(get_price_name(url))
     
 async def get_price_name(target_url):
