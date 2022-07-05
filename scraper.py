@@ -122,7 +122,7 @@ async def get_target(upc_number):
         url = soup.select('section a')
     print(url[0].get('href'))
     url = url[0].get('href')
-    return asyncio.run(get_price_name(url))
+    return asyncio.run(get_price_name("https://www.target.com/" + url))
     
 async def get_price_name(target_url):
     print("def get_price_name(target_url): " + target_url)
