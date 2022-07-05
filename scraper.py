@@ -57,12 +57,6 @@ config_url = os.path.join(SITE_ROOT, "static/data", "config.json")
 #############
 async def get_target(upc_number):
     print("def get_price_name(target_url): " + upc_number)
-    product_name = 'Not Found'
-    product_price = 'Not Found'
-    product_description = 'Not Found'
-    product_category = 'Not Found'
-    product_upc = 'Not Found'
-    product_imageurl = 'Not Found'
     
     browser = await pyppeteer.launch(handleSIGINT=False,
                                      handleSIGTERM=False,
@@ -76,6 +70,7 @@ async def get_target(upc_number):
         content = await page.content()
         soup = bs4.BeautifulSoup(content, features="lxml")
         url = soup.select('section a')
+    print(url)
     url = url[1]['href']
     print(url)
     return asyncio.run(get_price_name(url))
