@@ -35,6 +35,9 @@ data_ig_url = os.path.join(SITE_ROOT, "static/data", "data_ig.json")
 upcDetails={}
 isAvailable = 1
 
+conn = sqlite3.connect('mydb.db')
+cur = conn.cursor()
+table_name = ""
 
 # today = datetime.datetime.today()
 # print(today)
@@ -850,6 +853,7 @@ def upload_products():
 
 
     counter = 0
+    sql_query = "SELECT * FROM " + table_name
 
     for row in data_array['upc_details']:        
 
@@ -968,12 +972,10 @@ def upload_products_to_ig():
 
     return
 
-
 @app.route('/', methods = ['GET', 'POST'])
 def target():
-    conn = sqlite3.connect('mydb.db')
-    cur = conn.cursor()
     
+    global table_name
     
     #####
     # today_m = int(datetime.datetime.today().strftime("%m"))
