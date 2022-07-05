@@ -71,7 +71,7 @@ async def get_target(upc_number):
         soup = bs4.BeautifulSoup(content, features="lxml")
         url = soup.select('section a')
     print(url)
-    url = url[1]['href']
+    url = url[0]['href']
     print(url)
     return asyncio.run(get_price_name(url))
     
