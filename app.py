@@ -1,6 +1,5 @@
 from msilib.schema import Error
 from flask import Flask, render_template, request, redirect
-from pymysql import NULL
 from soupsieve import select
 from werkzeug.datastructures import Range
 from sheets import update_details
