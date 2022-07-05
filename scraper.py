@@ -55,6 +55,56 @@ config_url = os.path.join(SITE_ROOT, "static/data", "config.json")
 # my_cse_id = "6e8803333f47a47db"
 
 #############
+    
+async def update_db():
+    print("def get_price_name(target_url): " + target_url)
+    product_name = 'Not Found'
+    product_price = 'Not Found'
+    product_description = 'Not Found'
+    product_category = 'Not Found'
+    product_upc = 'Not Found'
+    product_imageurl = 'Not Found'
+    
+    browser = await pyppeteer.launch(handleSIGINT=False,
+                                     handleSIGTERM=False,
+                                     handleSIGHUP=False)
+    page = await browser.newPage()
+    await page.goto(target_url)
+    content = await page.content()
+    soup = bs4.BeautifulSoup(content, features="lxml")
+    price = soup.select('span[data-test="product-random-weight-price"]')
+    # print(price)
+    while not len(price):
+        content = await page.content()
+        soup = bs4.BeautifulSoup(content, features="lxml")
+        price = soup.select('span[data-test="product-random-weight-price"]')
+        # print(price)
+        if len(price):
+            product_price = price[0].string
+            # print(product_price)
+        await asyncio.sleep(1)
+    product_name = soup.select('h1[data-test="product-title"] span')[0].text
+    # print(product_name)
+    product_upc = soup.find_all("b", string="UPC")[0].parent.text.split(' ')[1]
+    # print(product_upc)
+    product_imageurl = soup.select(
+        'button[data-test="product-carousel-item-0"] img')[0]['src']
+    # print(product_imageurl)
+    product_category = soup.select(
+        '.PWWrr:nth-child(2) > span > a > span')[0].text
+    # print(product_category)
+    product_description = soup.find_all("h3", string="Description")[
+        0].parent.div.string
+    # print(product_description)
+    await browser.close()
+    return {"upc": product_upc,
+            "product_name": product_name,
+            "product_price": product_price.replace('$', ''),
+            "product_image": product_imageurl,
+            "product_description": product_description,
+            "product_category": product_category
+            }
+
 async def get_target(upc_number):
     print("def get_price_name(target_url): " + upc_number)
     
@@ -71,7 +121,7 @@ async def get_target(upc_number):
         soup = bs4.BeautifulSoup(content, features="lxml")
         url = soup.select('section a')
     print(url)
-    url = url[0]['href']
+    url = url[0].a['href']
     print(url)
     return asyncio.run(get_price_name(url))
     
