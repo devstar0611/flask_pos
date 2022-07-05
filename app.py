@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, redirect
 from soupsieve import select
 from werkzeug.datastructures import Range
 from sheets import update_details
-from scraper import get_amazon_price_by_link, get_price_name, get_upc, get_walamart_price, get_amazon_price
+from scraper import get_amazon_price_by_link, get_price_name, get_walamart_price, get_amazon_price
 from squares import add_to_square
 from marketplace import uploadToMP, publish
 from printzpls import printlabel, open_acrobat_print
@@ -1456,12 +1456,22 @@ async def get_upc():
                 target()
                 upc = soup.select('input#select')[0]['value'] = ''
 
-        except Error as err:
-            print(err)
-            break
+        except Exception as err:
+            # print(err)
+            pass
+class myThread (threading.Thread):
+    def __init__(self, threadID, name, delayTime):
+        threading.Thread.__init__(self)
+        self.threadID = threadID
+        self.name = name
+        self.delayTime = delayTime
+
+    def run(self):
+        asyncio.run(get_upc())
 
 
 if __name__ == '__main__':
-    asyncio.run(get_upc())
+    th = myThread(0, 'Thread-1',  0.5)
+    th.start()
     app.run(debug=True)
     

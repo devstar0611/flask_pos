@@ -265,7 +265,11 @@
                                                 <div class="form-row mb-4">
                                                     <div class="col">
                                                         <label for="TargetLink"  class="control-label ">Target Link</label>
-                                                        <input type="text" name="TargetLink" class="form-control mb-4" rows="1" placeholder="link" value="{{ request.form['TargetLink'] }}"  autocomplete="off" required></textarea>
+                                                        {% if details["upc"] == "" %}
+                                                            <input type="text" name="TargetLink" class="form-control mb-4" rows="1" placeholder="link" value="{{ request.form['TargetLink'] }}"  autocomplete="off" required></textarea>
+                                                        {% else %}
+                                                            <input type="text" name="TargetLink" class="form-control mb-4" rows="1" placeholder="link" value="{{ request.form['TargetLink'] }}"  autocomplete="off" required>{{ details["upc"] }}</textarea>
+                                                        {% endif %}
                                                     </div>
                                             
                                                 </div>
