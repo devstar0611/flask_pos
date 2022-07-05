@@ -35,8 +35,7 @@ data_ig_url = os.path.join(SITE_ROOT, "static/data", "data_ig.json")
 upcDetails={}
 isAvailable = 1
 
-conn = sqlite3.connect('mydb.db')
-cur = conn.cursor()
+
 table_name = ""
 
 # today = datetime.datetime.today()
@@ -974,7 +973,8 @@ def upload_products_to_ig():
 
 @app.route('/', methods = ['GET', 'POST'])
 def target():
-    
+    conn = sqlite3.connect('mydb.db')
+    cur = conn.cursor()
     global table_name
     
     #####
@@ -1327,6 +1327,8 @@ def target():
                                     "product_price":product_price,
                                     "product_category": product_category,
                                 }
+            conn.close()
+            
             return render_template('target.html', 
                                    details=default_details, 
                                    duration=runtime, 
@@ -1353,6 +1355,8 @@ def target():
                        "product_category": "Select"
                     }
 
+            conn.close()
+
             return render_template('target.html', 
                                details=default_details,
                                duration=0,counter=0,
@@ -1376,6 +1380,8 @@ def target():
                        "product_category": "Select"
                     }
 
+            conn.close()
+
             return render_template('target.html', 
                                details=default_details,
                                duration=0,counter=0,
@@ -1387,6 +1393,7 @@ def target():
 
         else:
             print('Report bad parameter')
+            conn.close()
     else:
         try:
             upc = upcDetails["upc"]
@@ -1414,7 +1421,7 @@ def target():
             categoryFoundFlag = 1
             discountPercent = results[0][0]
                 
-        
+        conn.close()
         return render_template('target.html', 
                                details=default_details,
                                duration=0,
