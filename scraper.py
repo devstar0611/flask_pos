@@ -71,7 +71,12 @@ async def get_target(upc_number):
     await page.goto("https://www.target.com/s?searchTerm=" + upc_number)
     content = await page.content()
     soup = bs4.BeautifulSoup(content, features="lxml")
-    url = soup.select('section a')[0]['href']
+    url = soup.select('section a')
+    while not len(url):
+        content = await page.content()
+        soup = bs4.BeautifulSoup(content, features="lxml")
+        url = soup.select('section a')
+    url = url[1]['href']
     print(url)
     return asyncio.run(get_price_name(url))
     
