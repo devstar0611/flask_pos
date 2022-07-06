@@ -133,7 +133,7 @@ async def get_target(upc_number):
     else:
         url = soup.select('section a')[0].get('href')
         print("https://www.target.com" + url)
-        return asyncio.run(get_price_name("https://www.target.com" + url))
+        return get_price_name("https://www.target.com" + url)
     
 async def get_price_name(target_url):
     print("def get_price_name(target_url): " + target_url)
@@ -172,8 +172,7 @@ async def get_price_name(target_url):
     product_category = soup.select(
         '.PWWrr:nth-child(2) > span > a > span')[0].text
     # print(product_category)
-    product_description = soup.find_all("h3", string="Description")[
-        0].parent.div.string
+    product_description = soup.find_all("h3", string="Description")[0].parent.div.string
     # print(product_description)
     await browser.close()
     return {"upc": product_upc,
@@ -217,11 +216,9 @@ async def scrap_all_products(target_url):
     product_imageurl = soup.select(
         'button[data-test="product-carousel-item-0"] img')[0]['src']
     print(product_imageurl)
-    product_category = soup.select(
-        '.PWWrr:nth-child(2) > span > a > span')[0].text
+    product_category = soup.select('.PWWrr:nth-child(2) > span > a > span')[0].text
     print(product_category)
-    product_description = soup.find_all("h3", string="Description")[
-        0].parent.div.string
+    product_description = soup.find_all("h3", string="Description")[0].parent.div.string
     print(product_description)
     await browser.close()
     return {"upc": product_upc,
