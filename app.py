@@ -1098,33 +1098,22 @@ def target():
                 table_name = "data" + \
                     (datetime.datetime.today().strftime("%Y%m%d"))
                 sql_query = "CREATE TABLE IF NOT EXISTS " + table_name + \
-                    """ (
-                        id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
-                        upc TEXT NOT NULL,
-                        product_name TEXT NOT NULL,
-                        product_description TEXT,
-                        product_image TEXT,
-                        product_price REAL,
-                        product_category TEXT,
-                        disc REAL,
-                        stock INTEGER,
-                        employee TEXT
-                        );"""
+                    " ( id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " + \
+                        "upc TEXT NOT NULL," + \
+                        "product_name TEXT NOT NULL," + \
+                        "product_description TEXT," + \
+                        "product_image TEXT," + \
+                        "product_price REAL," + \
+                        "product_category TEXT," + \
+                        "disc REAL," + \
+                        "stock INTEGER," + \
+                        "employee TEXT);"
                 print(sql_query)
                 cur.execute(sql_query)
                 conn.commit()
                 sql_query = "INSERT INTO " + table_name + \
-                    """ (
-                        upc,
-                        product_name,
-                        product_description,
-                        product_image,
-                        product_price,
-                        product_category,
-                        disc,
-                        stock,
-                        employee
-                        ) VALUES (""" + \
+                    " upc, product_name, product_description, product_image, product_price, product_category, disc, stock, employee) " + \
+                    "VALUES (" + \
                     "'" + upcDetails['upc'] + "', " + \
                     "'" + upcDetails['product_name'] + "', " + \
                     "'" + upcDetails['product_description'] + "', " + \
@@ -1146,9 +1135,8 @@ def target():
                 results = cur.execute().fetchall()
                 print(results)
                 if not len(results):
-                    sql_query = """INSERT INTO products (
-                        upc, name, description, image, price, disc, stock, employee, last_sold, last_price) 
-                        VALUES (""" + \
+                    sql_query = "INSERT INTO products (upc, name, description, image, price, disc, stock, employee, last_sold, last_price) " + \
+                        " VALUES (" + \
                             "'" + upcDetails["upc"] + "', " + \
                             "'" + upcDetails["product_name"] + "', " + \
                             "'" + upcDetails['product_description'] + "', " + \
