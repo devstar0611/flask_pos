@@ -1055,6 +1055,7 @@ def target():
             else:
                 # sql_query = "SELECT is_available FROM products WHERE product_name=" + "'" + upcDetails['product_name'] + "'"
                 sql_query = "SELECT discount FROM discounts WHERE category_name=" + "'" + upcDetails["product__category"] + "'"
+                print(sql_query)
                 results = cur.execute(sql_query).fetchall()
                 if len(results):
                     categoryFoundFlag = 1
