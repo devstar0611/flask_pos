@@ -1032,7 +1032,7 @@ def target():
             
             target_url = asyncio.run(get_target(link))
             upcDetailsTarget = asyncio.run(get_price_name(target_url))
-            # print(upcDetailsTarget)
+            print(upcDetailsTarget)
             
             lowest_price = 0
             upcDetails = upcDetailsTarget

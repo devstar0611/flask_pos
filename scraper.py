@@ -106,7 +106,7 @@ async def update_db():
             }
 
 async def get_target(upc_number):
-    print("def get_price_name(target_url): " + upc_number)
+    print("def get_target(upc_number): " + upc_number)
     
     browser = await pyppeteer.launch(handleSIGINT=False,
                                      handleSIGTERM=False,
@@ -161,20 +161,18 @@ async def get_price_name(target_url):
         # print(price)
         if len(price):
             product_price = price[0].string
-            # print(product_price)
+            print(product_price)
         await asyncio.sleep(1)
     product_name = soup.select('h1[data-test="product-title"] span')[0].text
-    # print(product_name)
+    print(product_name)
     product_upc = soup.find_all("b", string="UPC")[0].parent.text.split(' ')[1]
-    # print(product_upc)
-    product_imageurl = soup.select(
-        'button[data-test="product-carousel-item-0"] img')[0]['src']
-    # print(product_imageurl)
-    product_category = soup.select(
-        '.PWWrr:nth-child(2) > span > a > span')[0].text
-    # print(product_category)
+    print(product_upc)
+    product_imageurl = soup.select('button[data-test="product-carousel-item-0"] img')[0]['src']
+    print(product_imageurl)
+    product_category = soup.select('.PWWrr:nth-child(2) > span > a > span')[0].text
+    print(product_category)
     product_description = soup.find_all("h3", string="Description")[0].parent.div.string
-    # print(product_description)
+    print(product_description)
     await browser.close()
     return {"upc": product_upc,
             "product_name": product_name,
