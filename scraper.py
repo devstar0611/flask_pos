@@ -115,14 +115,23 @@ async def get_target(upc_number):
     await page.goto("https://www.target.com/s?searchTerm=" + upc_number)
     content = await page.content()
     soup = bs4.BeautifulSoup(content, features="lxml")
-    url = soup.select('section a')
-    while not len(url):
+    results = soup.select('div[data-test="resultsHeading"]')
+    while not len(results):
         content = await page.content()
         soup = bs4.BeautifulSoup(content, features="lxml")
-        url = soup.select('section a')
-    print(url[0].get('href'))
-    url = url[0].get('href')
-    return asyncio.run(get_price_name("https://www.target.com/" + url))
+        results = soup.select('div[data-test="resultsHeading"]')
+    res_num = int(results[0].text.split(' ')[0])
+    if not res_num:
+        return {"upc": upc_number,
+                "product_name": 'Not Found',
+                "product_price": "Not Found",
+                "product_image": "Not Found",
+                "product_description": "Not Found",
+                "product_category": "Not Found"
+                }
+    else:
+        url = soup.select('section a')[0].get('href')
+        return asyncio.run(get_price_name("https://www.target.com" + url))
     
 async def get_price_name(target_url):
     print("def get_price_name(target_url): " + target_url)
