@@ -1040,17 +1040,18 @@ def target():
             try:                
                 target_product_price = upcDetailsTarget["product_price"]
                 upc = upcDetailsTarget["upc"]
+                lowest_price = float(target_product_price)
             except:
                 target_product_price = 0
+                lowest_price = 0
                 
-            lowest_price = float(target_product_price)
             upcDetails["lowest_price"] = lowest_price
             categoryFoundFlag = 0
             discountPercent = 0
             
             if 'Not Found' in upcDetails["product_name"]:
                 print('Not found in Target')
-                target_product_price="0"
+                target_product_price=0
                 discountPercent = 0
                 upcDetails['discount'] = 0
             else:
@@ -1200,7 +1201,7 @@ def target():
                                    counter=0,  
                                    zpl="", 
                                    label=imgname, 
-                                   target=target_product_price, 
+                                   target=str(target_product_price), 
                                    walmart=walmart_price, 
                                    amazon=amazon_price,
                                    categories=categories,
