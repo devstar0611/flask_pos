@@ -115,11 +115,11 @@ async def get_target(upc_number):
     await page.goto("https://www.target.com/s?searchTerm=" + upc_number)
     content = await page.content()
     soup = bs4.BeautifulSoup(content, features="lxml")
-    results = soup.select('div[data-test="resultsHeading"]')
+    results = soup.select('h2[data-test="resultsHeading"]')
     while not len(results):
         content = await page.content()
         soup = bs4.BeautifulSoup(content, features="lxml")
-        results = soup.select('div[data-test="resultsHeading"]')
+        results = soup.select('h2[data-test="resultsHeading"]')
     res_num = int(results[0].text.split(' ')[0])
     if not res_num:
         return {"upc": upc_number,
