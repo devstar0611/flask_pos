@@ -1040,11 +1040,11 @@ def target():
             try:                
                 target_product_price = upcDetailsTarget["product_price"]
                 upc = upcDetailsTarget["upc"]
-                lowest_price = float(target_product_price)
-                upcDetails["lowest_price"] = lowest_price
             except:
                 target_product_price = 0
                 
+            lowest_price = float(target_product_price)
+            upcDetails["lowest_price"] = lowest_price
             categoryFoundFlag = 0
             discountPercent = 0
             
