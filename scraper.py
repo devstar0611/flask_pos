@@ -121,19 +121,13 @@ async def get_target(upc_number):
         soup = bs4.BeautifulSoup(content, features="lxml")
         results = soup.select('h2[data-test="resultsHeading"]')
     res_num = int(results[0].text.split(' ')[0])
-    print(res_num)
+    # print(res_num)
     if not res_num:
-        return {"upc": upc_number,
-                "product_name": 'Not Found',
-                "product_price": "Not Found",
-                "product_image": "Not Found",
-                "product_description": "Not Found",
-                "product_category": "Not Found"
-                }
+        url = ""
     else:
         url = soup.select('section a')[0].get('href')
-        print("https://www.target.com" + url)
-        return get_price_name("https://www.target.com" + url)
+    return url
+        
     
 async def get_price_name(target_url):
     print("def get_price_name(target_url): " + target_url)
@@ -143,7 +137,14 @@ async def get_price_name(target_url):
     product_category = 'Not Found'
     product_upc = 'Not Found'
     product_imageurl = 'Not Found'
-    
+    if not target_url:
+        return {"upc": product_upc,
+                "product_name": product_name,
+                "product_price": product_price.replace('$', ''),
+                "product_image": product_imageurl,
+                "product_description": product_description,
+                "product_category": product_category
+                }
     browser = await pyppeteer.launch(handleSIGINT=False,
                                      handleSIGTERM=False,
                                      handleSIGHUP=False)
