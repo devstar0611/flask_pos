@@ -146,16 +146,16 @@ async def get_target(upc_number):
     soup = bs4.BeautifulSoup(content, features="lxml")
     # price = soup.select('span[data-test="product-random-weight-price"]')
     price = soup.select('span[data-test="product-price"]')
-    # print(price)
+    print(price)
     while not len(price):
         content = await page.content()
         soup = bs4.BeautifulSoup(content, features="lxml")
         price = soup.select('span[data-test="product-price"]')
-        # print(price)
+        print(price)
         if len(price):
             product_price = price[0].string
             print(product_price)
-        await asyncio.sleep(1)
+        # await asyncio.sleep(1)
     product_name = soup.select('h1[data-test="product-title"] span')[0].text
     print(product_name)
     product_upc = soup.find_all("b", string="UPC")[0].parent.text.split(' ')[1]
