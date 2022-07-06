@@ -109,7 +109,7 @@ async def get_target(upc_number):
     product_price = 'Not Found'
     product_description = 'Not Found'
     product_category = 'Not Found'
-    product_upc = 'Not Found'
+    product_upc = upc_number
     product_imageurl = 'Not Found'
     browser = await pyppeteer.launch(
                                      headless = False,
@@ -158,13 +158,13 @@ async def get_target(upc_number):
         # await asyncio.sleep(1)
     product_name = soup.select('h1[data-test="product-title"] span')[0].text
     print(product_name)
-    product_upc = soup.find_all("b", string="UPC")[0].parent.text.split(' ')[1]
-    print(product_upc)
+    # product_upc = soup.find_all("b", string="UPC")[0].parent.text.split(' ')[1]
+    # print(product_upc)
     product_imageurl = soup.select('button[data-test="product-carousel-item-0"] img')[0]['src']
     print(product_imageurl)
     product_category = soup.select('.PWWrr:nth-child(2) > span > a > span')[0].text
     print(product_category)
-    product_description = soup.find_all("h3", string="Description")[0].parent.div.string
+    product_description = soup.find_all("h3", string="Description")[0].parent.div.text
     print(product_description)
     await browser.close()
     return {"upc": product_upc,
