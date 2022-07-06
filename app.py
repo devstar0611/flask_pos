@@ -1112,18 +1112,7 @@ def target():
                 print(sql_query)
                 cur.execute(sql_query)
                 conn.commit()
-                sql_query = "INSERT INTO " + table_name + \
-                    " upc, product_name, product_description, product_image, product_price, product_category, disc, stock, employee) " + \
-                    "VALUES (" + \
-                    "'" + upcDetails['upc'] + "', " + \
-                    "'" + upcDetails['product_name'] + "', " + \
-                    "'" + upcDetails['product_description'] + "', " + \
-                    "'" + upcDetails['product_image'] + "', " + \
-                    upcDetails['product_price'] + ", " + \
-                    "'" + upcDetails['product_category'] + ", " + \
-                    str(disc) + ", " + \
-                    str(stock) + ", " + \
-                    "'" + employee + "');"
+                
                 print(sql_query)
                 cur.execute(sql_query)
                 conn.commit()
