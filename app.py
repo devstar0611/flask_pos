@@ -1054,9 +1054,10 @@ def target():
                 upcDetails['discount'] = 0
             else:
                 # sql_query = "SELECT is_available FROM products WHERE product_name=" + "'" + upcDetails['product_name'] + "'"
-                sql_query = "SELECT discount FROM discounts WHERE category_name=" + "'" + upcDetails["product__category"] + "'"
+                sql_query = "SELECT discount FROM discounts WHERE category_name=" + "'" + upcDetails["product_category"] + "'"
                 print(sql_query)
                 results = cur.execute(sql_query).fetchall()
+                print(results)
                 if len(results):
                     categoryFoundFlag = 1
                     discountPercent = upcDetails['discount']
@@ -1076,7 +1077,9 @@ def target():
             #         discountPercent = discount
             categories = {}
             sql_query = "SELECT category_name, discount FROM discounts"
+            print(sql_query)
             results = cur.execute(sql_query).fetchall()
+            print(results)
             for row in results:
                 categories[row[0]] = row[1]
 
@@ -1106,6 +1109,7 @@ def target():
                         stock INTEGER,
                         employee TEXT
                         );"""
+                print(sql_query)
                 cur.execute(sql_query)
                 conn.commit()
                 sql_query = "INSERT INTO " + table_name + \
@@ -1129,6 +1133,7 @@ def target():
                     str(disc) + ", " + \
                     str(stock) + ", " + \
                     "'" + employee + "');"
+                print(sql_query)
                 cur.execute(sql_query)
                 conn.commit()
 
@@ -1136,7 +1141,9 @@ def target():
             #                      product_image, product_price, disc, stock, employee)
 
                 sql_query = "SELECT * FROM products WHERE product_name=" + "'" + upcDetails['product_name'] + "'"
+                print(sql_query)
                 results = cur.execute().fetchall()
+                print(results)
                 if not len(results):
                     sql_query = """INSERT INTO products (
                         upc, name, description, image, price, disc, stock, employee, last_sold, last_price) 
@@ -1151,6 +1158,7 @@ def target():
                             "'" + employee + "', " + \
                             "'" + datetime.datetime.today().strftime("%Y%m%d%H%M%S") + "', " + \
                             str(upcDetails['lowest_price']) + ");"
+                    print(sql_query)
                     cur.execute(sql_query)
                     conn.commit()
                 else:
@@ -1161,6 +1169,7 @@ def target():
                         "last_sold=" + "'" + datetime.datetime.today().strftime("%Y%m%d%H%M%S") + "', " + \
                         "last_price=" + str(upcDetails['lowest_price']) + \
                         " WHERE name=" + "'" + upcDetails['product_name'] + "'"
+                    print(sql_query)
                     cur.execute(sql_query)
                     conn.commit()
                 
@@ -1175,7 +1184,9 @@ def target():
                 
                 
                 sql_query = "SELECT * FROM " + table_name
+                print(sql_query)
                 results = cur.execute(sql_query).fetchall()
+                print(results)
                 if len(results) % 101 == 100:
                     sql_query = "SELECT * FROM " + table_name + " WHERE id BETWEEN " + str((len(results) / 101) % 101) + " and " + str(len(results))
                     results = cur.execute(sql_query).fetchall()
