@@ -1120,7 +1120,7 @@ def target():
             # writeAllDetailsInCSV(upc, product_name, product_description,
             #                      product_image, product_price, disc, stock, employee)
 
-                sql_query = "SELECT * FROM products WHERE product_name=" + "'" + upcDetails['product_name'] + "'"
+                sql_query = "SELECT * FROM products WHERE name=" + "'" + upcDetails['product_name'] + "'"
                 print(sql_query)
                 results = cur.execute(sql_query).fetchall()
                 print(results)
