@@ -113,6 +113,7 @@ async def get_target(upc_number):
     product_imageurl = 'Not Found'
     browser = await pyppeteer.launch(
                                      headless = False,
+                                     executablePath="C:/Program Files/Google/Chrome/Application/chrome.exe",
                                      handleSIGINT=False,
                                      handleSIGTERM=False,
                                      handleSIGHUP=False)
