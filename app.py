@@ -1,4 +1,5 @@
 from msilib.schema import Error
+from unittest import result
 from flask import Flask, render_template, request, redirect
 from soupsieve import select
 from werkzeug.datastructures import Range
@@ -1060,7 +1061,7 @@ def target():
                 print(results)
                 if len(results):
                     categoryFoundFlag = 1
-                    discountPercent = upcDetails['discount']
+                    discountPercent = upcDetails['discount'] = results[0][0]
                 
             for filename in os.listdir('static/'):
                 if filename.startswith('label'):  # not to remove other images
