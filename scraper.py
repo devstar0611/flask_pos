@@ -1,7 +1,4 @@
-from threading import main_thread
 from googleapiclient.discovery import build
-from pip import main
-from pymysql import NULL
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -129,7 +126,7 @@ async def get_target(upc_number):
     res_num = int(results[0].text.split(' ')[0])
     # print(res_num)
     if not res_num:
-        target_url = NULL
+        target_url = ""
     else:
         target_url = "https://www.target.com" + soup.select('section a')[0].get('href')
     if not target_url:
