@@ -1042,18 +1042,18 @@ def target():
                 upc = upcDetailsTarget["upc"]
                 lowest_price = float(target_product_price)
             except:
-                target_product_price = 0
+                target_product_price = "0"
                 lowest_price = 0
                 
-            upcDetails["lowest_price"] = lowest_price
+            upcDetails["lowest_price"] = str(lowest_price)
             categoryFoundFlag = 0
             discountPercent = 0
             
             if 'Not Found' in upcDetails["product_name"]:
                 print('Not found in Target')
-                target_product_price=0
+                target_product_price="0"
                 discountPercent = 0
-                upcDetails['discount'] = 0
+                upcDetails['discount'] = "0"
             else:
                 # sql_query = "SELECT is_available FROM products WHERE product_name=" + "'" + upcDetails['product_name'] + "'"
                 sql_query = "SELECT discount FROM discounts WHERE category_name=" + "'" + upcDetails["product_category"] + "'"
@@ -1062,7 +1062,8 @@ def target():
                 print(results)
                 if len(results):
                     categoryFoundFlag = 1
-                    discountPercent = upcDetails['discount'] = results[0][0]
+                    discountPercent = results[0][0]
+                    upcDetails['discount'] = str(discountPercent)
                 
             for filename in os.listdir('static/'):
                 if filename.startswith('label'):  # not to remove other images
@@ -1190,7 +1191,7 @@ def target():
                                    counter=0,  
                                    zpl="", 
                                    label=imgname, 
-                                   target=str(target_product_price), 
+                                   target=target_product_price,
                                    walmart=walmart_price, 
                                    amazon=amazon_price,
                                    categories=categories,

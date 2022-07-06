@@ -153,7 +153,7 @@ async def get_target(upc_number):
         price = soup.select('span[data-test="product-price"]')
         print(price)
         if len(price):
-            product_price = price[0].string
+            product_price = price[0].text
             print(product_price)
         # await asyncio.sleep(1)
     product_name = soup.select('h1[data-test="product-title"] span')[0].text
