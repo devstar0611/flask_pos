@@ -1101,8 +1101,8 @@ def target():
                     (datetime.datetime.today().strftime("%Y%m%d"))
                 sql_query = "CREATE TABLE IF NOT EXISTS " + table_name + \
                     " ( id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " + \
-                        "upc TEXT NOT NULL," + \
-                        "name TEXT NOT NULL," + \
+                        "upc TEXT," + \
+                        "name TEXT," + \
                         "description TEXT," + \
                         "image TEXT," + \
                         "price REAL," + \
@@ -1113,7 +1113,16 @@ def target():
                 print(sql_query)
                 cur.execute(sql_query)
                 conn.commit()
-                
+                sql_query = "INSERT INTO " + table_name + " (upc, name, description, image, price, category, disc, stock, employee) VALUES (" + \
+                            "'" + upcDetails["upc"] + "', " + \
+                            '"' + upcDetails["product_name"] + '", ' + \
+                            '"' + upcDetails['product_description'] + '", ' + \
+                            "'" + upcDetails["product_image"] + "', " + \
+                            str(upcDetails["lowest_price"]) + ", " + \
+                            "'" + upcDetails["product_category"] + "', " + \
+                            str(disc) + ", " + \
+                            str(stock) + ", " + \
+                            "'" + employee + "');"
                 print(sql_query)
                 cur.execute(sql_query)
                 conn.commit()
