@@ -1126,7 +1126,7 @@ def target():
                 print(results)
                 if not len(results):
                     sql_query = "INSERT INTO products (upc, name, description, image, price, disc, stock, employee, last_sold, last_price) " + \
-                        " VALUES (" + \
+                            " VALUES (" + \
                             "'" + upcDetails["upc"] + "', " + \
                             "'" + upcDetails["product_name"] + "', " + \
                             "'" + upcDetails['product_description'] + "', " + \
