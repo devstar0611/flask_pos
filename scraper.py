@@ -125,7 +125,7 @@ async def get_target(upc_number):
     if not res_num:
         url = ""
     else:
-        url = soup.select('section a')[0].get('href')
+        url = "https://www.target.com" + soup.select('section a')[0].get('href')
     return url
         
     
