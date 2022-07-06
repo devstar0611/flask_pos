@@ -1029,23 +1029,21 @@ def target():
             # starting time
             start = time.time()
             
-            
-            target_url = asyncio.run(get_target(link))
-            upcDetailsTarget = asyncio.run(get_price_name(target_url))
+            upcDetailsTarget = asyncio.run(get_target(link))
+            # upcDetailsTarget = asyncio.run(get_price_name(target_url))
             print(upcDetailsTarget)
             
             lowest_price = 0
             upcDetails = upcDetailsTarget
-            print(upcDetails)
 
             try:                
                 target_product_price = upcDetailsTarget["product_price"]
                 upc = upcDetailsTarget["upc"]
                 lowest_price = float(target_product_price)
+                upcDetails["lowest_price"] = lowest_price
             except:
                 target_product_price = 0
                 
-            upcDetails["lowest_price"] = lowest_price
             categoryFoundFlag = 0
             discountPercent = 0
             
