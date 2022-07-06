@@ -1108,9 +1108,7 @@ def target():
                         "category TEXT," + \
                         "disc REAL," + \
                         "stock INTEGER," + \
-                        "employee TEXT," + \
-                        "last_sold TEXT," + \
-                        "last_price REAL);"
+                        "employee TEXT);"
                 print(sql_query)
                 cur.execute(sql_query)
                 conn.commit()
