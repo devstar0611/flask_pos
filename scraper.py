@@ -111,7 +111,9 @@ async def get_target(upc_number):
     product_category = 'Not Found'
     product_upc = 'Not Found'
     product_imageurl = 'Not Found'
-    browser = await pyppeteer.launch(handleSIGINT=False,
+    browser = await pyppeteer.launch(
+                                     headless = False,
+                                     handleSIGINT=False,
                                      handleSIGTERM=False,
                                      handleSIGHUP=False)
     page = await browser.newPage()
@@ -137,6 +139,7 @@ async def get_target(upc_number):
                 "product_description": product_description,
                 "product_category": product_category
                 }
+    print(target_url)
     await page.goto(target_url)
     content = await page.content()
     soup = bs4.BeautifulSoup(content, features="lxml")
