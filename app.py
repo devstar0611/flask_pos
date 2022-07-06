@@ -1122,7 +1122,7 @@ def target():
 
                 sql_query = "SELECT * FROM products WHERE product_name=" + "'" + upcDetails['product_name'] + "'"
                 print(sql_query)
-                results = cur.execute().fetchall()
+                results = cur.execute(sql_query).fetchall()
                 print(results)
                 if not len(results):
                     sql_query = "INSERT INTO products (upc, name, description, image, price, disc, stock, employee, last_sold, last_price) " + \
