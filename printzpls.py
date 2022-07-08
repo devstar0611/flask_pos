@@ -25,6 +25,7 @@ def open_acrobat_print(count):
                 imgname = filename
                 break    
         
+        # os.startfile("static\\test_pdf_label.pdf", "print")
         os.startfile("static\\test_pdf_label.pdf", "print")
         time.sleep(1)
 

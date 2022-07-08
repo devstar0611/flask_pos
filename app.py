@@ -1,10 +1,9 @@
-from msilib.schema import Error
-from unittest import result
-from flask import Flask, render_template, request, redirect
+from dis import dis
+from flask import Flask, flash, render_template, request, redirect, url_for
 from soupsieve import select
 from werkzeug.datastructures import Range
 from sheets import update_details
-from scraper import get_amazon_price_by_link, get_price_name, get_target, get_walamart_price, get_amazon_price
+from scraper import get_amazon_price_by_link, get_price_name, get_target, get_walamart_price, get_amazon_price, update_db
 from squares import add_to_square
 from marketplace import uploadToMP, publish
 from printzpls import printlabel, open_acrobat_print
@@ -39,22 +38,53 @@ isAvailable = 1
 
 table_name = ""
 
-# today = datetime.datetime.today()
-# print(today)
-# ## get all data from target.com every monday
-# if today.weekday() == 0:
-#     conn = sqlite3.connect('mydb.db')
-#     cur = conn.cursor()
-#     sql_query = "SELECT * FROM history WHERE id=(SELECT MAX(id) FROM history)"
-#     results = cur.execute(sql_query).fetchall()
-#     if len(results):
-#         last_scrapped_date = results[0][1]
-#     else:
-#         last_scrapped_date = '0000-00-00'
-#     diff_d = int(today.strftime("%Y-%m-%d").split('-')[2]) - int(last_scrapped_date.split('-')[2] + 30) % 30
-#     if diff_d >= 7:
-#         update_products_list()
-        
+today = datetime.datetime.today()
+print(today)
+
+def testing():
+    today = datetime.datetime.today()
+    print(today)
+    # Testing weekly
+    if today.weekday() == 0:
+        print("updating database....")
+        conn = sqlite3.connect('mydb.db')
+        cur = conn.cursor()
+        # start - updating database
+        sql_query = "SELECT * FROM history WHERE id=(SELECT MAX(id) FROM history)"
+        results = cur.execute(sql_query).fetchall()
+        if len(results):
+            last_scrapped_date = results[0][1]
+        else:
+            last_scrapped_date = '0000-00-00'
+        diff_d = int(today.strftime("%Y-%m-%d").split('-')[2]) - int(last_scrapped_date.split('-')[2] + 30) % 30
+        if diff_d >= 7:
+            asyncio.run(update_db())
+            sql_query = "INSERT INTO history (date) VALUES (" + today.strftime("%Y-%m-%d") + ")"
+        # end - updating database
+        # start - testing product is available
+        today_m = int(datetime.datetime.today().strftime("%m"))
+        sql_query = "SELECT upc, open_date, update_date, close_date, is_available, last_sold, last_date FROM products"
+        results = cur.execute(sql_query).fetchall()
+        for row in results:
+            if not row[4]:
+                # deleting unavailable product from database
+                diff_m = (today_m + 12 - int(row[3].split('-')[1])) % 12
+                if diff_m > 6:
+                    sql_query = "DELETE FROM products WHERE upc=" + "'" + row[0] + "'"
+                    cur.execute(sql_query)
+                    conn.commit()
+            if row[6]:
+                # not sold in 3 months product
+                diff_m = (today_m + 12 - int(row[3].split('-')[1])) % 12
+                if diff_m > 3:
+                    sql_query = "DELETE FROM products WHERE upc=" + "'" + row[0] + "'"
+                    cur.execute(sql_query)
+                    conn.commit()
+
+        # end - testing product is available
+        conn.close()
+
+    # end - testing
 
 app = Flask(__name__)
 
@@ -852,8 +882,8 @@ def upload_products():
     InstaPrice = int(config['InstaPrice'])
 
 
-    counter = 0
-    sql_query = "SELECT * FROM " + table_name
+    # counter = 0
+    # sql_query = "SELECT * FROM " + table_name
 
     for row in data_array['upc_details']:        
 
@@ -977,27 +1007,36 @@ def target():
     conn = sqlite3.connect('mydb.db')
     cur = conn.cursor()
     global table_name
-    
-    #####
-    # today_m = int(datetime.datetime.today().strftime("%m"))
-    # sql_query = "SELECT close_date, open_date, upc, last_sold FROM products"
-    # results = cur.execute(sql_query).fetchall()
-    # for row in results:
-    #     if row[0]:
-    #         diff_m = (today_m + 12 - int(row[0].split('-')[1])) % 12
-    #         if diff_m > 6:
-    #             sql_query = "DELETE FROM products WHERE upc=" + "'" + row[2] + "'"
-    #             cur.execute(sql_query)
-    #             conn.commit()
-    #     if row[3]:
-    #         diff_m = (today_m + 12 - int(row[3].split('-')[1])) % 12
-    #         if diff_m > 3:
-    #             sql_query = "DELETE FROM products WHERE upc=" + "'" + row[2] + "'"
-    #             cur.execute(sql_query)
-    #             conn.commit()
-                
-    #####
-        
+    table_name = "data" + \
+                    (datetime.datetime.today().strftime("%Y%m%d"))
+    sql_query = "CREATE TABLE IF NOT EXISTS " + table_name + "_scaned" + \
+                    " ( id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " + \
+                        "upc TEXT," + \
+                        "name TEXT," + \
+                        "description TEXT," + \
+                        "image TEXT," + \
+                        "price REAL," + \
+                        "category TEXT," + \
+                        "disc REAL," + \
+                        "stock INTEGER," + \
+                        "employee TEXT);"
+    print(sql_query)
+    cur.execute(sql_query)
+    conn.commit()    
+    sql_query = "CREATE TABLE IF NOT EXISTS " + table_name + "_printed" + \
+                    " ( id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " + \
+                        "upc TEXT," + \
+                        "name TEXT," + \
+                        "description TEXT," + \
+                        "image TEXT," + \
+                        "price REAL," + \
+                        "category TEXT," + \
+                        "disc REAL," + \
+                        "stock INTEGER," + \
+                        "employee TEXT);"
+    print(sql_query)
+    cur.execute(sql_query)
+    conn.commit()    
     global upcDetails
     
     if request.method == "POST":
@@ -1030,8 +1069,51 @@ def target():
             # starting time
             start = time.time()
             
-            upcDetailsTarget = asyncio.run(get_target(link))
+            product_name = 'Not Found'
+            product_price = 'Not Found'
+            product_description = 'Not Found'
+            product_category = 'Not Found'
+            product_upc = link
+            product_image = 'Not Found'
+            product_is_available = 1
+            
+            # upcDetailsTarget = asyncio.run(get_target(link))
             # upcDetailsTarget = asyncio.run(get_price_name(target_url))
+            sql_query = "SELECT * FROM products WHERE upc=" + "'" + link + "'"
+            results = cur.execute(sql_query).fetchall()
+            if len(results):
+                product_url = results[0][1]
+                # product_upc = results[0][2]
+                product_name = results[0][3]
+                product_description = results[0][4]
+                product_image = results[0][5]
+                product_category = results[0][6]
+                product_price = results[0][7]
+                product_disc = results[0][8]
+                product_stock = results[0][9]
+                product_employee = results[0][10]
+                product_open = results[0][11]
+                product_update = results[0][12]
+                product_close = results[0][13]
+                product_is_available = results[0][14]
+                product_last_sold = results[0][15]
+                product_last_price = results[0][16]
+                if not product_is_available:
+                    product_name = product_price = 'Not Found'
+            else:
+                product_name = 'Not Found'
+                product_price = 'Not Found'
+            
+            upcDetailsTarget = {
+                "product_name": product_name,
+                "product_price": product_price,
+                "product_description": product_description,
+                "product_category": product_category,
+                "upc": link,
+                "product_image": product_image,
+                "is_available": product_is_available
+            }
+            
             print(upcDetailsTarget)
             
             lowest_price = 0
@@ -1063,7 +1145,11 @@ def target():
                 if len(results):
                     categoryFoundFlag = 1
                     discountPercent = results[0][0]
-                    upcDetails['discount'] = str(discountPercent)
+                    if not product_disc:
+                        upcDetails['discount'] = str(discountPercent)
+                    else:
+                        discountPercent = product_disc
+                        upcDetails['discount'] = str(discountPercent)
                 
             for filename in os.listdir('static/'):
                 if filename.startswith('label'):  # not to remove other images
@@ -1095,25 +1181,17 @@ def target():
             product_category = upcDetails["product_category"]
             product_image = upcDetails["product_image"]
             disc = upcDetails["discount"]
+            try:
+               stock = product_stock
+            except:
+                pass
+            try:
+                employee = product_employee
+            except:
+                pass
             
             if not 'Not Found' in upcDetails["product_name"]:
-                table_name = "data" + \
-                    (datetime.datetime.today().strftime("%Y%m%d"))
-                sql_query = "CREATE TABLE IF NOT EXISTS " + table_name + \
-                    " ( id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " + \
-                        "upc TEXT," + \
-                        "name TEXT," + \
-                        "description TEXT," + \
-                        "image TEXT," + \
-                        "price REAL," + \
-                        "category TEXT," + \
-                        "disc REAL," + \
-                        "stock INTEGER," + \
-                        "employee TEXT);"
-                print(sql_query)
-                cur.execute(sql_query)
-                conn.commit()
-                sql_query = "INSERT INTO " + table_name + " (upc, name, description, image, price, category, disc, stock, employee) VALUES (" + \
+                sql_query = "INSERT INTO " + table_name + "_scaned" + " (upc, name, description, image, price, category, disc, stock, employee) VALUES (" + \
                             "'" + upcDetails["upc"] + "', " + \
                             '"' + upcDetails["product_name"] + '", ' + \
                             '"' + upcDetails['product_description'] + '", ' + \
@@ -1130,61 +1208,7 @@ def target():
             # writeAllDetailsInCSV(upc, product_name, product_description,
             #                      product_image, product_price, disc, stock, employee)
 
-                sql_query = "SELECT * FROM products WHERE name=" + "'" + upcDetails['product_name'] + "'"
-                print(sql_query)
-                results = cur.execute(sql_query).fetchall()
-                print(results)
-                if not len(results):
-                    sql_query = "INSERT INTO products " + " (upc, name, description, image, price, category, disc, stock, employee, last_sold, last_price) VALUES (" + \
-                            "'" + upcDetails["upc"] + "', " + \
-                            '"' + upcDetails["product_name"] + '", ' + \
-                            '"' + upcDetails['product_description'] + '", ' + \
-                            "'" + upcDetails["product_image"] + "', " + \
-                            str(upcDetails["product_price"]) + ", " + \
-                            "'" + upcDetails["product_category"] + "', " + \
-                            str(disc) + ", " + \
-                            str(stock) + ", " + \
-                            "'" + employee + "', " + \
-                            "'" + datetime.datetime.today().strftime("%Y%m%d%H%M%S") + "', " + \
-                            str(upcDetails['lowest_price']) + ");"
-                    print(sql_query)
-                    cur.execute(sql_query)
-                    conn.commit()
-                else:
-                    sql_query = "UPDATE products SET " + \
-                        "disc=" + str(disc) + ", " + \
-                        "stock=" + str(stock) + ", " + \
-                        "employee=" + "'" + employee + "', " +  \
-                        "last_sold=" + "'" + datetime.datetime.today().strftime("%Y%m%d%H%M%S") + "', " + \
-                        "last_price=" + str(upcDetails['lowest_price']) + \
-                        " WHERE name=" + "'" + upcDetails['product_name'] + "'"
-                    print(sql_query)
-                    cur.execute(sql_query)
-                    conn.commit()
-                
-                zpl = printlabel(upc, product_name, product_price, disc)
-
-                try:
-                    printlabels = int(request.form["printlabels"])
-                except:
-                    printlabels = 1
-
-                imgname = open_acrobat_print(printlabels)
-                
-                
-                sql_query = "SELECT * FROM " + table_name
-                print(sql_query)
-                results = cur.execute(sql_query).fetchall()
-                print(results)
-                if len(results) % 101 == 100:
-                    sql_query = "SELECT * FROM " + table_name + " WHERE id BETWEEN " + str((len(results) / 101) % 101) + " and " + str(len(results))
-                    results = cur.execute(sql_query).fetchall()
-                    for row in results:
-                        link_to_mp_post = uploadToMP(row[2], row[5], row[3], row[1], row[6], "New", row[4])
-                        add_to_square(row[2], row[1], str(row[5]) + "00", row[9], row[8])
-                        print('Posted to Square ' + row[0])
-
-                # auto end
+            # auto end
                 
             # end time
             end = time.time()
@@ -1219,30 +1243,10 @@ def target():
             product_category = upcDetails["product_category"]
             product_image = upcDetails["product_image"]
             disc= request.form['Discount']
-            
+            is_new = 0
             
             if not 'Not Found' in upcDetails["product_name"]:
-                sql_query = "UPDATE discounts SET discount=" + str(disc) + " WHERE category_name=" + "'" + upcDetails["product_category"] + "'"
-                cur.execute(sql_query)
-                conn.commit()
-                table_name = "data" + \
-                    (datetime.datetime.today().strftime("%Y%m%d"))
-                sql_query = "CREATE TABLE IF NOT EXISTS " + table_name + \
-                    """ (
-                        id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
-                        upc TEXT NOT NULL,
-                        product_name TEXT NOT NULL,
-                        product_description TEXT,
-                        product_image TEXT,
-                        product_price REAL,
-                        product_category TEXT,
-                        disc REAL,
-                        stock INTEGER,
-                        employee TEXT
-                        );"""
-                cur.execute(sql_query)
-                conn.commit()
-                sql_query = "INSERT INTO " + table_name + \
+                sql_query = "INSERT INTO " + table_name + "_printed" + \
                     """ (
                         upc,
                         product_name,
@@ -1265,8 +1269,32 @@ def target():
                     "'" + employee + "');"
                 cur.execute(sql_query)
                 conn.commit()
-            
-            
+                sql_query = "UPDATE products SET " + \
+                        "disc=" + str(disc) + ", " + \
+                        "stock=" + str(stock) + ", " + \
+                        "employee=" + "'" + employee + "', " +  \
+                        "last_sold=" + "'" + datetime.datetime.today().strftime("%Y%m%d%H%M%S") + "', " + \
+                        "last_price=" + str(upcDetails['lowest_price']) + \
+                        " WHERE name=" + "'" + upcDetails['product_name'] + "'"
+                print(sql_query)
+                cur.execute(sql_query)
+                conn.commit()
+            elif not upcDetails['is_available']:  # step 9 - print
+                    sql_query = "INSERT INTO " + table_name + "_printed" + " (upc, name, price, disc, last_sold, last_price) VALUES (" + \
+                                "'" + upcDetails["upc"] + "', " + \
+                                '"' + upcDetails["product_name"] + '", ' + \
+                                str(upcDetails["product_price"]) + ", " + \
+                                str(disc) + ", " + \
+                                "'" + datetime.datetime.today().strftime("%Y-%m-%d") + "', " + \
+                                str(upcDetails['lowest_price']) + ");"
+                    print(sql_query)
+                    cur.execute(sql_query)
+                    conn.commit()
+            else:
+                is_new = 1
+            if is_new:
+                flash("It is new product")
+                return redirect(url_for('add_produtcs', count=0, zpl="", label="", upc=""))
             # writeAllDetailsInCSV(upc, product_name, product_description, product_image, product_price, disc, stock, employee)
 
             zpl = printlabel(upc, product_name, product_price, disc)
@@ -1279,15 +1307,21 @@ def target():
             
             imgname = open_acrobat_print(printlabels)
             
-            sql_query = "UPDATE products SET " + \
-                        "disc=" + str(disc) + ", " + \
-                        "stock=" + str(stock) + ", " + \
-                        "employee=" + "'" + employee + "', " +  \
-                        "last_sold=" + "'" + datetime.datetime.today().strftime("%Y%m%d%H%M%S") + "', " + \
-                        "last_price=" + str(upcDetails['lowest_price']) + \
-                        " WHERE name=" + "'" + upcDetails['product_name'] + "'"
-            cur.execute(sql_query)
-            conn.commit()
+            sql_query = "SELECT * FROM " + table_name + "_printed"
+            print(sql_query)
+            results = cur.execute(sql_query).fetchall()
+            print(results)
+            if len(results) % 101 == 100:
+                sql_query = "SELECT * FROM " + table_name + "_printed" + " WHERE id BETWEEN " + \
+                    str((len(results) / 101) % 101) + \
+                    " and " + str(len(results))
+                results = cur.execute(sql_query).fetchall()
+                for row in results:
+                    link_to_mp_post = uploadToMP(
+                        row[2], row[5], row[3], row[1], row[6], "New", row[4])
+                    add_to_square(row[2], row[1], str(
+                        row[5]) + "00", row[9], row[8])
+                    print('Posted to Square ' + row[0])
             
             # end time
             end = time.time()
@@ -1468,11 +1502,11 @@ class myThread (threading.Thread):
         self.delayTime = delayTime
 
     def run(self):
-        asyncio.run(get_upc())
+        testing()
+        'Done Testing!'
 
+th = myThread(0, 'Start Testing...',  2)
+th.start()
 
 if __name__ == '__main__':
-    # th = myThread(0, 'Thread-1',  0.5)
-    # th.start()
     app.run(debug=True)
-    
