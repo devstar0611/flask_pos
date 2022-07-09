@@ -1,7 +1,7 @@
 from unicodedata import name
 from flask import Flask, flash, render_template, request, redirect, url_for, session
 from sheets import update_details
-from scraper import get_amazon_price_by_link, get_price_name, get_target, get_walamart_price, get_amazon_price, update_db
+from scraper import get_amazon_price_by_link, get_price_name, get_walamart_price, get_amazon_price, update_db
 from squares import add_to_square
 from marketplace import uploadToMP, publish
 from printzpls import printlabel, open_acrobat_print
@@ -19,6 +19,7 @@ import sqlite3
 import threading
 import pyppeteer
 import bs4
+import requests
 
 import csv
 import time
@@ -91,7 +92,27 @@ def testing():
         conn.close()
 
     # end - testing
-
+def get_target_upc(upc):
+    API_URL = "https://redsky.target.com/redsky_aggregations/v1/web/plp_search_v1"
+    API_KEY = "9f36aeafbe60771e321a7cc95a78140772ab3e96"
+    params = {
+        "key": API_KEY,
+        "channel": "WEB",
+        "count": "24",
+        "default_purchasability_filter": "false",
+        "include_sponsored": "true",
+        "keyword": str(upc),
+        "offset": "0",
+        "page": "%2Fs%2F" + str(upc),
+        "platform": "desktop",
+        "pricing_store_id": "3991",
+        "useragent": "Mozilla%2F5.0+%28Windows+NT+10.0%3B+Win64%3B+x64%29+AppleWebKit%2F537.36+%28KHTML%2C+like+Gecko%29+Chrome%2F103.0.0.0+Safari%2F537.36",
+        "visitor_id": "0181DBA81F220201B2C4F5C04CBA071E"
+    }
+    response = requests.get(API_URL, params=params)
+    print(response.status_code)
+    print(response.json())
+    
 
 @app.route('/add', methods = ['GET', 'POST'])
 def add_produtcs():
@@ -1127,6 +1148,9 @@ def target():
 
         
         if request.form["btn"] == 'Fetch Details':  
+            
+            get_target_upc(link)
+            
             # starting time
             start = time.time()
             
