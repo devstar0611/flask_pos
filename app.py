@@ -145,7 +145,7 @@ def get_target_upc(upc):
         barcode = upc
         name = product_info['item']['product_description']['title']
         description = product_info['item']['product_description']['downstream_description']
-        vender = product_info['item']['product_vendors']['vendor_name']
+        # vender = product_info['item']['product_vendors']['vendor_name']
         price_max = product_info['price']['reg_retail_max']
         price_min = product_info['price']['reg_retail_min']
         print("product info=", {
