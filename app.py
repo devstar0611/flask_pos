@@ -142,7 +142,7 @@ def get_target_upc(upc):
         print(response.status_code)
         product_info = response.json()['data']['product']
         category_id = product_info['category']['parent_category_id']
-        barcode = product_info['item']['primary_barcode']
+        barcode = upc
         name = product_info['item']['product_description']['title']
         description = product_info['item']['product_description']['downstream_description']
         vender = product_info['item']['product_vendors']['vendor_name']
