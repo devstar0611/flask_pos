@@ -111,7 +111,9 @@ def get_target_upc(upc):
     }
     response = requests.get(API_URL, params=params)
     print(response.status_code)
-    print(response.json())
+    products = response.json()['data']['search']['products']
+    for product in products:
+        print(product)
     
 
 @app.route('/add', methods = ['GET', 'POST'])
