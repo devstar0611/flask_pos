@@ -1,7 +1,5 @@
-from dis import dis
-from flask import Flask, flash, render_template, request, redirect, url_for
-from soupsieve import select
-from werkzeug.datastructures import Range
+from unicodedata import name
+from flask import Flask, flash, render_template, request, redirect, url_for, session
 from sheets import update_details
 from scraper import get_amazon_price_by_link, get_price_name, get_target, get_walamart_price, get_amazon_price, update_db
 from squares import add_to_square
@@ -12,6 +10,7 @@ from ig import postInstagram
 import os
 import pandas as pd
 
+from flask_session import Session
 import datetime
 import json
 import asyncio
@@ -23,6 +22,12 @@ import bs4
 
 import csv
 import time
+
+app = Flask(__name__)
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
+
 timestr = time.strftime("%Y%m%d")
 
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
@@ -31,6 +36,7 @@ config_url = os.path.join(SITE_ROOT, "static/data", "config.json")
 data_date_url = os.path.join(SITE_ROOT, "static/data", "data" + timestr + ".json")
 data_url = os.path.join(SITE_ROOT, "static/data", "data.json")
 data_ig_url = os.path.join(SITE_ROOT, "static/data", "data_ig.json")
+
 
 upcDetails={}
 isAvailable = 1
@@ -86,10 +92,16 @@ def testing():
 
     # end - testing
 
-app = Flask(__name__)
 
 @app.route('/add', methods = ['GET', 'POST'])
 def add_produtcs():
+    conn = sqlite3.connect('mydb.db')
+    cur = conn.cursor()
+    global upcDetails
+    try:
+        vender = upcDetails["employee"]
+    except:
+        vender = ""
     if request.method == "POST":
         # try:
         #     stock=request.form["Stock"]
@@ -110,9 +122,59 @@ def add_produtcs():
             #category = request.form["Category"] 
             # category = "Miscellaneous"
             # condition = request.form["Condition"]             
-            upc = datetime.datetime.now().strftime('%Y%m%d%H%M')
+            # upc = datetime.datetime.now().strftime('%Y%m%d%H%M')
+            upc = request.form["upc"]
             # stock = request.form["Stock"] 
-            imgpath = request.files["filename"].filename
+            try:
+                imgpath = request.files["filename"].filename
+            except:
+                imgpath = ""
+            
+            sql_query = "INSERT INTO " + table_name + "_scaned" + \
+                    """ (
+                        upc,
+                        name,
+                        image,
+                        price,
+                        employee
+                        ) VALUES (""" + \
+                    "'" + upc + "', " + \
+                    '"' + product_name + '", ' + \
+                    "'" + imgpath + "', " + \
+                    str(request.form["Price"]) + ", " + \
+                    "'" + employee + "');"
+            print(sql_query)
+            cur.execute(sql_query)
+            conn.commit()
+            sql_query = "INSERT INTO " + table_name + "_printed" + \
+                    """ (
+                        upc,
+                        name,
+                        image,
+                        price,
+                        employee
+                        ) VALUES (""" + \
+                    "'" + upc + "', " + \
+                    '"' + product_name + '", ' + \
+                    "'" + imgpath + "', " + \
+                    str(request.form["Price"]) + ", " + \
+                    "'" + employee + "');"
+            print(sql_query)
+            cur.execute(sql_query)
+            conn.commit()
+            sql_query = "INSERT INTO products (upc, name, image, price, employee, open_date, last_sold) VALUES (" + \
+                "'" + upc + "', " + \
+                '"' + product_name + '", ' + \
+                "'" + imgpath + "', " + \
+                str(request.form["Price"]) + ", " + \
+                "'" + employee + "', " + \
+                "'" + today.strftime("%Y-%m-%d") + "', " + \
+                "'" + today.strftime("%Y-%m-%d") + "'" + \
+                ");"
+            print(sql_query)
+            cur.execute(sql_query)
+            conn.commit()
+            
             
             try:
                 addFBListing = request.form["addFBListing"]
@@ -139,12 +201,11 @@ def add_produtcs():
             
             imgname = open_acrobat_print(printlabels)
             
-            return render_template('add.html', count=count, zpl=zpl, label=imgname, upc=upc)
-            
-        
-        
-        
-    return render_template('add.html', count=0, zpl="", label="", upc="")  
+            return render_template('add.html', count=count, zpl=zpl, label=imgname, upc=upcDetails["upc"], vender=vender)
+    else:
+        # vender = request.args.get('vender')
+        # upc = request.args.get('upc')
+        return render_template('add.html', count=0, zpl="", label="", upc=upcDetails["upc"], vender=vender)
     
 @app.route('/updateDiscount', methods = ['GET', 'POST'])
 def updateDiscount():
@@ -1057,7 +1118,7 @@ def target():
             printlabels = int(request.form["printlabels"])
 
              
-        employee=request.form["VendorName"]   
+        employee=request.form["VendorName"]  
         amazon_price =0 
         walmart_price = 0
         target_product_price=0
@@ -1118,6 +1179,7 @@ def target():
             
             lowest_price = 0
             upcDetails = upcDetailsTarget
+            upcDetails["employee"] = employee
 
             try:                
                 target_product_price = upcDetailsTarget["product_price"]
@@ -1204,6 +1266,12 @@ def target():
                 print(sql_query)
                 cur.execute(sql_query)
                 conn.commit()
+            elif not product_is_available:  # not available product
+                pass
+            else:   # new product
+                flash("Please add this product into your database!")
+                # return render_template('add.html', count=0, zpl="", label="", upc=upcDetails["upc"])
+                return redirect(url_for('add_produtcs', vender=employee, upc=upcDetails["upc"]))
 
             # writeAllDetailsInCSV(upc, product_name, product_description,
             #                      product_image, product_price, disc, stock, employee)
@@ -1249,11 +1317,11 @@ def target():
                 sql_query = "INSERT INTO " + table_name + "_printed" + \
                     """ (
                         upc,
-                        product_name,
-                        product_description,
-                        product_image,
-                        product_price,
-                        product_category,
+                        name,
+                        description,
+                        image,
+                        price,
+                        ategory,
                         disc,
                         stock,
                         employee
@@ -1294,7 +1362,8 @@ def target():
                 is_new = 1
             if is_new:
                 flash("It is new product")
-                return redirect(url_for('add_produtcs', count=0, zpl="", label="", upc=""))
+                # return render_template('add.html', count=0, zpl="", label="", upc=upcDetails["upc"])
+                return redirect(url_for('add_produtcs', vender=employee, upc=upcDetails["upc"]))
             # writeAllDetailsInCSV(upc, product_name, product_description, product_image, product_price, disc, stock, employee)
 
             zpl = printlabel(upc, product_name, product_price, disc)
@@ -1502,8 +1571,9 @@ class myThread (threading.Thread):
         self.delayTime = delayTime
 
     def run(self):
+        print(self.name)
         testing()
-        'Done Testing!'
+        print('Done Testing!')
 
 th = myThread(0, 'Start Testing...',  2)
 th.start()
