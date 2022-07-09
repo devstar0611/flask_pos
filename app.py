@@ -148,7 +148,19 @@ def get_target_upc(upc):
         # vender = product_info['item']['product_vendors']['vendor_name']
         price_max = product_info['price']['reg_retail_max']
         price_min = product_info['price']['reg_retail_min']
-        print("product info=", {
+        # print("product info=", {
+        #     "url": url,
+        #     "upc": barcode,
+        #     "tcin": tcin,
+        #     "name": name,
+        #     "description": description,
+        #     "image": image,
+        #     "category": category,
+        #     "price_max": price_max,
+        #     "price_min": price_min,
+        #     # "employee": vender,
+        # })
+        return {
             "url": url,
             "upc": barcode,
             "tcin": tcin,
@@ -159,7 +171,7 @@ def get_target_upc(upc):
             "price_max": price_max,
             "price_min": price_min,
             # "employee": vender,
-        })
+        }
     
 
 @app.route('/add', methods = ['GET', 'POST'])
@@ -323,8 +335,7 @@ def configuration():
         return render_template('configuration.html', categories=categories, config=config)     
 
     return render_template('configuration.html', categories=categories, config=config)     
-    
-
+ 
 @app.route('/old', methods = ['GET', 'POST'])
 def homepage():
     
@@ -590,8 +601,6 @@ def homepage():
                                categoryFoundFlag=categoryFoundFlag,
                                discount=discountPercent)
 
-
-
 @app.route('/add_to_marketplace', methods = ['GET', 'POST'])
 def add_to_marketplace():
     
@@ -852,8 +861,6 @@ def amazon():
                                categoryFoundFlag=categoryFoundFlag,
                                discount=discountPercent)
 
-        
-        
 @app.route('/amazon_add_multiple', methods = ['GET', 'POST'])
 def amazon_add_multiple():
     
@@ -910,7 +917,6 @@ def amazon_add_multiple():
             return render_template('addtomarketfromamazon.html', config=config)
  
     return render_template('addtomarketfromamazon.html', config=config)  
-
 
 def writeInstaJson(upc, product_name, product_description, product_image, product_price, disc, stock, employee, link_to_mp_post):
 
