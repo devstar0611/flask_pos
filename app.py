@@ -1,3 +1,4 @@
+from turtle import title
 from unicodedata import name
 from flask import Flask, flash, render_template, request, redirect, url_for, session
 from sheets import update_details
@@ -93,9 +94,10 @@ def testing():
 
     # end - testing
 def get_target_upc(upc):
-    API_URL = "https://redsky.target.com/redsky_aggregations/v1/web/plp_search_v1"
+    API_URL1 = "https://redsky.target.com/redsky_aggregations/v1/web/plp_search_v1"
+    API_URL2 = "https://redsky.target.com/redsky_aggregations/v1/web/pdp_client_v1"
     API_KEY = "9f36aeafbe60771e321a7cc95a78140772ab3e96"
-    params = {
+    params1 = {
         "key": API_KEY,
         "channel": "WEB",
         "count": "24",
@@ -109,11 +111,53 @@ def get_target_upc(upc):
         "useragent": "Mozilla%2F5.0+%28Windows+NT+10.0%3B+Win64%3B+x64%29+AppleWebKit%2F537.36+%28KHTML%2C+like+Gecko%29+Chrome%2F103.0.0.0+Safari%2F537.36",
         "visitor_id": "0181DBA81F220201B2C4F5C04CBA071E"
     }
-    response = requests.get(API_URL, params=params)
+    response = requests.get(API_URL1, params=params1)
     print(response.status_code)
-    products = response.json()['data']['search']['products']
+    searched = response.json()['data']['search']
+    products = searched['products']
+    category = searched['search_response']['facet_list'][0]['details'][0]['display_name']
+    url = products['item']['enrichment']['buy_url']
+    image = products['item']['enrichment']['images']['primary_image_url']
     for product in products:
-        print(product)
+        tcin = product['tcin']
+        params2 = {
+            "key": API_KEY,
+            "tcin": str(tcin),
+            "is_bot": "false",
+            "member_id": "0",
+            "pricing_store_id": "3991",
+            "has_pricing_store_id": "true",
+            "has_financing_options": "true",
+            "visitor_id": "0181DBA81F220201B2C4F5C04CBA071E",
+            "has_size_context": "true",
+            "latitude": "50.130",
+            "longitude": "8.670",
+            "zip": "60323",
+            "state": "HE",
+            "channel": "WEB",
+            "page": "%2Fp%2FA-" + str(tcin)
+        }
+        response = requests.get(API_URL2, params=params2)
+        print(response.status_code)
+        product_info = response.json()['data']['product']
+        category_id = product_info['category']['parent_category_id']
+        barcode = product_info['item']['primary_barcode']
+        name = product_info['item']['product_description']['title']
+        description = product_info['item']['product_description']['downstream_description']
+        vender = product_info['item']['product_vendors']['vendor_name']
+        price_max = product_info['price']['reg_retail_max']
+        price_min = product_info['price']['reg_retail_min']
+        print("product info=", {
+            "url": url,
+            "upc": barcode,
+            "name": name,
+            "description": description,
+            "image": image,
+            "category": category,
+            "price_max": price_max,
+            "price_min": price_min,
+            "employee": vender,
+        })
     
 
 @app.route('/add', methods = ['GET', 'POST'])
