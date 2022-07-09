@@ -157,7 +157,7 @@ def get_target_upc(upc):
             "category": category,
             "price_max": price_max,
             "price_min": price_min,
-            "employee": vender,
+            # "employee": vender,
         })
     
 
