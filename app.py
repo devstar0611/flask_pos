@@ -114,6 +114,7 @@ def get_target_upc(upc):
     response = requests.get(API_URL1, params=params1)
     print(response.status_code)
     searched = response.json()['data']['search']
+    print(searched)
     products = searched['products']
     category = searched['search_response']['facet_list'][0]['details'][0]['display_name']
     url = products['item']['enrichment']['buy_url']
