@@ -117,9 +117,9 @@ def get_target_upc(upc):
     print(searched)
     products = searched['products']
     category = searched['search_response']['facet_list'][0]['details'][0]['display_name']
-    url = products['item']['enrichment']['buy_url']
-    image = products['item']['enrichment']['images']['primary_image_url']
     for product in products:
+        url = products['item']['enrichment']['buy_url']
+        image = products['item']['enrichment']['images']['primary_image_url']
         tcin = product['tcin']
         params2 = {
             "key": API_KEY,
