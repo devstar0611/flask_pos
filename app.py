@@ -22,7 +22,6 @@ import threading
 import pyppeteer
 import bs4
 import requests
-import keyboard
 
 import csv
 import time
