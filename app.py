@@ -1226,21 +1226,21 @@ def target():
             results = cur.execute(sql_query).fetchall()
             if len(results):
                 product_url = results[0][1]
-                # product_upc = results[0][2]
-                product_name = results[0][3]
-                product_description = results[0][4]
-                product_image = results[0][5]
-                product_category = results[0][6]
-                product_price = results[0][7]
-                product_disc = results[0][8]
-                product_stock = results[0][9]
-                product_employee = results[0][10]
-                product_open = results[0][11]
-                product_update = results[0][12]
-                product_close = results[0][13]
-                product_is_available = results[0][14]
-                product_last_sold = results[0][15]
-                product_last_price = results[0][16]
+                product_upc = results[0][3]
+                product_name = results[0][4]
+                product_description = results[0][5]
+                product_image = results[0][6]
+                product_category = results[0][7]
+                product_price = results[0][8]
+                product_disc = results[0][9]
+                product_stock = results[0][10]
+                product_employee = results[0][11]
+                product_open = results[0][12]
+                product_update = results[0][13]
+                product_close = results[0][14]
+                product_is_available = results[0][15]
+                product_last_sold = results[0][16]
+                product_last_price = results[0][17]
                 if not product_is_available:
                     product_name = product_price = 'Not Found'
             else:
@@ -1252,7 +1252,7 @@ def target():
                 "product_price": product_price,
                 "product_description": product_description,
                 "product_category": product_category,
-                "upc": link,
+                "upc": product_upc,
                 "product_image": product_image,
                 "is_available": product_is_available
             }
