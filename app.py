@@ -10,6 +10,7 @@ from openpyxl import load_workbook
 from ig import postInstagram
 import os
 import pandas as pd
+from scraper_test import get_products_upc, get_products_category
 
 from flask_session import Session
 import datetime
@@ -64,36 +65,35 @@ def testing():
             last_scrapped_date = results[0][1]
         else:
             last_scrapped_date = '0000-00-00'
-        diff_d = int(today.strftime("%Y-%m-%d").split('-')[2]) - int(last_scrapped_date.split('-')[2] + 30) % 30
+        diff_d = int(today.strftime("%d")) - int(last_scrapped_date.split('-')[2] + 30) % 30
         if diff_d >= 7:
-            asyncio.run(update_db())
+            categories = json.load(open(os.path.join("categories.json")))
+            get_products_category(categories)
             sql_query = "INSERT INTO history (date) VALUES (" + today.strftime("%Y-%m-%d") + ")"
         # end - updating database
         # start - testing product is available
         today_m = int(datetime.datetime.today().strftime("%m"))
-        sql_query = "SELECT upc, open_date, update_date, close_date, is_available, last_sold, last_date FROM products"
+        sql_query = "SELECT upc, tcin, open_date, update_date, last_sold, last_date FROM products"
         results = cur.execute(sql_query).fetchall()
         for row in results:
-            if not row[4]:
+            if (today_m + 12 - int(row[2].split('-')[1])) % 12 > 6:
                 # deleting unavailable product from database
-                diff_m = (today_m + 12 - int(row[3].split('-')[1])) % 12
-                if diff_m > 6:
-                    sql_query = "DELETE FROM products WHERE upc=" + "'" + row[0] + "'"
-                    cur.execute(sql_query)
-                    conn.commit()
-            if row[6]:
+                sql_query = "DELETE FROM products WHERE upc=" + \
+                    "'" + row[0] + "' or tcin=" + "'" + row[1] + "'"
+                cur.execute(sql_query)
+                conn.commit()
+            if (today_m + 12 - int(row[5].split('-')[1])) % 12 > 3:
                 # not sold in 3 months product
-                diff_m = (today_m + 12 - int(row[3].split('-')[1])) % 12
-                if diff_m > 3:
-                    sql_query = "DELETE FROM products WHERE upc=" + "'" + row[0] + "'"
-                    cur.execute(sql_query)
-                    conn.commit()
+                sql_query = "DELETE FROM products WHERE upc=" + \
+                    "'" + row[0] + "' or tcin=" + "'" + row[1] + "'"
+                cur.execute(sql_query)
+                conn.commit()
 
         # end - testing product is available
         conn.close()
 
     # end - testing
-def get_target_upc(upc):
+
     API_URL1 = "https://redsky.target.com/redsky_aggregations/v1/web/plp_search_v1"
     API_URL2 = "https://redsky.target.com/redsky_aggregations/v1/web/pdp_client_v1"
     API_KEY = "9f36aeafbe60771e321a7cc95a78140772ab3e96"
@@ -1203,7 +1203,7 @@ def target():
         
         if request.form["btn"] == 'Fetch Details':  
             
-            get_target_upc(link)
+            get_products_upc(link)
             
             # starting time
             start = time.time()

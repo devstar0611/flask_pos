@@ -249,7 +249,7 @@
                                                 <div class="form-row mb-4">
                                                     <div class="col">
                                                         <label for="upc"  class="control-label ">Generated UPC</label>
-                                                        {% if vender %}
+                                                        {% if upc %}
                                                             <input type="number" name="upc" class="form-control mb-4" rows="1" placeholder="Scanned UPC" value="{{ upc }}" required>
                                                         {% else %}
                                                             <input type="number" name="upc" class="form-control mb-4" rows="1" placeholder="Scanned UPC" value="{{ request.form['upc'] }}" required>
