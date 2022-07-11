@@ -10,7 +10,7 @@ from openpyxl import load_workbook
 from ig import postInstagram
 import os
 import pandas as pd
-from scraper_test import get_products_upc, get_products_category
+from scraper_test import get_products_upc, get_products_category, get_products_tcin, get_tcin_upc
 
 from flask_session import Session
 import datetime
@@ -22,6 +22,7 @@ import threading
 import pyppeteer
 import bs4
 import requests
+import keyboard
 
 import csv
 import time
@@ -1176,7 +1177,7 @@ def target():
     global upcDetails
     
     if request.method == "POST":
-        link=request.form["TargetLink"]
+        link=str(request.form["TargetLink"])
         try:
             stock=request.form["Stock"]
         except:
@@ -1203,7 +1204,10 @@ def target():
         
         if request.form["btn"] == 'Fetch Details':  
             
-            get_products_upc(link)
+            tcin_category = get_tcin_upc(link)
+            tcin = tcin_category['tcin']
+            category = tcin_category['category']
+            # get_products_upc(link)
             
             # starting time
             start = time.time()
@@ -1211,14 +1215,14 @@ def target():
             product_name = 'Not Found'
             product_price = 'Not Found'
             product_description = 'Not Found'
-            product_category = 'Not Found'
+            product_category = category
             product_upc = link
             product_image = 'Not Found'
             product_is_available = 1
             
             # upcDetailsTarget = asyncio.run(get_target(link))
             # upcDetailsTarget = asyncio.run(get_price_name(target_url))
-            sql_query = "SELECT * FROM products WHERE upc=" + "'" + link + "'"
+            sql_query = "SELECT * FROM products WHERE tcin=" + "'" + tcin + "'"
             results = cur.execute(sql_query).fetchall()
             if len(results):
                 product_url = results[0][1]
