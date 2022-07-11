@@ -1657,7 +1657,7 @@ class myThread (threading.Thread):
         print('Done Testing!')
 
 th = myThread(0, 'Start Testing...',  2)
-th.start()
+# th.start()
 
 if __name__ == '__main__':
     app.run(debug=True)

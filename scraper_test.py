@@ -676,7 +676,7 @@ def get_products_category(categories):
             response = requests.get(API_URL1, params=params3)
             # print("category response time=", datetime.datetime.now() - start_time)
             start_time = datetime.datetime.now()
-            time.sleep(3)
+            time.sleep(5)
             if response.status_code > 300:
                 print("category_requests:", response.status_code)
                 break
