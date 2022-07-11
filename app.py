@@ -65,7 +65,7 @@ def testing():
             last_scrapped_date = results[0][1]
         else:
             last_scrapped_date = '0000-00-00'
-        diff_d = int(today.strftime("%d")) - int(last_scrapped_date.split('-')[2] + 30) % 30
+        diff_d = (int(today.strftime("%d")) - int(last_scrapped_date.split('-')[2]) + 30) % 30
         if diff_d >= 7:
             categories = json.load(open(os.path.join("categories.json")))
             get_products_category(categories)
