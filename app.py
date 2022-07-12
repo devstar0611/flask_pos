@@ -1499,6 +1499,16 @@ def target():
                 print(sql_query)
                 cur.execute(sql_query)
                 conn.commit()
+                zpl = printlabel(
+                    upcDetails['upc'], upcDetails['name'], upcDetails['price'], disc)
+
+                try:
+                    printlabels = int(request.form["printlabels"])
+                except:
+                    printlabels = 1
+
+                imgname = open_acrobat_print(printlabels)
+
             else:
                 sql_query = "INSERT INTO " + table_name + "_printed" + \
                     " (upc, name, description, image, price, category, disc, stock, employee) VALUES (" + \
@@ -1514,6 +1524,12 @@ def target():
                 print(sql_query)
                 cur.execute(sql_query)
                 conn.commit()
+                flash([{
+                    "title": "Wrong product name!",
+                    "text": "Please try again with another product!"
+                }])
+                zpl = ""
+                imgname = ""
             # elif not upcDetails['is_available']:  # step 9 - print
             #         sql_query = "INSERT INTO " + table_name + "_printed" + " (upc, name, price, disc, last_sold, last_price) VALUES (" + \
             #                     "'" + upcDetails["upc"] + "', " + \
@@ -1532,36 +1548,22 @@ def target():
             #     # return render_template('add.html', count=0, zpl="", label="", upc=upcDetails["upc"])
             #     return redirect(url_for('add_produtcs', vender=employee, upc=upcDetails["upc"]))
             # writeAllDetailsInCSV(upc, product_name, product_description, product_image, product_price, disc, stock, employee)
-                zpl = printlabel(upcDetails['upc'], upcDetails['name'], upcDetails['price'], disc)
-
-                try:
-                    printlabels = int(request.form["printlabels"])
-                except:
-                    printlabels = 1
-                
-                imgname = open_acrobat_print(printlabels)
-                
-                sql_query = "SELECT * FROM " + table_name + "_printed"
-                print(sql_query)
-                results = cur.execute(sql_query).fetchall()
-                print(results)
-                if len(results) % 101 == 100:
-                    sql_query = "SELECT * FROM " + table_name + "_printed" + " WHERE id BETWEEN " + \
-                        str((len(results) / 101) % 101) + " and " + str(len(results))
-                    results = cur.execute(sql_query).fetchall()
-                    for row in results:
-                        link_to_mp_post = uploadToMP(row[2], row[5], row[3], row[1], row[6], "New", row[4])
-                        add_to_square(row[2], row[1], str(row[5]) + "00", row[9], row[8])
-                        print('Posted to Square ' + row[0])
             
-            else:
-                flash([{
-                    "title": "Wrong product name!",
-                    "text": "Please try again with another product!"
-                }])
-                zpl = ""
-                imgname = ""
-                
+            sql_query = "SELECT * FROM " + table_name + "_printed"
+            print(sql_query)
+            results = cur.execute(sql_query).fetchall()
+            print(results)
+            if len(results) % 101 == 100:
+                sql_query = "SELECT * FROM " + table_name + "_printed" + " WHERE id BETWEEN " + \
+                    str((len(results) / 101) % 101) + \
+                    " and " + str(len(results))
+                results = cur.execute(sql_query).fetchall()
+                for row in results:
+                    link_to_mp_post = uploadToMP(
+                        row[2], row[5], row[3], row[1], row[6], "New", row[4])
+                    add_to_square(row[2], row[1], str(
+                        row[5]) + "00", row[9], row[8])
+                    print('Posted to Square ' + row[0])
                 
             
             categoryFoundFlag = 0
