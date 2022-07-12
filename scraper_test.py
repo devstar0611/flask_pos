@@ -1,3 +1,4 @@
+from email.mime import image
 from itertools import starmap
 from pandas import ExcelWriter
 import pyppeteer
@@ -617,26 +618,47 @@ API_URL2 = "https://redsky.target.com/redsky_aggregations/v1/web/pdp_client_v1"
 API_KEY = "9f36aeafbe60771e321a7cc95a78140772ab3e96"
 
 today = datetime.datetime.today().strftime("%Y-%m-%d")
+conn = sqlite3.connect('mydb.db')
+cur = conn.cursor()
 
 def insert_into_table(product_info):
-    conn = sqlite3.connect('mydb.db')
-    cur = conn.cursor()
+    
+    disc = "0"
+    sql_query = "SELECT discount FROM discounts WHERE category_name=" + \
+        "'" + product_info['category'] + "'"
+    print(sql_query)
+    results = cur.execute(sql_query).fetchall()
+    # print(results)
+    if len(results):
+        disc = str(results[0][0])
     sql_query = "SELECT * FROM products WHERE tcin=" + \
-        "'" + product_info['tcin'] + "' or name=" + \
-        '"' + product_info['name'] + '"'
+        "'" + product_info['tcin'] + "'"
     print(sql_query)
     results = cur.execute(sql_query).fetchall()
     if len(results):
         id = results[0][0]
         sql_query = "UPDATE products SET " + \
                     "price=" + "'" + product_info['price_min'] + "', " +  \
+                    "disc=" + "'" + disc + "', " +  \
                     "update_date=" + "'" + today + "' " +  \
                     " WHERE id=" + str(id)
         print(sql_query)
         cur.execute(sql_query)
         conn.commit()
     else:
-        sql_query = 'INSERT INTO products (url, tcin, upc, name, description, image, category, price, employee, open_date, update_date) ' + " VALUES (" + '"' + product_info['url'] + '", ' + '"' + product_info['tcin'] + '", ' + '"", ' + '"' + product_info['name'] + '", ' + '"' + product_info['description'] + '", ' + '"' + product_info['image'] + '", ' + '"' + product_info['category'] + '", ' + '"' + product_info['price_min'] + '", ' + '"' + product_info['employee'] + '", ' + '"' + today + '", ' + '"' + today + '"' + ");"
+        sql_query = 'INSERT INTO products (url, tcin, name, description, image, category, price, disc, employee, open_date, update_date) ' + \
+            " VALUES (" + \
+            '"' + product_info['url'] + '", ' + \
+            '"' + product_info['tcin'] + '", ' + \
+            '"' + product_info['name'] + '", ' + \
+            '"' + product_info['description'] + '", ' + \
+            '"' + product_info['image'] + '", ' + \
+            '"' + product_info['category'] + '", ' + \
+            '"' + product_info['price_min'] + '", ' + \
+            '"' + disc + '", ' + \
+            '"' + product_info['employee'] + '", ' + \
+            '"' + today + '", ' + \
+            '"' + today + '"' + ");"
         print(sql_query)
         cur.execute(sql_query)
         conn.commit()
@@ -655,6 +677,7 @@ def get_products_category(categories):
         total_results = 0
         offset = 0
         cnt = 0
+        time_one_page = datetime.timedelta(seconds=0)
         while current_page <= total_pages:
             if cnt > total_results:
                 break
@@ -673,12 +696,14 @@ def get_products_category(categories):
                 "visitor_id": "0181DBA81F220201B2C4F5C04CBA071E"
             }
             # start_time = datetime.datetime.now()
+            if time_one_page.total_seconds() < 5 :
+                time.sleep(5 - time_one_page.total_seconds())
             response = requests.get(API_URL1, params=params3)
             # print("category response time=", datetime.datetime.now() - start_time)
             start_time = datetime.datetime.now()
-            time.sleep(5)
             if response.status_code > 300:
                 print("category_requests:", response.status_code)
+                time.sleep(5)
                 break
             searched = response.json()['data']['search']
             overview = searched['search_response']["typed_metadata"]
@@ -689,6 +714,11 @@ def get_products_category(categories):
             total_results = overview['total_results']
             products = searched['products']
             print("len(products)=", len(products))
+            if not len(products):
+                print("products not found")
+                offset += count
+                time.sleep(5)
+                break
             for product in products:
                 try:
                     url = product['item']['enrichment']['buy_url']
@@ -707,7 +737,8 @@ def get_products_category(categories):
                 except:
                     name = 'Not Found'
                 try:
-                    description = ''.join(str(sub) for sub in product['item']['product_description']['soft_bullets']['bullets'])
+                    description = ''.join(str(
+                        sub) for sub in product['item']['product_description']['soft_bullets']['bullets'])
                 except:
                     description = 'Not Found'
                 try:
@@ -718,32 +749,33 @@ def get_products_category(categories):
                     price_min = product['price']['current_retail']
                 except:
                     price_min = 'Not Found'
-                    
+
                 # tcin_results = get_products_tcin(tcin)
                 # if isinstance(tcin_results, int) and tcin_results > 300:
                 #     break
-                
-                products_info.append({
-                    "url": str(url),
-                    # "upc": tcin_results['upc'],
-                    "tcin": str(tcin),
-                    # "name": tcin_results['name'],
-                    # "description": tcin_results['description'],
-                    "name": str(name).replace("\"", " "),
-                    "description": str(description).replace('"', '\''),
-                    "image": str(image),
-                    "category": str(category_name),
-                    # "price_max": str(tcin_results['price_max']),
-                    # "price_min": str(tcin_results['price_min']),
-                    "price_min": str(price_min),
-                    "employee": str(vender),
-                })
-                insert_into_table(products_info[-1])
+                if tcin != 'Not Found':
+                    products_info.append({
+                        "url": str(url),
+                        # "upc": tcin_results['upc'],
+                        "tcin": str(tcin),
+                        # "name": tcin_results['name'],
+                        # "description": tcin_results['description'],
+                        "name": str(name).replace("\"", " "),
+                        "description": str(description).replace('"', '\''),
+                        "image": str(image),
+                        "category": str(category_name),
+                        # "price_max": str(tcin_results['price_max']),
+                        # "price_min": str(tcin_results['price_min']),
+                        "price_min": str(price_min),
+                        "employee": str(vender),
+                    })
+                    insert_into_table(products_info[-1])
                 print("product_info = ", products_info[-1])
                 cnt += 1
             offset += count
-            print("one page time=", datetime.datetime.now() - start_time)
-    return(products_info)        
+            time_one_page = datetime.datetime.now() - start_time
+            print("one page time=", time_one_page)
+    return(products_info)
    
 def get_products_tcin(tcin):
     params2 = {
@@ -985,3 +1017,4 @@ if __name__ == '__main__':
     # print(get_products_upc(upc))
     categories = json.load(open(os.path.join("categories.json")))
     print(len(get_products_category(categories)))
+    conn.close()
