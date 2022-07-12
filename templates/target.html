@@ -243,11 +243,8 @@
                            {% if messages %}
                                 <nav class="alert alert-success navbar navbar-expand navbar-light topbar mb-4 static-top shadow">
                                 <div>
-                                 <h1 class="h4 mb-2 text-gray-800">New Product Fetched</h1>
-                                        {% for message in messages%}
-                                            <p>{{message}}</p>
-                                        {% endfor %}
-                                        
+                                 <h1 class="h4 mb-2 text-gray-800">{{ messages[0]['title'] }}</h1>    
+                                 {{ messages[0]['text'] }}  
                                 </div>
                                 </nav>
                             {% endif %}
@@ -308,12 +305,12 @@
                                         </div>
                                         <div class="card-body  text-center">
                                             
-                                                <h4>{{ details["product_name"] }}</h4>
+                                                <h4>{{ details["name"] }}</h4>
                                                 <h6>UPC: {{ details["upc"] }}</h6>
                                                 
                                                 <ul class="list-group list-group-flush">
                                                    
-                                                    <li class="list-group-item" class="form-control" id="OriginalPrice" name="OriginalPrice"><b>Lowest Price: ${{ lowest_price }}</b></li>
+                                                    <li class="list-group-item" class="form-control" id="OriginalPrice" name="OriginalPrice"><b>Lowest Price: ${{ details["price"] }}</b></li>
                                                     <li class="list-group-item" class="form-control" id="AlternatePrice" name="AlternatePrice"><code>Target: ${{ target }}</code> | <code>Walmart: ${{ walmart }}</code> | <code>Amazon: {{ amazon }}</code></li>
                                                     <li class="list-group-item">Duration: {{ duration }} seconds</li>
                                                     <!-- <li class="list-group-item">Scanned Items Counter: {{ counter }}</li> -->
@@ -329,7 +326,7 @@
                                                         <label for="Category"  class="control-label ">Category</label>
                                                         <select class="form-control" id="Category" name="Category" onchange="addDiscount()">                                                            
                                                             {% for name, discount in categories.items() %}  
-                                                                {% if name in details["product_category"]  %}  
+                                                                {% if name in details["category"]  %}  
                                                                     <option value={{ discount }} selected>{{ name }}</option>
                                                                 {% else %}
                                                                     <option value={{ discount }}>{{ name }}</option>
@@ -341,7 +338,7 @@
                                                     </div>
                                                     <div class="col">
                                                         <label for="Discount">Discount (%)</label>
-                                                        {% if 'NOT FOUND' in details["product_name"]  %}  
+                                                        {% if 'NOT FOUND' in details["name"]  %}  
                                                             <input type="number" min="0" class="form-control" id="Discount" name="Discount"  onkeyup="myFunction()"  autocomplete="off">
                                                         {% else %}
                                                             {% if categoryFoundFlag  %}                                                                      
@@ -361,7 +358,7 @@
                                                 </div>
                                                 <ul class="list-group list-group-flush">
                                                     
-                                                    <li class="list-group-item" class="form-control" id="DiscountedPrice" name="DiscountedPrice"><b>Our Price: ${{ details["product_price"] }}</b></li>
+                                                    <li class="list-group-item" class="form-control" id="DiscountedPrice" name="DiscountedPrice"><b>Our Price: ${{ details["price"] }}</b></li>
                                                    
                                                 </ul>
                                                 
