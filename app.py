@@ -81,7 +81,7 @@ def testing():
         if diff_d >= 7:
             categories = json.load(open(os.path.join("categories.json")))
             get_products_category(categories)
-            sql_query = "INSERT INTO history (date) VALUES (" + "'" + today.strftime("%Y-%m-%d") + "'" + ")"
+            sql_query = "INSERT INTO history (date) VALUES (" + '"' + today.strftime("%Y-%m-%d") + '"' + ")"
         # end - updating database
         # start - testing product is available
         sql_query = "SELECT * FROM products ORDER BY update_date DESC"
@@ -96,13 +96,13 @@ def testing():
             if (today_m + 12 - int(row[2].split('-')[1])) % 12 > 6 and not row[0][4]:
                 # deleting unavailable product from database
                 sql_query = "DELETE FROM products WHERE tcin=" + \
-                    "'" + row[0] + "'"
+                    '"' + row[0] + '"'
                 cur.execute(sql_query)
                 conn.commit()
             elif row[3] != "0000-00-00" and (today_m + 12 - int(row[3].split('-')[1])) % 12 > 3:
                 # not sold in 3 months product
                 sql_query = "DELETE FROM products WHERE tcin=" + \
-                    "'" + row[0] + "'"
+                    '"' + row[0] + '"'
                 cur.execute(sql_query)
                 conn.commit()
 
@@ -152,33 +152,33 @@ def add_produtcs():
             
             sql_query = "INSERT INTO " + table_name + "_scaned" + \
                     " (upc, name, image, price, employee) VALUES (" + \
-                    "'" + upc + "', " + \
+                    '"' + upc + '", ' + \
                     '"' + product_name + '", ' + \
-                    "'" + imgpath + "', " + \
+                    '"' + imgpath + '", ' + \
                     str(product_price) + ", " + \
-                    "'" + employee + "');"
+                    '"' + employee + '");'
             print(sql_query)
             cur.execute(sql_query)
             conn.commit()
             sql_query = "INSERT INTO " + table_name + "_printed" + \
                     " (upc, name, image, price, employee ) VALUES (" + \
-                    "'" + upc + "', " + \
+                    '"' + upc + '", ' + \
                     '"' + product_name + '", ' + \
-                    "'" + imgpath + "', " + \
+                    '"' + imgpath + '", ' + \
                     str(product_price) + ", " + \
-                    "'" + employee + "');"
+                    '"' + employee + '");'
             print(sql_query)
             cur.execute(sql_query)
             conn.commit()
             sql_query = "INSERT INTO products (upc, name, image, price, employee, open_date, update_date, last_sold) VALUES (" + \
-                "'" + upc + "', " + \
+                '"' + upc + '", ' + \
                 '"' + product_name + '", ' + \
-                "'" + imgpath + "', " + \
-                "'" + str(product_price) + "', " + \
-                "'" + employee + "', " + \
-                "'" + today.strftime("%Y-%m-%d") + "', " + \
-                "'" + today.strftime("%Y-%m-%d") + "', " + \
-                "'" + today.strftime("%Y-%m-%d") + "'" + \
+                '"' + imgpath + '", ' + \
+                '"' + str(product_price) + '", ' + \
+                '"' + employee + '", ' + \
+                '"' + today.strftime("%Y-%m-%d") + '", ' + \
+                '"' + today.strftime("%Y-%m-%d") + '", ' + \
+                '"' + today.strftime("%Y-%m-%d") + '"' + \
                 ");"
             print(sql_query)
             cur.execute(sql_query)
@@ -1183,7 +1183,7 @@ def target():
             tcin_category = get_tcin_upc(link)
             if (isinstance(tcin_category, int) and tcin_category > 300) or tcin_category['tcin'] == 'Not Found' or tcin_category['category'] == 'Not Found':
                 tcin = category = "Not Found"
-                sql_query = "SELECT * FROM products WHERE upc=" + "'" + link + "'"
+                sql_query = "SELECT * FROM products WHERE upc=" + '"' + link + '"'
                 results = cur.execute(sql_query).fetchall()
                 if len(results):
                     if results[0][15] == "0":
@@ -1194,7 +1194,7 @@ def target():
                         flash("This product is not available now!")
                         id = results[0][0]
                         sql_query = "UPDATE products SET " + \
-                            "update_date=" + "'" + today.strftime('%Y-%m-%d') + "', " + \
+                            "update_date=" + '"' + today.strftime('%Y-%m-%d') + '", ' + \
                             "is_available=0" + \
                             " WHERE id=" + str(id)
                         cur.execute(sql_query)
@@ -1243,14 +1243,14 @@ def target():
             else:
                 tcin = tcin_category['tcin']
                 category = tcin_category['category']
-                sql_query = "SELECT discount FROM discounts WHERE category_name=" + "'" + category + "'"
+                sql_query = "SELECT discount FROM discounts WHERE category_name=" + '"' + category + '"'
                 print(sql_query)
                 results = cur.execute(sql_query).fetchall()
                 print(results)
                 if len(results):
                     categoryFoundFlag = 1
                     discountPercent = results[0][0]
-                sql_query = "SELECT * FROM products WHERE tcin=" + "'" + str(tcin) + "'"
+                sql_query = "SELECT * FROM products WHERE tcin=" + '"' + str(tcin) + '"'
                 results = cur.execute(sql_query).fetchall()
                 if len(results):
                     product_url = results[0][1]
@@ -1318,8 +1318,8 @@ def target():
                         " VALUES (" + \
                         '"' + upcDetails['url'] + '", ' + \
                         '"' + upcDetails['tcin'] + '", ' + \
-                        '"' + upcDetails['name'] + '", ' + \
-                        '"' + upcDetails['description'] + '", ' + \
+                        '"' + upcDetails['name'].replace("\"", " ") + '", ' + \
+                        '"' + upcDetails['description'].replace("\"", " ") + '", ' + \
                         '"' + upcDetails['image'] + '", ' + \
                         '"' + upcDetails['category'] + '", ' + \
                         '"' + upcDetails['price'] + '", ' + \
@@ -1332,15 +1332,15 @@ def target():
                     conn.commit()
                 print(upcDetails)
             sql_query = "INSERT INTO " + table_name + "_scaned" + " (upc, name, description, image, price, category, disc, stock, employee) VALUES (" + \
-                            "'" + upcDetails["upc"] + "', " + \
+                            '"' + upcDetails["upc"] + '", ' + \
                             '"' + upcDetails["name"] + '", ' + \
                             '"' + upcDetails['description'] + '", ' + \
-                            "'" + upcDetails["image"] + "', " + \
-                            "'" + upcDetails["price"] + "', " + \
+                            '"' + upcDetails["image"] + '", ' + \
+                            '"' + upcDetails["price"] + '", ' + \
                             '"' + upcDetails["category"] + '", ' + \
                             '"' + upcDetails["discount"] + '", ' + \
-                            "'" + str(stock) + "', " + \
-                            "'" + employee + "');"
+                            '"' + str(stock) + '", ' + \
+                            '"' + employee + '");'
             print(sql_query)
             cur.execute(sql_query)
             conn.commit()
@@ -1383,15 +1383,15 @@ def target():
             
             # if not 'Not Found' in upcDetails["product_name"]:
             #     sql_query = "INSERT INTO " + table_name + "_scaned" + " (upc, name, description, image, price, category, disc, stock, employee) VALUES (" + \
-            #                 "'" + upcDetails["upc"] + "', " + \
+            #                 '"' + upcDetails["upc"] + '", ' + \
             #                 '"' + upcDetails["product_name"] + '", ' + \
             #                 '"' + upcDetails['product_description'] + '", ' + \
-            #                 "'" + upcDetails["product_image"] + "', " + \
+            #                 '"' + upcDetails["product_image"] + '", ' + \
             #                 str(upcDetails["lowest_price"]) + ", " + \
-            #                 "'" + category + "', " + \
+            #                 '"' + category + '", ' + \
             #                 str(disc) + ", " + \
             #                 str(stock) + ", " + \
-            #                 "'" + employee + "');"
+            #                 '"' + employee + '");'
             #     print(sql_query)
             #     cur.execute(sql_query)
             #     conn.commit()
@@ -1404,31 +1404,31 @@ def target():
             #     else:
             #         upcDetails = get_products_tcin(tcin)
             #         sql_query = "INSERT INTO " + table_name + "_scaned" + " (upc, name, description, image, price, category, disc, stock, employee) VALUES (" + \
-            #                 "'" + upcDetails["upc"] + "', " + \
+            #                 '"' + upcDetails["upc"] + '", ' + \
             #                 '"' + upcDetails["name"] + '", ' + \
             #                 '"' + upcDetails['description'] + '", ' + \
-            #                 "'" + upcDetails["image"] + "', " + \
-            #                 "'" + str(upcDetails["price_min"]) + "', " + \
-            #                 "'" + category + "', " + \
+            #                 '"' + upcDetails["image"] + '", ' + \
+            #                 '"' + str(upcDetails["price_min"]) + '", ' + \
+            #                 '"' + category + '", ' + \
             #                 str(disc) + ", " + \
             #                 str(stock) + ", " + \
-            #                 "'" + employee + "');"
+            #                 '"' + employee + '");'
             #         print(sql_query)
             #         cur.execute(sql_query)
             #         conn.commit()
             #         sql_query = "INSERT INTO products (url, tcin, upc, name, description, image, category, price, open_date, update_date, last_sold, employee) VALUES (" + \
-            #             "'" + upcDetails['url'] + "', " + \
-            #             "'" + tcin + "', " + \
-            #             "'" + upcDetails["upc"] + "', " + \
+            #             '"' + upcDetails['url'] + '", ' + \
+            #             '"' + tcin + '", ' + \
+            #             '"' + upcDetails["upc"] + '", ' + \
             #             '"' + upcDetails["name"] + '", ' + \
             #             '"' + upcDetails['description'] + '", ' + \
-            #             "'" + upcDetails["image"] + "', " + \
-            #             "'" + product_category + "', " + \
-            #             "'" + str(upcDetails["price_min"]) + "', " + \
-            #             "'" + str(today.strftime('%Y-%m-%d')) + "', " + \
-            #             "'" + str(today.strftime('%Y-%m-%d')) + "', " + \
-            #             "'" + str(today.strftime('%Y-%m-%d')) + "', " + \
-            #             "'" + employee + "');"
+            #             '"' + upcDetails["image"] + '", ' + \
+            #             '"' + product_category + '", ' + \
+            #             '"' + str(upcDetails["price_min"]) + '", ' + \
+            #             '"' + str(today.strftime('%Y-%m-%d')) + '", ' + \
+            #             '"' + str(today.strftime('%Y-%m-%d')) + '", ' + \
+            #             '"' + str(today.strftime('%Y-%m-%d')) + '", ' + \
+            #             '"' + employee + '");'
             #         print(sql_query)
             #         cur.execute(sql_query)
             #         conn.commit()
@@ -1469,23 +1469,23 @@ def target():
             # if not 'Not Found' in upcDetails["tcin"] and not '' in upcDetails['tcin']:
             sql_query = "INSERT INTO " + table_name + "_printed" + \
                     " (upc, name, description, image, price, category, disc, stock, employee) VALUES (" + \
-                    "'" + upcDetails['upc'] + "', " + \
-                    "'" + upcDetails['name'] + "', " + \
-                    "'" + upcDetails['description'] + "', " + \
-                    "'" + upcDetails['image'] + "', " + \
-                    "'" + upcDetails['price'] + "', " + \
-                    "'" + upcDetails['category'] + "', " + \
-                    "'" + str(disc) + "', " + \
-                    "'" + str(stock) + "', " + \
-                    "'" + employee + "');"
+                    '"' + upcDetails['upc'] + '", ' + \
+                    '"' + upcDetails['name'] + '", ' + \
+                    '"' + upcDetails['description'] + '", ' + \
+                    '"' + upcDetails['image'] + '", ' + \
+                    '"' + upcDetails['price'] + '", ' + \
+                    '"' + upcDetails['category'] + '", ' + \
+                    '"' + str(disc) + '", ' + \
+                    '"' + str(stock) + '", ' + \
+                    '"' + employee + '");'
             print(sql_query)
             cur.execute(sql_query)
             conn.commit()
             sql_query = "UPDATE products SET " + \
-                        "stock=" + "'" + str(stock) + "', " + \
-                        "last_sold=" + "'" + datetime.datetime.today().strftime("%Y%m%d%H%M%S") + "', " + \
-                        "last_price=" + "'" + str(upcDetails['price']) + "'" + \
-                        " WHERE tcin=" + "'" + upcDetails['tcin'] + "' or upc=" + "'" + link + "'"
+                        "stock=" + '"' + str(stock) + '", ' + \
+                        "last_sold=" + '"' + datetime.datetime.today().strftime("%Y%m%d%H%M%S") + '", ' + \
+                        "last_price=" + '"' + str(upcDetails['price']) + '"' + \
+                        " WHERE tcin=" + '"' + upcDetails['tcin'] + '" or upc=' + '"' + link + '"'
             print(sql_query)
             cur.execute(sql_query)
             conn.commit()
@@ -1501,15 +1501,15 @@ def target():
             # else:
                 # sql_query = "INSERT INTO " + table_name + "_printed" + \
                 #     " (upc, name, description, image, price, category, disc, stock, employee) VALUES (" + \
-                #     "'" + upcDetails['upc'] + "', " + \
-                #     "'" + upcDetails['name'] + "', " + \
-                #     "'" + upcDetails['description'] + "', " + \
-                #     "'" + upcDetails['image'] + "', " + \
-                #     "'" + upcDetails['price'] + "', " + \
-                #     "'" + upcDetails['category'] + "', " + \
-                #     "'" + str(disc) + "', " + \
-                #     "'" + str(stock) + "', " + \
-                #     "'" + employee + "');"
+                #     '"' + upcDetails['upc'] + '", ' + \
+                #     '"' + upcDetails['name'] + '", ' + \
+                #     '"' + upcDetails['description'] + '", ' + \
+                #     '"' + upcDetails['image'] + '", ' + \
+                #     '"' + upcDetails['price'] + '", ' + \
+                #     '"' + upcDetails['category'] + '", ' + \
+                #     '"' + str(disc) + '", ' + \
+                #     '"' + str(stock) + '", ' + \
+                #     '"' + employee + '");'
                 # print(sql_query)
                 # cur.execute(sql_query)
                 # conn.commit()
@@ -1519,11 +1519,11 @@ def target():
                 # imgname = ""
             # elif not upcDetails['is_available']:  # step 9 - print
             #         sql_query = "INSERT INTO " + table_name + "_printed" + " (upc, name, price, disc, last_sold, last_price) VALUES (" + \
-            #                     "'" + upcDetails["upc"] + "', " + \
+            #                     '"' + upcDetails["upc"] + '", ' + \
             #                     '"' + upcDetails["product_name"] + '", ' + \
             #                     str(upcDetails["product_price"]) + ", " + \
             #                     str(disc) + ", " + \
-            #                     "'" + datetime.datetime.today().strftime("%Y-%m-%d") + "', " + \
+            #                     '"' + datetime.datetime.today().strftime("%Y-%m-%d") + '", ' + \
             #                     str(upcDetails['lowest_price']) + ");"
             #         print(sql_query)
             #         cur.execute(sql_query)
@@ -1556,7 +1556,7 @@ def target():
             categoryFoundFlag = 0
             discountPercent = 0
             sql_query = "SELECT discount FROM discounts WHERE category_name=" + \
-                "'" + upcDetails["category"] + "'"
+                '"' + upcDetails["category"] + '"'
             results = cur.execute(sql_query).fetchall()
             if len(results):
                 categoryFoundFlag = 1
@@ -1670,7 +1670,7 @@ def target():
                     }
         
         sql_query = "SELECT discount FROM discounts WHERE category_name=" + \
-            "'" + default_details["product_category"] + "'"
+            '"' + default_details["product_category"] + '"'
         results = cur.execute(sql_query).fetchall()
         if len(results):
             categoryFoundFlag = 1

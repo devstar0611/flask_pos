@@ -546,14 +546,14 @@ target_url = TARGET_PRODUCT
 #     #     product_category = product["product_category"]
 #     #     if product_upc == 'Not Found':
 #     #         # current product is unavailable
-#     #         sql_query = "SELECT * FROM products WHERE url=" + "'" + product_url + "'"
+#     #         sql_query = "SELECT * FROM products WHERE url=" + '"' + product_url + '"'
 #     #         if len(cur.execute(sql_query).fetchall()):
 #     #             # it is existed in database
 #     #             sql_query = "UPDATE products SET " + \
-#     #                 "update_date=" + "'" + today + "', " +  \
-#     #                 "close_date=" + "'" + today + "', " +  \
+#     #                 "update_date=" + '"' + today + '", ' +  \
+#     #                 "close_date=" + '"' + today + '", ' +  \
 #     #                 "is_available=0" + ", " +  \
-#     #                 " WHERE url=" + "'" + product_url + "'"
+#     #                 " WHERE url=" + '"' + product_url + '"'
 #     #             print(sql_query)
 #     #             cur.execute(sql_query)
 #     #             conn.commit()
@@ -561,11 +561,11 @@ target_url = TARGET_PRODUCT
 #     #             # it is not existed in database
 #     #             sql_query = "INSERT INTO products " + \
 #     #                         " (url, upc, name, description, image, price, category, open_date, update_date, close_cate, is_available) VALUES (" + \
-#     #                         "'" + product_url + "', " + \
+#     #                         '"' + product_url + '", ' + \
 #     #                         '"' + product_upc + '", ' + \
 #     #                         '"' + product_name + '", ' + \
 #     #                         '"' + product_description + '", ' + \
-#     #                         "'" + product_imageurl + "', " + \
+#     #                         '"' + product_imageurl + '", ' + \
 #     #                         str(product_price) + ", " + \
 #     #                         '"' + product_category + '", ' + \
 #     #                         '"' + today + '", ' + \
@@ -577,17 +577,17 @@ target_url = TARGET_PRODUCT
 #     #             conn.commit()
 #     #     else:
 #     #         # current product is available
-#     #         sql_query = "SELECT * FROM products WHERE upc=" + "'" + product_upc + "'"
+#     #         sql_query = "SELECT * FROM products WHERE upc=" + '"' + product_upc + '"'
 #     #         if len(cur.execute(sql_query).fetchall()):
 #     #             # it is existed in database
 #     #             sql_query = "UPDATE products SET " + \
-#     #                         "name=" + "'" + product_name + "'" + ", " + \
-#     #                         "description=" + "'" + product_description + "'" + ", " + \
-#     #                         "image=" + "'" + product_imageurl + "', " +  \
-#     #                         "category=" + "'" + product_category + "', " +  \
+#     #                         "name=" + '"' + product_name + '"' + ", " + \
+#     #                         "description=" + '"' + product_description + '"' + ", " + \
+#     #                         "image=" + '"' + product_imageurl + '", ' +  \
+#     #                         "category=" + '"' + product_category + '", ' +  \
 #     #                         "price=" + str(product_price) + ", " +  \
-#     #                         "update_date=" + "'" + today + "', " +  \
-#     #                         " WHERE upc=" + "'" + product_upc + "'"
+#     #                         "update_date=" + '"' + today + '", ' +  \
+#     #                         " WHERE upc=" + '"' + product_upc + '"'
 #     #             print(sql_query)
 #     #             cur.execute(sql_query)
 #     #             conn.commit()
@@ -595,11 +595,11 @@ target_url = TARGET_PRODUCT
 #     #             # it is not existed in database = new data
 #     #             sql_query = "INSERT INTO products " + \
 #     #                         " (url, upc, name, description, image, price, category, open_date, update_date) VALUES (" + \
-#     #                         "'" + product_url + "', " + \
+#     #                         '"' + product_url + '", ' + \
 #     #                         '"' + product_upc + '", ' + \
 #     #                         '"' + product_name + '", ' + \
 #     #                         '"' + product_description + '", ' + \
-#     #                         "'" + product_imageurl + "', " + \
+#     #                         '"' + product_imageurl + '", ' + \
 #     #                         str(product_price) + ", " + \
 #     #                         '"' + product_category + '", ' + \
 #     #                         '"' + today + '", ' + \
@@ -625,22 +625,22 @@ def insert_into_table(product_info):
     
     disc = "0"
     sql_query = "SELECT discount FROM discounts WHERE category_name=" + \
-        "'" + product_info['category'] + "'"
+        '"' + product_info['category'] + '"'
     print(sql_query)
     results = cur.execute(sql_query).fetchall()
     # print(results)
     if len(results):
         disc = str(results[0][0])
     sql_query = "SELECT * FROM products WHERE tcin=" + \
-        "'" + product_info['tcin'] + "'"
+        '"' + product_info['tcin'] + '"'
     print(sql_query)
     results = cur.execute(sql_query).fetchall()
     if len(results):
         id = results[0][0]
         sql_query = "UPDATE products SET " + \
-                    "price=" + "'" + product_info['price_min'] + "', " +  \
-                    "disc=" + "'" + disc + "', " +  \
-                    "update_date=" + "'" + today + "' " +  \
+                    "price=" + '"' + product_info['price_min'] + '", ' +  \
+                    "disc=" + '"' + disc + '", ' +  \
+                    "update_date=" + '"' + today + '" ' +  \
                     " WHERE id=" + str(id)
         print(sql_query)
         cur.execute(sql_query)
@@ -918,7 +918,7 @@ def get_tcin_upc(upc):
                 tcin = "Not Found"
             return {
                 'tcin': str(tcin),
-                'category': str(category).replace('"', "'")
+                'category': str(category).replace('"', '"')
             }
     else:
         return {
