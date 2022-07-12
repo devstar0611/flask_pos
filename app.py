@@ -1206,8 +1206,9 @@ def target():
             tcin_category = get_tcin_upc(link)
             if isinstance(tcin_category, int) and tcin_category > 300:
                 tcin = category = "Not Found"
-            tcin = tcin_category['tcin']
-            category = tcin_category['category']
+            else:
+                tcin = tcin_category['tcin']
+                category = tcin_category['category']
             # get_products_upc(link)
             
             # starting time
