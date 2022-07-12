@@ -1466,8 +1466,8 @@ def target():
             
             print(upcDetails)
             
-            if not 'Not Found' in upcDetails["tcin"] and not '' in upcDetails['tcin']:
-                sql_query = "INSERT INTO " + table_name + "_printed" + \
+            # if not 'Not Found' in upcDetails["tcin"] and not '' in upcDetails['tcin']:
+            sql_query = "INSERT INTO " + table_name + "_printed" + \
                     " (upc, name, description, image, price, category, disc, stock, employee) VALUES (" + \
                     "'" + upcDetails['upc'] + "', " + \
                     "'" + upcDetails['name'] + "', " + \
@@ -1478,46 +1478,45 @@ def target():
                     "'" + str(disc) + "', " + \
                     "'" + str(stock) + "', " + \
                     "'" + employee + "');"
-                print(sql_query)
-                cur.execute(sql_query)
-                conn.commit()
-                sql_query = "UPDATE products SET " + \
+            print(sql_query)
+            cur.execute(sql_query)
+            conn.commit()
+            sql_query = "UPDATE products SET " + \
                         "stock=" + "'" + str(stock) + "', " + \
                         "last_sold=" + "'" + datetime.datetime.today().strftime("%Y%m%d%H%M%S") + "', " + \
                         "last_price=" + "'" + str(upcDetails['price']) + "'" + \
-                        " WHERE tcin=" + "'" + upcDetails['tcin'] + "'"
-                print(sql_query)
-                cur.execute(sql_query)
-                conn.commit()
-                zpl = printlabel(
-                    upcDetails['upc'], upcDetails['name'], upcDetails['price'], disc)
+                        " WHERE tcin=" + "'" + upcDetails['tcin'] + "' or upc=" + "'" + link + "'"
+            print(sql_query)
+            cur.execute(sql_query)
+            conn.commit()
+            zpl = printlabel(upcDetails['upc'], upcDetails['name'], upcDetails['price'], disc)
 
-                try:
+            try:
                     printlabels = int(request.form["printlabels"])
-                except:
+            except:
                     printlabels = 1
 
-                imgname = open_acrobat_print(printlabels)
+            imgname = open_acrobat_print(printlabels)
 
-            else:
-                sql_query = "INSERT INTO " + table_name + "_printed" + \
-                    " (upc, name, description, image, price, category, disc, stock, employee) VALUES (" + \
-                    "'" + upcDetails['upc'] + "', " + \
-                    "'" + upcDetails['name'] + "', " + \
-                    "'" + upcDetails['description'] + "', " + \
-                    "'" + upcDetails['image'] + "', " + \
-                    "'" + upcDetails['price'] + "', " + \
-                    "'" + upcDetails['category'] + "', " + \
-                    "'" + str(disc) + "', " + \
-                    "'" + str(stock) + "', " + \
-                    "'" + employee + "');"
-                print(sql_query)
-                cur.execute(sql_query)
-                conn.commit()
-                flash("Wrong product name!")
-                flash("Please try again with another product!")
-                zpl = ""
-                imgname = ""
+            # else:
+                # sql_query = "INSERT INTO " + table_name + "_printed" + \
+                #     " (upc, name, description, image, price, category, disc, stock, employee) VALUES (" + \
+                #     "'" + upcDetails['upc'] + "', " + \
+                #     "'" + upcDetails['name'] + "', " + \
+                #     "'" + upcDetails['description'] + "', " + \
+                #     "'" + upcDetails['image'] + "', " + \
+                #     "'" + upcDetails['price'] + "', " + \
+                #     "'" + upcDetails['category'] + "', " + \
+                #     "'" + str(disc) + "', " + \
+                #     "'" + str(stock) + "', " + \
+                #     "'" + employee + "');"
+                # print(sql_query)
+                # cur.execute(sql_query)
+                # conn.commit()
+                # flash("Wrong product name!")
+                # flash("Please try again with another product!")
+                # zpl = ""
+                # imgname = ""
             # elif not upcDetails['is_available']:  # step 9 - print
             #         sql_query = "INSERT INTO " + table_name + "_printed" + " (upc, name, price, disc, last_sold, last_price) VALUES (" + \
             #                     "'" + upcDetails["upc"] + "', " + \
