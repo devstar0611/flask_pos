@@ -116,9 +116,7 @@ def testing():
 def add_produtcs():
     conn = sqlite3.connect('mydb.db')
     cur = conn.cursor()
-    print(sql_query)
-    cur.execute(sql_query)
-    conn.commit()    
+    print(sql_query)  
     global upcDetails
     try:
         vender = upcDetails["employee"]
