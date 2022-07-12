@@ -1186,15 +1186,15 @@ def target():
                 results = cur.execute(sql_query).fetchall()
                 if len(results):
                     if results[0][15] == "0":
-                        flash([{
-                            "title": "Not found product's tcin with current upc on target.com!",
-                            "text": "This product is not available yet!"
-                        }])
+                        flash([
+                            "Not found product's tcin with current upc on target.com!",
+                            "This product is not available yet!"
+                        ])
                     else:
-                        flash([{
-                            "title": "Not found product's tcin with current upc on target.com!",
-                            "text": "This product is not available now!"
-                        }])
+                        flash([
+                            "Not found product's tcin with current upc on target.com!",
+                            "This product is not available now!"
+                        ])
                         id = results[0][0]
                         sql_query = "UPDATE products SET " + \
                             "update_date=" + "'" + today.strftime('%Y-%m-%d') + "', " + \
@@ -1239,10 +1239,10 @@ def target():
                     }
                     
                 else:
-                    flash([{
-                        "title": "Not found product's tcin with current upc on target.com!",
-                        "text": "It may be new product!"
-                    }])
+                    flash([
+                        "Not found product's tcin with current upc on target.com!",
+                        "It may be new product!"
+                    ])
                     return redirect(url_for('add_produtcs', vender=employee, upc=link))
                     
             else:
@@ -1304,10 +1304,10 @@ def target():
                         target_product_price = 0
                         lowest_price = 0
                 else:
-                    flash([{
-                        "title": "Not found product's tcin with current upc on target.com!",
-                        "text": "It is new product!"
-                    }])
+                    flash([
+                        "Not found product's tcin with current upc on target.com!",
+                        "It is new product!"
+                    ])
                     product_info = get_products_tcin(tcin)
                     upcDetails = {
                         "url": product_info['url'],
@@ -1521,10 +1521,10 @@ def target():
                 print(sql_query)
                 cur.execute(sql_query)
                 conn.commit()
-                flash([{
-                    "title": "Wrong product name!",
-                    "text": "Please try again with another product!"
-                }])
+                flash([
+                    "Wrong product name!",
+                    "Please try again with another product!"
+                ])
                 zpl = ""
                 imgname = ""
             # elif not upcDetails['is_available']:  # step 9 - print
