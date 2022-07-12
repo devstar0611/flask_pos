@@ -174,8 +174,9 @@ def add_produtcs():
                 "'" + upc + "', " + \
                 '"' + product_name + '", ' + \
                 "'" + imgpath + "', " + \
-                str(product_price) + ", " + \
+                "'" + str(product_price) + "', " + \
                 "'" + employee + "', " + \
+                "'" + today.strftime("%Y-%m-%d") + "', " + \
                 "'" + today.strftime("%Y-%m-%d") + "', " + \
                 "'" + today.strftime("%Y-%m-%d") + "'" + \
                 ");"
