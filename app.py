@@ -1507,7 +1507,7 @@ def target():
                     "'" + upcDetails['description'] + "', " + \
                     "'" + upcDetails['image'] + "', " + \
                     "'" + upcDetails['price'] + "', " + \
-                    "'" + upcDetails['category'] + ", " + \
+                    "'" + upcDetails['category'] + "', " + \
                     "'" + str(disc) + "', " + \
                     "'" + str(stock) + "', " + \
                     "'" + employee + "');"
