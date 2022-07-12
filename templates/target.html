@@ -239,6 +239,19 @@
         
         
                         </nav>
+                        <nav class="alert alert-success navbar navbar-expand navbar-light topbar mb-4 static-top shadow">
+                             <div>
+                                 <h1 class="h4 mb-2 text-gray-800">New Product Fetched</h1>
+                                 {% with messages = get_flashed_messages() %}
+                                    {% if messages %}
+                                        {% for message in messages%}
+                                            <p>{{message}}</p>
+                                        {% endfor %}
+                                    {% endif %}
+                                 {% endwith %}  
+                                 
+                                </div>
+                            </nav>
                         <!-- End of Topbar -->
         
                         <!-- Begin Page Content -->

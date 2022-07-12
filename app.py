@@ -1340,7 +1340,7 @@ def target():
                             '"' + upcDetails['product_description'] + '", ' + \
                             "'" + upcDetails["product_image"] + "', " + \
                             str(upcDetails["lowest_price"]) + ", " + \
-                            "'" + upcDetails["product_category"] + "', " + \
+                            "'" + category + "', " + \
                             str(disc) + ", " + \
                             str(stock) + ", " + \
                             "'" + employee + "');"
@@ -1351,8 +1351,39 @@ def target():
                 pass
             else:   # new product
                 flash("Please add this product into your database!")
-                # return render_template('add.html', count=0, zpl="", label="", upc=upcDetails["upc"])
-                return redirect(url_for('add_produtcs', vender=employee, upc=upcDetails["upc"]))
+                if tcin == 'Not Found':
+                    return redirect(url_for('add_produtcs', vender=employee, upc=upcDetails["upc"]))
+                else:
+                    upcDetails = get_products_tcin(tcin)
+                    sql_query = "INSERT INTO " + table_name + "_scaned" + " (upc, name, description, image, price, category, disc, stock, employee) VALUES (" + \
+                            "'" + upcDetails["upc"] + "', " + \
+                            '"' + upcDetails["name"] + '", ' + \
+                            '"' + upcDetails['description'] + '", ' + \
+                            "'" + upcDetails["image"] + "', " + \
+                            "'" + str(upcDetails["price_min"]) + "', " + \
+                            "'" + category + "', " + \
+                            str(disc) + ", " + \
+                            str(stock) + ", " + \
+                            "'" + employee + "');"
+                    print(sql_query)
+                    cur.execute(sql_query)
+                    conn.commit()
+                    sql_query = "INSERT INTO products (url, tcin, upc, name, description, image, category, price, open_date, update_date, last_sold, employee) VALUES (" + \
+                        "'" + upcDetails['url'] + "', " + \
+                        "'" + tcin + "', " + \
+                        "'" + upcDetails["upc"] + "', " + \
+                        '"' + upcDetails["name"] + '", ' + \
+                        '"' + upcDetails['description'] + '", ' + \
+                        "'" + upcDetails["image"] + "', " + \
+                        "'" + product_category + "', " + \
+                        "'" + str(upcDetails["price_min"]) + "', " + \
+                        "'" + str(today.strftime('%Y-%m-%d')) + "', " + \
+                        "'" + str(today.strftime('%Y-%m-%d')) + "', " + \
+                        "'" + str(today.strftime('%Y-%m-%d')) + "', " + \
+                        "'" + employee + "');"
+                    print(sql_query)
+                    cur.execute(sql_query)
+                    conn.commit()
 
             # writeAllDetailsInCSV(upc, product_name, product_description,
             #                      product_image, product_price, disc, stock, employee)
@@ -1660,4 +1691,4 @@ th = myThread(0, 'Start Testing...',  2)
 # th.start()
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=8000, debug=True)
