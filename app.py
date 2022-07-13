@@ -67,7 +67,7 @@ def testing():
     # Testing weekly
     if today.weekday() == 0:
         print("updating database....")
-        # notify('Updating DB....', "Today is Monday, so system is doing updating database")
+        notify('Updating DB....', "Today is Monday, so system is doing updating database")
         conn = sqlite3.connect('mydb.db')
         cur = conn.cursor()
         # start - updating database
