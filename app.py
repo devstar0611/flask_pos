@@ -82,29 +82,56 @@ def testing():
             categories = json.load(open(os.path.join("categories.json")))
             get_products_category(categories)
             sql_query = "INSERT INTO history (date) VALUES (" + '"' + today.strftime("%Y-%m-%d") + '"' + ")"
+            cur.execute(sql_query)
+            conn.commit()
         # end - updating database
         # start - testing product is available
-        sql_query = "SELECT * FROM products ORDER BY update_date DESC"
+        sql_query = "SELECT * FROM products_manual ORDER BY update_date DESC"
         results = cur.execute(sql_query).fetchall()
         for row in results:
             if row[13] != today.strftime('%Y-%m-%d'):
-                sql_query = "UPDATE products SET is_available=0 WHERE id=" + str(row[0])
+                sql_query = "UPDATE products_manual SET is_available=0 WHERE id=" + str(row[0])
+                cur.execute(sql_query)
+                conn.commit()
         today_m = int(today.strftime("%m"))
-        sql_query = "SELECT tcin, open_date, update_date, last_sold, is_available FROM products"
+        sql_query = "SELECT tcin, open_date, update_date, last_sold, is_available FROM products_manual"
         results = cur.execute(sql_query).fetchall()
         for row in results:
             if (today_m + 12 - int(row[2].split('-')[1])) % 12 > 6 and not row[0][4]:
                 # deleting unavailable product from database
-                sql_query = "DELETE FROM products WHERE tcin=" + \
-                    '"' + row[0] + '"'
+                sql_query = "DELETE FROM products_manual WHERE tcin=" + '"' + row[0] + '"'
                 cur.execute(sql_query)
                 conn.commit()
             elif row[3] != "0000-00-00" and (today_m + 12 - int(row[3].split('-')[1])) % 12 > 3:
                 # not sold in 3 months product
-                sql_query = "DELETE FROM products WHERE tcin=" + \
-                    '"' + row[0] + '"'
+                sql_query = "DELETE FROM products_manual WHERE tcin=" + '"' + row[0] + '"'
                 cur.execute(sql_query)
                 conn.commit()
+        for category in categories:
+            products_table = category['name'] + "_products"
+            products_table.replace(" ", "")
+            sql_query = "SELECT * FROM " + products_table + " ORDER BY update_date DESC"
+            results = cur.execute(sql_query).fetchall()
+            for row in results:
+                if row[13] != today.strftime('%Y-%m-%d'):
+                    sql_query = "UPDATE " + products_table + " SET is_available=0 WHERE id=" + str(row[0])
+                    cur.execute(sql_query)
+                    conn.commit()
+            today_m = int(today.strftime("%m"))
+            sql_query = "SELECT tcin, open_date, update_date, last_sold, is_available FROM " + products_table
+            results = cur.execute(sql_query).fetchall()
+            for row in results:
+                if (today_m + 12 - int(row[2].split('-')[1])) % 12 > 6 and not row[0][4]:
+                    # deleting unavailable product from database
+                    sql_query = "DELETE FROM " + products_table + " WHERE tcin=" + '"' + row[0] + '"'
+                    cur.execute(sql_query)
+                    conn.commit()
+                elif row[3] != "0000-00-00" and (today_m + 12 - int(row[3].split('-')[1])) % 12 > 3:
+                    # not sold in 3 months product
+                    sql_query = "DELETE FROM " + products_table + " WHERE tcin=" + '"' + row[0] + '"'
+                    cur.execute(sql_query)
+                    conn.commit()
+                    
 
         # end - testing product is available
         conn.close()
@@ -116,6 +143,24 @@ def testing():
 def add_produtcs():
     conn = sqlite3.connect('mydb.db')
     cur = conn.cursor()
+    sql_query = "CREATE TABLE IF NOT EXISTS products_manual" + \
+                    " ( id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " + \
+                    "url TEXT," + \
+                    "tcin TEXT," + \
+                    "upc TEXT," + \
+                    "name TEXT," + \
+                    "description TEXT," + \
+                    "image TEXT," + \
+                    "category TEXT," + \
+                    "price TEXT," + \
+                    "disc TEXT," + \
+                    "stock TEXT," + \
+                    "employee TEXT," + \
+                    "open_date TEXT," + \
+                    "update_date TEXT," + \
+                    "is_available integer DEFAULT 1," + \
+                    "last_sold TEXT," + \
+                    "last_price TEXT);"
     global upcDetails
     try:
         vender = upcDetails["employee"]
@@ -170,7 +215,7 @@ def add_produtcs():
             print(sql_query)
             cur.execute(sql_query)
             conn.commit()
-            sql_query = "INSERT INTO products (upc, name, image, price, employee, open_date, update_date, last_sold) VALUES (" + \
+            sql_query = "INSERT INTO products_manual (upc, name, image, price, employee, open_date, update_date, last_sold) VALUES (" + \
                 '"' + upc + '", ' + \
                 '"' + product_name + '", ' + \
                 '"' + imgpath + '", ' + \
@@ -1066,11 +1111,13 @@ def upload_products_to_ig():
 
     return
 
+table_name_products = ""
+
 @app.route('/', methods = ['GET', 'POST'])
 def target():
     conn = sqlite3.connect('mydb.db')
     cur = conn.cursor()
-    global table_name
+    global table_name, table_name_products
     table_name = "data" + \
                     (datetime.datetime.today().strftime("%Y%m%d"))
     sql_query = "CREATE TABLE IF NOT EXISTS " + table_name + "_scaned" + \
@@ -1183,7 +1230,9 @@ def target():
             tcin_category = get_tcin_upc(link)
             if (isinstance(tcin_category, int) and tcin_category > 300) or tcin_category['tcin'] == 'Not Found' or tcin_category['category'] == 'Not Found':
                 tcin = category = "Not Found"
-                sql_query = "SELECT * FROM products WHERE upc=" + '"' + link + '"'
+                table_name_products = category + "_products"
+                table_name_products.replace(" ", "")
+                sql_query = "SELECT * FROM products_manual WHERE upc=" + '"' + link + '"'
                 results = cur.execute(sql_query).fetchall()
                 if len(results):
                     if results[0][15] == "0":
@@ -1193,7 +1242,7 @@ def target():
                         flash("Not found product's tcin with current upc on target.com!")
                         flash("This product is not available now!")
                         id = results[0][0]
-                        sql_query = "UPDATE products SET " + \
+                        sql_query = "UPDATE products_manual SET " + \
                             "update_date=" + '"' + today.strftime('%Y-%m-%d') + '", ' + \
                             "is_available=0" + \
                             " WHERE id=" + str(id)
@@ -1243,6 +1292,8 @@ def target():
             else:
                 tcin = tcin_category['tcin']
                 category = tcin_category['category']
+                table_name_products = category + "_products"
+                table_name_products.replace(" ", "")
                 sql_query = "SELECT discount FROM discounts WHERE category_name=" + '"' + category + '"'
                 print(sql_query)
                 results = cur.execute(sql_query).fetchall()
@@ -1250,7 +1301,8 @@ def target():
                 if len(results):
                     categoryFoundFlag = 1
                     discountPercent = results[0][0]
-                sql_query = "SELECT * FROM products WHERE tcin=" + '"' + str(tcin) + '"'
+                sql_query = "SELECT * FROM " + table_name_products + \
+                    " WHERE tcin=" + '"' + str(tcin) + '"'
                 results = cur.execute(sql_query).fetchall()
                 if len(results):
                     product_url = results[0][1]
@@ -1314,7 +1366,7 @@ def target():
                         "discount": str(discountPercent),
                         "employee": employee
                     }
-                    sql_query = 'INSERT INTO products (url, tcin, name, description, image, category, price, disc, employee, open_date, update_date) ' + \
+                    sql_query = 'INSERT INTO ' + table_name_products + ' (url, tcin, name, description, image, category, price, disc, employee, open_date, update_date) ' + \
                         " VALUES (" + \
                         '"' + upcDetails['url'] + '", ' + \
                         '"' + upcDetails['tcin'] + '", ' + \
@@ -1481,7 +1533,7 @@ def target():
             print(sql_query)
             cur.execute(sql_query)
             conn.commit()
-            sql_query = "UPDATE products SET " + \
+            sql_query = "UPDATE " + table_name_products + " SET " + \
                         "stock=" + '"' + str(stock) + '", ' + \
                         "last_sold=" + '"' + datetime.datetime.today().strftime("%Y%m%d%H%M%S") + '", ' + \
                         "last_price=" + '"' + str(upcDetails['price']) + '"' + \
