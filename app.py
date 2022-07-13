@@ -109,7 +109,7 @@ def testing():
                 conn.commit()
         for category in categories:
             products_table = category['name'] + "_products"
-            products_table.replace(" ", "")
+            products_table = products_table.replace(" ", "")
             sql_query = "SELECT * FROM " + products_table + " ORDER BY update_date DESC"
             results = cur.execute(sql_query).fetchall()
             for row in results:
@@ -1231,7 +1231,7 @@ def target():
             if (isinstance(tcin_category, int) and tcin_category > 300) or tcin_category['tcin'] == 'Not Found' or tcin_category['category'] == 'Not Found':
                 tcin = category = "Not Found"
                 table_name_products = category + "_products"
-                table_name_products.replace(" ", "")
+                table_name_products = table_name_products.replace(" ", "")
                 sql_query = "SELECT * FROM products_manual WHERE upc=" + '"' + link + '"'
                 results = cur.execute(sql_query).fetchall()
                 if len(results):
@@ -1293,7 +1293,7 @@ def target():
                 tcin = tcin_category['tcin']
                 category = tcin_category['category']
                 table_name_products = category + "_products"
-                table_name_products.replace(" ", "")
+                table_name_products = table_name_products.replace(" ", "")
                 sql_query = "SELECT discount FROM discounts WHERE category_name=" + '"' + category + '"'
                 print(sql_query)
                 results = cur.execute(sql_query).fetchall()
