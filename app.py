@@ -1254,6 +1254,7 @@ def target():
             
             
             tcin_category = get_tcin_upc(link)
+            
             if (isinstance(tcin_category, int) and tcin_category > 300) or tcin_category['tcin'] == 'Not Found' or tcin_category['category'] == 'Not Found':
                 tcin = category = "Not Found"
                 table_name_products = category + "_products"
