@@ -110,25 +110,29 @@ def testing():
         for category in categories:
             products_table = category['name'] + "_products"
             products_table = products_table.replace(" ", "")
-            sql_query = "SELECT * FROM " + products_table + " ORDER BY update_date DESC"
+            sql_query = "SELECT * FROM " + '"' + products_table + '"' + " ORDER BY update_date DESC"
             results = cur.execute(sql_query).fetchall()
             for row in results:
                 if row[13] != today.strftime('%Y-%m-%d'):
-                    sql_query = "UPDATE " + products_table + " SET is_available=0 WHERE id=" + str(row[0])
+                    sql_query = "UPDATE " + '"' + products_table + '"' + \
+                        " SET is_available=0 WHERE id=" + str(row[0])
                     cur.execute(sql_query)
                     conn.commit()
             today_m = int(today.strftime("%m"))
-            sql_query = "SELECT tcin, open_date, update_date, last_sold, is_available FROM " + products_table
+            sql_query = "SELECT tcin, open_date, update_date, last_sold, is_available FROM " + \
+                '"' + products_table + '"'
             results = cur.execute(sql_query).fetchall()
             for row in results:
                 if (today_m + 12 - int(row[2].split('-')[1])) % 12 > 6 and not row[0][4]:
                     # deleting unavailable product from database
-                    sql_query = "DELETE FROM " + products_table + " WHERE tcin=" + '"' + row[0] + '"'
+                    sql_query = "DELETE FROM " + '"' + products_table + \
+                        '"' + " WHERE tcin=" + '"' + row[0] + '"'
                     cur.execute(sql_query)
                     conn.commit()
                 elif row[3] != "0000-00-00" and (today_m + 12 - int(row[3].split('-')[1])) % 12 > 3:
                     # not sold in 3 months product
-                    sql_query = "DELETE FROM " + products_table + " WHERE tcin=" + '"' + row[0] + '"'
+                    sql_query = "DELETE FROM " + '"' + products_table + \
+                        '"' + " WHERE tcin=" + '"' + row[0] + '"'
                     cur.execute(sql_query)
                     conn.commit()
                     
@@ -1301,7 +1305,7 @@ def target():
                 if len(results):
                     categoryFoundFlag = 1
                     discountPercent = results[0][0]
-                sql_query = "SELECT * FROM " + table_name_products + \
+                sql_query = "SELECT * FROM " + '"' +  table_name_products + '"' + \
                     " WHERE tcin=" + '"' + str(tcin) + '"'
                 results = cur.execute(sql_query).fetchall()
                 if len(results):
@@ -1366,7 +1370,7 @@ def target():
                         "discount": str(discountPercent),
                         "employee": employee
                     }
-                    sql_query = 'INSERT INTO ' + table_name_products + ' (url, tcin, name, description, image, category, price, disc, employee, open_date, update_date) ' + \
+                    sql_query = 'INSERT INTO ' + '"' +  table_name_products + '"' + ' (url, tcin, name, description, image, category, price, disc, employee, open_date, update_date) ' + \
                         " VALUES (" + \
                         '"' + upcDetails['url'] + '", ' + \
                         '"' + upcDetails['tcin'] + '", ' + \
@@ -1533,7 +1537,7 @@ def target():
             print(sql_query)
             cur.execute(sql_query)
             conn.commit()
-            sql_query = "UPDATE " + table_name_products + " SET " + \
+            sql_query = "UPDATE " + '"' +  table_name_products + '"' + " SET " + \
                         "stock=" + '"' + str(stock) + '", ' + \
                         "last_sold=" + '"' + datetime.datetime.today().strftime("%Y%m%d%H%M%S") + '", ' + \
                         "last_price=" + '"' + str(upcDetails['price']) + '"' + \
