@@ -1329,6 +1329,7 @@ def target():
                     discountPercent = results[0][0]
                 sql_query = "SELECT * FROM " + '"' +  table_name_products + '"' + \
                     " WHERE tcin=" + '"' + str(tcin) + '"'
+                print(sql_query)
                 results = cur.execute(sql_query).fetchall()
                 if len(results):
                     product_url = results[0][1]
