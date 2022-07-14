@@ -165,6 +165,8 @@ def add_produtcs():
                     "is_available integer DEFAULT 1," + \
                     "last_sold TEXT," + \
                     "last_price TEXT);"
+    cur.execute(sql_query)
+    conn.commit()
     global upcDetails
     try:
         vender = upcDetails["employee"]
@@ -1152,6 +1154,26 @@ def target():
     print(sql_query)
     cur.execute(sql_query)
     conn.commit()    
+    sql_query = "CREATE TABLE IF NOT EXISTS products_manual" + \
+        " ( id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " + \
+        "url TEXT," + \
+        "tcin TEXT," + \
+        "upc TEXT," + \
+        "name TEXT," + \
+        "description TEXT," + \
+        "image TEXT," + \
+        "category TEXT," + \
+        "price TEXT," + \
+        "disc TEXT," + \
+        "stock TEXT," + \
+        "employee TEXT," + \
+        "open_date TEXT," + \
+        "update_date TEXT," + \
+        "is_available integer DEFAULT 1," + \
+        "last_sold TEXT," + \
+        "last_price TEXT);"
+    cur.execute(sql_query)
+    conn.commit()
     global upcDetails
     
     if request.method == "POST":
