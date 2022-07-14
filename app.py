@@ -1262,7 +1262,7 @@ def target():
                 sql_query = "SELECT * FROM products_manual WHERE upc=" + '"' + link + '"'
                 results = cur.execute(sql_query).fetchall()
                 if len(results):
-                    if results[0][15] == "0":
+                    if results[0][14] == "0":
                         flash("Not found product's tcin with current upc on target.com!")
                         flash("This product is not available yet!")
                     else:
@@ -1288,9 +1288,9 @@ def target():
                     product_open = results[0][12]
                     product_update = results[0][13]
                     # product_close = results[0][14]
-                    # product_is_available = results[0][15]
-                    product_last_sold = results[0][16]
-                    product_last_price = results[0][17]
+                    # product_is_available = results[0][14]
+                    product_last_sold = results[0][15]
+                    product_last_price = results[0][16]
                     upcDetails = {
                         "url": product_url,
                         "tcin": tcin,
@@ -1346,9 +1346,9 @@ def target():
                     product_open = results[0][12]
                     product_update = results[0][13]
                     # product_close = results[0][14]
-                    # product_is_available = results[0][15]
-                    product_last_sold = results[0][16]
-                    product_last_price = results[0][17]
+                    # product_is_available = results[0][14]
+                    product_last_sold = results[0][15]
+                    product_last_price = results[0][16]
                     
                     upcDetails = {
                         "url": product_url,
