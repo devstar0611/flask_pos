@@ -10,7 +10,7 @@ from openpyxl import load_workbook
 from ig import postInstagram
 import os
 import pandas as pd
-from scraper_test import get_products_upc, get_products_category, get_products_tcin, get_tcin_upc, insert_into_table
+from updating import get_products_category, get_products_tcin, get_tcin_upc
 
 from flask_session import Session
 import datetime
