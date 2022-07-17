@@ -1379,7 +1379,7 @@ def target():
                         target_product_price = 0
                         lowest_price = 0
                 else:
-                    flash("Not found product's tcin with current upc on target.com!")
+                    flash("Not found product's tcin with current upc in database")
                     flash("It is new product!")
                     product_info = get_products_tcin(tcin)
                     upcDetails = {
