@@ -277,7 +277,11 @@ def get_products_tcin(tcin):
         try:
             price_min = product_info['price']['reg_retail_min']
         except:
-            price_min = 'Not Found'
+            try:
+                price_min = product_info['price']['current_retail']
+            except:
+
+                price_min = 'Not Found'
         # print("product info=", {
         #     "url": url,
         #     "upc": barcode,
