@@ -1849,7 +1849,7 @@ def target():
                     }
         
         for name, discount in categories.items():
-            if name in category:
+            if name in "Select":
                 categoryFoundFlag = 1
                 discountPercent = discount
 
