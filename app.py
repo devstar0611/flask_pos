@@ -1394,6 +1394,12 @@ def target():
                         "discount": str(discountPercent),
                         "employee": employee
                     }
+                    try:
+                        target_product_price = upcDetails["price"]
+                        lowest_price = float(target_product_price)
+                    except:
+                        target_product_price = 0
+                        lowest_price = 0
                     sql_query = 'INSERT INTO ' + '"' +  table_name_products + '"' + ' (url, tcin, name, description, image, category, price, disc, employee, open_date, update_date) ' + \
                         " VALUES (" + \
                         '"' + upcDetails['url'] + '", ' + \
