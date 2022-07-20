@@ -145,6 +145,9 @@ def testing():
 
 @app.route('/add', methods = ['GET', 'POST'])
 def add_produtcs():
+    global table_name
+    table_name = "data" + \
+        (datetime.datetime.today().strftime("%Y%m%d"))
     conn = sqlite3.connect('mydb.db')
     cur = conn.cursor()
     sql_query = "CREATE TABLE IF NOT EXISTS products_manual" + \
