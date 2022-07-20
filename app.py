@@ -1441,6 +1441,8 @@ def target():
                         conn.commit()
 
                 except:
+                    flash("Not found product's tcin with current upc in database")
+                    flash("It is new product and new Category!\nCreate new table in database.")
                     sql_query = "CREATE TABLE IF NOT EXISTS " + '"' + table_name_products + '"' + \
                         " ( id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " + \
                         "url TEXT," + \
