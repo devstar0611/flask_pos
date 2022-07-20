@@ -1729,7 +1729,7 @@ def target():
             categoryFoundFlag = 0
             discountPercent = 0
             for name, discount in categories.items():
-                if name in category:
+                if name in upcDetails['category']:
                     categoryFoundFlag = 1
                     discountPercent = discount
             # sql_query = "SELECT discount FROM discounts WHERE category_name=" + \
