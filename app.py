@@ -1829,11 +1829,15 @@ def target():
             upc = upcDetails["upc"]
         except:
             upc = "" 
-        categories = {}
-        sql_query = "SELECT category_name, discount FROM discounts"
-        results = cur.execute(sql_query).fetchall()
-        for row in results:
-            categories[row[0]] = row[1]
+        
+        categories = json.load(open(json_url))
+        print("categories.json:", categories)
+
+        # categories = {}
+        # sql_query = "SELECT category_name, discount FROM discounts"
+        # results = cur.execute(sql_query).fetchall()
+        # for row in results:
+        #     categories[row[0]] = row[1]
         # categories = json.load(open(json_url))   
         categoryFoundFlag = 0
         discountPercent = 0
