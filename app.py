@@ -247,7 +247,7 @@ def add_produtcs():
             if addFBListing == 'on':
                 link_to_mp_post = uploadToMP(product_name, product_price, "", upc, "", "New", imgpath)
                 
-
+            print("addFBListing=", addFBListing)
             add_to_square(product_name, upc, str(product_price) + "00", employee, 0)
             print('Posted to Square')
             try:
