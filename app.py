@@ -1375,6 +1375,7 @@ def target():
                     try:                
                         target_product_price = upcDetails["price"]
                         lowest_price = float(target_product_price)
+                        target_product_price = lowest_price
                     except:
                         target_product_price = 0
                         lowest_price = 0
@@ -1397,6 +1398,7 @@ def target():
                     try:
                         target_product_price = upcDetails["price"]
                         lowest_price = float(target_product_price)
+                        target_product_price = lowest_price
                     except:
                         target_product_price = 0
                         lowest_price = 0
