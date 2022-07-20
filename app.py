@@ -1199,13 +1199,22 @@ def target():
         walmart_price = 0
         target_product_price=0
         
-        categories = {}
-        sql_query = "SELECT category_name, discount FROM discounts"
-        print(sql_query)
-        results = cur.execute(sql_query).fetchall()
-        print(results)
-        for row in results:
-            categories[row[0]] = row[1]
+        categories = json.load(open(json_url))
+        print("categories.json:", categories)
+        # categoryFoundFlag = 0
+        # discountPercent = 0
+        # for name, discount in categories.items():
+        #     if name in upcDetails["product_category"]:
+        #         categoryFoundFlag = 1
+        #         discountPercent = discount
+
+        # categories = {}
+        # sql_query = "SELECT category_name, discount FROM discounts"
+        # print(sql_query)
+        # results = cur.execute(sql_query).fetchall()
+        # print(results)
+        # for row in results:
+        #     categories[row[0]] = row[1]
 
         
         if request.form["btn"] == 'Fetch Details':  
@@ -1257,8 +1266,8 @@ def target():
             
             if (isinstance(tcin_category, int) and tcin_category > 300) or tcin_category['tcin'] == 'Not Found' or tcin_category['category'] == 'Not Found':
                 tcin = category = "Not Found"
-                table_name_products = category + "_products"
-                table_name_products = table_name_products.replace(" ", "")
+                # table_name_products = category + "_products"
+                # table_name_products = table_name_products.replace(" ", "")
                 sql_query = "SELECT * FROM products_manual WHERE upc=" + '"' + link + '"'
                 results = cur.execute(sql_query).fetchall()
                 if len(results):
@@ -1321,67 +1330,138 @@ def target():
                 category = tcin_category['category']
                 table_name_products = category + "_products"
                 table_name_products = table_name_products.replace(" ", "")
-                sql_query = "SELECT discount FROM discounts WHERE category_name=" + '"' + category + '"'
-                print(sql_query)
-                results = cur.execute(sql_query).fetchall()
-                print(results)
-                if len(results):
-                    categoryFoundFlag = 1
-                    discountPercent = results[0][0]
+
+                for name, discount in categories.items():
+                    if name in category:
+                        categoryFoundFlag = 1
+                        discountPercent = discount
+                if not categoryFoundFlag:
+                    discountPercent = "50"
+                    with open(json_url) as f:
+                        categories[str(category)] = "50"
+                        json.dump(categories, f)
+                        print("updated categories.json")
+                # sql_query = "SELECT discount FROM discounts WHERE category_name=" + '"' + category + '"'
+                # print(sql_query)
+                # results = cur.execute(sql_query).fetchall()
+                # print(results)
+                # if len(results):
+                #     categoryFoundFlag = 1
+                #     discountPercent = results[0][0]
                 sql_query = "SELECT * FROM " + '"' +  table_name_products + '"' + \
                     " WHERE tcin=" + '"' + str(tcin) + '"'
                 print(sql_query)
-                results = cur.execute(sql_query).fetchall()
-                if len(results):
-                    product_url = results[0][1]
-                    # product_upc = results[0][3]
-                    product_name = results[0][4]
-                    product_description = results[0][5]
-                    product_image = results[0][6]
-                    product_category = results[0][7]
-                    product_price = results[0][8]
-                    product_disc = results[0][9]
-                    product_stock = results[0][10]
-                    product_employee = results[0][11]
-                    product_open = results[0][12]
-                    product_update = results[0][13]
-                    # product_close = results[0][14]
-                    # product_is_available = results[0][14]
-                    product_last_sold = results[0][15]
-                    product_last_price = results[0][16]
-                    
-                    upcDetails = {
-                        "url": product_url,
-                        "tcin": tcin,
-                        "upc": link,
-                        "name": product_name,
-                        "description": product_description,
-                        "image": product_image,
-                        "category": product_category,
-                        "price": product_price,
-                        "discount": product_disc,
-                        "stock": product_stock,
-                        "employee": product_employee,
-                        "open": product_open,
-                        "update": product_update,
-                        "last_sold": product_last_sold,
-                        "last_price": product_last_price,
-                        # "upc": product_upc,
-                        # "is_available": product_is_available
-                    }
-                    
-                    upcDetails["employee"] = employee
-                    
-                    try:                
-                        target_product_price = upcDetails["price"]
-                        lowest_price = float(target_product_price)
-                        target_product_price = lowest_price
-                    except:
-                        target_product_price = 0
-                        lowest_price = 0
-                else:
-                    flash("Not found product's tcin with current upc in database")
-                    flash("It is new product!")
+                try:
+                    results = cur.execute(sql_query).fetchall()
+                    if len(results):
+                        product_url = results[0][1]
+                        # product_upc = results[0][3]
+                        product_name = results[0][4]
+                        product_description = results[0][5]
+                        product_image = results[0][6]
+                        product_category = results[0][7]
+                        product_price = results[0][8]
+                        product_disc = results[0][9]
+                        product_stock = results[0][10]
+                        product_employee = results[0][11]
+                        product_open = results[0][12]
+                        product_update = results[0][13]
+                        # product_close = results[0][14]
+                        # product_is_available = results[0][14]
+                        product_last_sold = results[0][15]
+                        product_last_price = results[0][16]
+                        
+                        upcDetails = {
+                            "url": product_url,
+                            "tcin": tcin,
+                            "upc": link,
+                            "name": product_name,
+                            "description": product_description,
+                            "image": product_image,
+                            "category": product_category,
+                            "price": product_price,
+                            "discount": product_disc,
+                            "stock": product_stock,
+                            "employee": product_employee,
+                            "open": product_open,
+                            "update": product_update,
+                            "last_sold": product_last_sold,
+                            "last_price": product_last_price,
+                            # "upc": product_upc,
+                            # "is_available": product_is_available
+                        }
+                        
+                        upcDetails["employee"] = employee
+                        
+                        try:                
+                            target_product_price = upcDetails["price"]
+                            lowest_price = float(target_product_price)
+                            target_product_price = lowest_price
+                        except:
+                            target_product_price = 0
+                            lowest_price = 0
+                    else:
+                        flash("Not found product's tcin with current upc in database")
+                        flash("It is new product!")
+                        product_info = get_products_tcin(tcin)
+                        upcDetails = {
+                            "url": product_info['url'],
+                            "tcin": tcin,
+                            "upc": link,
+                            "name": product_info['name'],
+                            "description": product_info['description'],
+                            "image": product_info['image'],
+                            "category": category,
+                            "price": product_info['price_min'],
+                            "discount": str(discountPercent),
+                            "employee": employee
+                        }
+                        try:
+                            target_product_price = upcDetails["price"]
+                            lowest_price = float(target_product_price)
+                            target_product_price = lowest_price
+                        except:
+                            target_product_price = 0
+                            lowest_price = 0
+                        sql_query = 'INSERT INTO ' + '"' +  table_name_products + '"' + ' (url, tcin, name, description, image, category, price, disc, employee, open_date, update_date) ' + \
+                            " VALUES (" + \
+                            '"' + upcDetails['url'] + '", ' + \
+                            '"' + upcDetails['tcin'] + '", ' + \
+                            '"' + upcDetails['name'].replace("\"", " ") + '", ' + \
+                            '"' + upcDetails['description'].replace("\"", " ") + '", ' + \
+                            '"' + upcDetails['image'] + '", ' + \
+                            '"' + upcDetails['category'] + '", ' + \
+                            '"' + upcDetails['price'] + '", ' + \
+                            '"' + upcDetails['discount'] + '", ' + \
+                            '"' + employee + '", ' + \
+                            '"' + today.strftime("%Y-%m-%d") + '", ' + \
+                            '"' + today.strftime("%Y-%m-%d") + '"' + ");"
+                        print(sql_query)
+                        cur.execute(sql_query)
+                        conn.commit()
+
+                except:
+                    sql_query = "CREATE TABLE IF NOT EXISTS " + '"' + table_name_products + '"' + \
+                        " ( id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " + \
+                        "url TEXT," + \
+                        "tcin TEXT," + \
+                        "upc TEXT," + \
+                        "name TEXT," + \
+                        "description TEXT," + \
+                        "image TEXT," + \
+                        "category TEXT," + \
+                        "price TEXT," + \
+                        "disc TEXT," + \
+                        "stock TEXT," + \
+                        "employee TEXT," + \
+                        "open_date TEXT," + \
+                        "update_date TEXT," + \
+                        "is_available integer DEFAULT 1," + \
+                        "last_sold TEXT," + \
+                        "last_price TEXT);"
+                    cur.execute(sql_query)
+                    conn.commit()
+
                     product_info = get_products_tcin(tcin)
                     upcDetails = {
                         "url": product_info['url'],
@@ -1395,6 +1475,7 @@ def target():
                         "discount": str(discountPercent),
                         "employee": employee
                     }
+
                     try:
                         target_product_price = upcDetails["price"]
                         lowest_price = float(target_product_price)
@@ -1402,7 +1483,8 @@ def target():
                     except:
                         target_product_price = 0
                         lowest_price = 0
-                    sql_query = 'INSERT INTO ' + '"' +  table_name_products + '"' + ' (url, tcin, name, description, image, category, price, disc, employee, open_date, update_date) ' + \
+
+                    sql_query = 'INSERT INTO ' + '"' + table_name_products + '"' + ' (url, tcin, name, description, image, category, price, disc, employee, open_date, update_date) ' + \
                         " VALUES (" + \
                         '"' + upcDetails['url'] + '", ' + \
                         '"' + upcDetails['tcin'] + '", ' + \
@@ -1418,6 +1500,7 @@ def target():
                     print(sql_query)
                     cur.execute(sql_query)
                     conn.commit()
+
                 print(upcDetails)
             sql_query = "INSERT INTO " + table_name + "_scaned" + " (upc, name, description, image, price, category, disc, stock, employee) VALUES (" + \
                             '"' + upcDetails["upc"] + '", ' + \
@@ -1643,12 +1726,16 @@ def target():
             
             categoryFoundFlag = 0
             discountPercent = 0
-            sql_query = "SELECT discount FROM discounts WHERE category_name=" + \
-                '"' + upcDetails["category"] + '"'
-            results = cur.execute(sql_query).fetchall()
-            if len(results):
-                categoryFoundFlag = 1
-                discountPercent = results[0][0]
+            for name, discount in categories.items():
+                if name in category:
+                    categoryFoundFlag = 1
+                    discountPercent = discount
+            # sql_query = "SELECT discount FROM discounts WHERE category_name=" + \
+            #     '"' + upcDetails["category"] + '"'
+            # results = cur.execute(sql_query).fetchall()
+            # if len(results):
+            #     categoryFoundFlag = 1
+            #     discountPercent = results[0][0]
                     
             # categories = json.load(open(json_url))
             # categoryFoundFlag = 0
@@ -1757,12 +1844,17 @@ def target():
                        "product_category": "Select"
                     }
         
-        sql_query = "SELECT discount FROM discounts WHERE category_name=" + \
-            '"' + default_details["product_category"] + '"'
-        results = cur.execute(sql_query).fetchall()
-        if len(results):
-            categoryFoundFlag = 1
-            discountPercent = results[0][0]
+        for name, discount in categories.items():
+            if name in category:
+                categoryFoundFlag = 1
+                discountPercent = discount
+
+        # sql_query = "SELECT discount FROM discounts WHERE category_name=" + \
+        #     '"' + default_details["product_category"] + '"'
+        # results = cur.execute(sql_query).fetchall()
+        # if len(results):
+        #     categoryFoundFlag = 1
+        #     discountPercent = results[0][0]
                 
         conn.close()
         return render_template('target.html', 
