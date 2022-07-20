@@ -247,11 +247,14 @@ def add_produtcs():
 
             add_to_square(product_name, upc, str(product_price) + "00", employee, 0)
             print('Posted to Square')
+            try:
+                itemCounter = update_details(upc, product_name, product_price, 0, "0", employee, link_to_mp_post['link'], link_to_mp_post['imglink'], "")
+                count = itemCounter["count"]
+                print('Posted to Catalog')
+            except:
+                count = 0
 
-            itemCounter = update_details(upc, product_name, product_price, 0, "0", employee, link_to_mp_post['link'], link_to_mp_post['imglink'], "")
-            print('Posted to Catalog')
-
-            count = itemCounter["count"]
+            
             zpl = printlabel(upc, product_name, product_price, "0")
             
             if "." in request.form["Price"]:
