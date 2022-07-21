@@ -278,7 +278,7 @@
                                             <div class="form-row mb-4">		                                                        
                                                 <div class="col">
                                                     <label for="Price"  class="control-label ">Price <i>(in usd)</i></label>
-                                                    <input type="number" min="0" name="Price" class="form-control" placeholder="Price" value="{{ request.form['Price'] }}" required>
+                                                    <input type="number" step="0.01" min="0" name="Price" class="form-control" placeholder="Price" value="{{ request.form['Price'] }}" required>
                                                 </div>
                                                 <div class="col" style="display: none">
                                                     <label for="Stock"  class="control-label">Stock</label>
