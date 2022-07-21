@@ -1514,6 +1514,7 @@ def target():
                     conn.commit()
 
                 print(upcDetails)
+            print(upcDetails)
             sql_query = "INSERT INTO " + table_name + "_scaned" + " (upc, name, description, image, price, category, disc, stock, employee) VALUES (" + \
                 '"' + upcDetails["upc"] + '", ' + \
                 '"' + upcDetails["name"] + '", ' + \
