@@ -1523,7 +1523,7 @@ def target():
                 '"' + upcDetails["price"] + '", ' + \
                 '"' + upcDetails["category"] + '", ' + \
                 '"' + upcDetails["discount"] + '", ' + \
-                '"' + upcDetails["stock"] + '", ' + \
+                '"' + str(stock) + '", ' + \
                 '"' + employee + '");'
             print(sql_query)
             cur.execute(sql_query)
