@@ -1516,7 +1516,7 @@ def target():
                 print(upcDetails)
             print(upcDetails)
             print(table_name)
-            sql_query = 'INSERT INTO ' + table_name + '_scaned' + ' (upc, name, description, image, price, category, disc, stock, employee) VALUES (' + '"' + upcDetails["upc"] + '", ' + '"' + upcDetails["name"] + '", ' + '"' + upcDetails['description'] + '", ' + '"' + upcDetails["image"] + '", ' + '"' + upcDetails["price"] + '", ' + '"' + upcDetails["category"] + '", ' + '"' + upcDetails["discount"] + '", ' + '"' + upcDetails["stock"] + '", ' + '"' + employee + '");'
+            sql_query = 'INSERT INTO ' + '"' + table_name + '"' + '_scaned' + ' (upc, name, description, image, price, category, disc, stock, employee) VALUES (' + '"' + upcDetails["upc"] + '", ' + '"' + upcDetails["name"] + '", ' + '"' + upcDetails['description'] + '", ' + '"' + upcDetails["image"] + '", ' + '"' + upcDetails["price"] + '", ' + '"' + upcDetails["category"] + '", ' + '"' + upcDetails["discount"] + '", ' + '"' + upcDetails["stock"] + '", ' + '"' + employee + '");'
             print(sql_query)
             cur.execute(sql_query)
             conn.commit()
