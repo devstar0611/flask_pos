@@ -224,7 +224,7 @@ def add_produtcs():
             print(sql_query)
             cur.execute(sql_query)
             conn.commit()
-            sql_query = "INSERT INTO products_manual (upc, name, image, price, employee, open_date, update_date, last_sold) VALUES (" + \
+            sql_query = "INSERT INTO products_manual (upc, name, image, price, employee, open_date, update_date, last_sold, last_price) VALUES (" + \
                 '"' + upc + '", ' + \
                 '"' + product_name + '", ' + \
                 '"' + imgpath + '", ' + \
@@ -233,6 +233,7 @@ def add_produtcs():
                 '"' + today.strftime("%Y-%m-%d") + '", ' + \
                 '"' + today.strftime("%Y-%m-%d") + '", ' + \
                 '"' + today.strftime("%Y-%m-%d") + '"' + \
+                '"' + str(product_price) + '", ' + \
                 ");"
             print(sql_query)
             cur.execute(sql_query)
@@ -1289,6 +1290,7 @@ def target():
                             "update_date=" + '"' + today.strftime('%Y-%m-%d') + '", ' + \
                             "is_available=0" + \
                             " WHERE id=" + str(id)
+                        print(sql_query)
                         cur.execute(sql_query)
                         conn.commit()
                     product_url = results[0][1]
