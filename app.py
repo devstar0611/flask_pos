@@ -270,8 +270,8 @@ def add_produtcs():
             return render_template('add.html', count=count, zpl=zpl, label=imgname, upc=upcDetails["upc"], vender=vender)
     else:
         vender = request.args.get('vender')
-        # upc = request.args.get('upc')
-        return render_template('add.html', count=0, zpl="", label="", upc=upcDetails["upc"], vender=vender)
+        upc = request.args.get('upc')
+        return render_template('add.html', count=0, zpl="", label="", upc=upc, vender=vender)
     
 @app.route('/updateDiscount', methods = ['GET', 'POST'])
 def updateDiscount():
