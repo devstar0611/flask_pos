@@ -152,22 +152,22 @@ def add_produtcs():
     cur = conn.cursor()
     sql_query = "CREATE TABLE IF NOT EXISTS products_manual" + \
                     " ( id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " + \
-                    "url TEXT DEFAULT ''," + \
-                    "tcin TEXT DEFAULT ''," + \
-                    "upc TEXT DEFAULT ''," + \
-                    "name TEXT DEFAULT ''," + \
-                    "description TEXT DEFAULT ''," + \
-                    "image TEXT DEFAULT ''," + \
-                    "category TEXT DEFAULT ''," + \
-                    "price TEXT DEFAULT ''," + \
-                    "disc TEXT DEFAULT ''," + \
-                    "stock TEXT DEFAULT ''," + \
-                    "employee TEXT DEFAULT ''," + \
-                    "open_date TEXT DEFAULT ''," + \
-                    "update_date TEXT DEFAULT ''," + \
+                    "url TEXT DEFAULT \"\"," + \
+                    "tcin TEXT DEFAULT \"\"," + \
+                    "upc TEXT DEFAULT \"\"," + \
+                    "name TEXT DEFAULT \"\"," + \
+                    "description TEXT DEFAULT \"\"," + \
+                    "image TEXT DEFAULT \"\"," + \
+                    "category TEXT DEFAULT \"\"," + \
+                    "price TEXT DEFAULT \"\"," + \
+                    "disc TEXT DEFAULT \"\"," + \
+                    "stock TEXT DEFAULT \"\"," + \
+                    "employee TEXT DEFAULT \"\"," + \
+                    "open_date TEXT DEFAULT \"\"," + \
+                    "update_date TEXT DEFAULT \"\"," + \
                     "is_available integer DEFAULT 1," + \
-                    "last_sold TEXT DEFAULT ''," + \
-                    "last_price TEXT DEFAULT '');"
+                    "last_sold TEXT DEFAULT \"\"," + \
+                    "last_price TEXT DEFAULT \"\");"
     cur.execute(sql_query)
     conn.commit()
     global upcDetails
@@ -225,12 +225,12 @@ def add_produtcs():
             cur.execute(sql_query)
             conn.commit()
             sql_query = "INSERT INTO products_manual (upc, name, image, price, last_price, employee, open_date, update_date, last_sold) VALUES (" + \
-                '"' + upc + '", ' + \
-                '"' + product_name + '", ' + \
-                '"' + imgpath + '", ' + \
+                '"' + str(upc) + '", ' + \
+                '"' + str(product_name) + '", ' + \
+                '"' + str(imgpath) + '", ' + \
                 '"' + str(product_price) + '", ' + \
                 '"' + str(product_price) + '", ' + \
-                '"' + employee + '", ' + \
+                '"' + str(employee) + '", ' + \
                 '"' + today.strftime("%Y-%m-%d") + '", ' + \
                 '"' + today.strftime("%Y-%m-%d") + '", ' + \
                 '"' + today.strftime("%Y-%m-%d") + '"' + \
@@ -1135,50 +1135,50 @@ def target():
                     (datetime.datetime.today().strftime("%Y%m%d"))
     sql_query = "CREATE TABLE IF NOT EXISTS " + table_name + "_scaned" + \
                     " ( id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " + \
-                        "upc TEXT DEFAULT ''," + \
-                        "name TEXT DEFAULT ''," + \
-                        "description TEXT DEFAULT ''," + \
-                        "image TEXT DEFAULT ''," + \
+                        "upc TEXT DEFAULT \"\"," + \
+                        "name TEXT DEFAULT \"\"," + \
+                        "description TEXT DEFAULT \"\"," + \
+                        "image TEXT DEFAULT \"\"," + \
                         "price REAL," + \
-                        "category TEXT DEFAULT ''," + \
+                        "category TEXT DEFAULT \"\"," + \
                         "disc REAL," + \
                         "stock INTEGER," + \
-                        "employee TEXT DEFAULT '');"
+                        "employee TEXT DEFAULT \"\");"
     print(sql_query)
     cur.execute(sql_query)
     conn.commit()    
     sql_query = "CREATE TABLE IF NOT EXISTS " + table_name + "_printed" + \
                     " ( id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " + \
-                        "upc TEXT DEFAULT ''," + \
-                        "name TEXT DEFAULT ''," + \
-                        "description TEXT DEFAULT ''," + \
-                        "image TEXT DEFAULT ''," + \
+                        "upc TEXT DEFAULT \"\"," + \
+                        "name TEXT DEFAULT \"\"," + \
+                        "description TEXT DEFAULT \"\"," + \
+                        "image TEXT DEFAULT \"\"," + \
                         "price REAL," + \
-                        "category TEXT DEFAULT ''," + \
+                        "category TEXT DEFAULT \"\"," + \
                         "disc REAL," + \
                         "stock INTEGER," + \
-                        "employee TEXT DEFAULT '');"
+                        "employee TEXT DEFAULT \"\");"
     print(sql_query)
     cur.execute(sql_query)
     conn.commit()    
     sql_query = "CREATE TABLE IF NOT EXISTS products_manual" + \
         " ( id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " + \
-        "url TEXT DEFAULT ''," + \
-        "tcin TEXT DEFAULT ''," + \
-        "upc TEXT DEFAULT ''," + \
-        "name TEXT DEFAULT ''," + \
-        "description TEXT DEFAULT ''," + \
-        "image TEXT DEFAULT ''," + \
-        "category TEXT DEFAULT ''," + \
-        "price TEXT DEFAULT ''," + \
-        "disc TEXT DEFAULT ''," + \
-        "stock TEXT DEFAULT ''," + \
-        "employee TEXT DEFAULT ''," + \
-        "open_date TEXT DEFAULT ''," + \
-        "update_date TEXT DEFAULT ''," + \
+        "url TEXT DEFAULT \"\"," + \
+        "tcin TEXT DEFAULT \"\"," + \
+        "upc TEXT DEFAULT \"\"," + \
+        "name TEXT DEFAULT \"\"," + \
+        "description TEXT DEFAULT \"\"," + \
+        "image TEXT DEFAULT \"\"," + \
+        "category TEXT DEFAULT \"\"," + \
+        "price TEXT DEFAULT \"\"," + \
+        "disc TEXT DEFAULT \"\"," + \
+        "stock TEXT DEFAULT \"\"," + \
+        "employee TEXT DEFAULT \"\"," + \
+        "open_date TEXT DEFAULT \"\"," + \
+        "update_date TEXT DEFAULT \"\"," + \
         "is_available integer DEFAULT 1," + \
-        "last_sold TEXT DEFAULT ''," + \
-        "last_price TEXT DEFAULT '');"
+        "last_sold TEXT DEFAULT \"\"," + \
+        "last_price TEXT DEFAULT \"\");"
     cur.execute(sql_query)
     conn.commit()
     global upcDetails
@@ -1455,22 +1455,22 @@ def target():
                     flash("It is new product and new Category!\nCreate new table in database.")
                     sql_query = "CREATE TABLE IF NOT EXISTS " + '"' + table_name_products + '"' + \
                         " ( id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " + \
-                        "url TEXT DEFAULT ''," + \
-                        "tcin TEXT DEFAULT ''," + \
-                        "upc TEXT DEFAULT ''," + \
-                        "name TEXT DEFAULT ''," + \
-                        "description TEXT DEFAULT ''," + \
-                        "image TEXT DEFAULT ''," + \
-                        "category TEXT DEFAULT ''," + \
-                        "price TEXT DEFAULT ''," + \
-                        "disc TEXT DEFAULT ''," + \
-                        "stock TEXT DEFAULT ''," + \
-                        "employee TEXT DEFAULT ''," + \
-                        "open_date TEXT DEFAULT ''," + \
-                        "update_date TEXT DEFAULT ''," + \
+                        "url TEXT DEFAULT \"\"," + \
+                        "tcin TEXT DEFAULT \"\"," + \
+                        "upc TEXT DEFAULT \"\"," + \
+                        "name TEXT DEFAULT \"\"," + \
+                        "description TEXT DEFAULT \"\"," + \
+                        "image TEXT DEFAULT \"\"," + \
+                        "category TEXT DEFAULT \"\"," + \
+                        "price TEXT DEFAULT \"\"," + \
+                        "disc TEXT DEFAULT \"\"," + \
+                        "stock TEXT DEFAULT \"\"," + \
+                        "employee TEXT DEFAULT \"\"," + \
+                        "open_date TEXT DEFAULT \"\"," + \
+                        "update_date TEXT DEFAULT \"\"," + \
                         "is_available integer DEFAULT 1," + \
-                        "last_sold TEXT DEFAULT ''," + \
-                        "last_price TEXT DEFAULT '');"
+                        "last_sold TEXT DEFAULT \"\"," + \
+                        "last_price TEXT DEFAULT \"\");"
                     cur.execute(sql_query)
                     conn.commit()
 
