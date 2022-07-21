@@ -74,22 +74,22 @@ def get_products_category(categories):
         print("product table name=", table_name)
         sql_query = "CREATE TABLE IF NOT EXISTS " + '"' + table_name + '"' + \
                     " ( id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " + \
-                    "url TEXT," + \
-                    "tcin TEXT," + \
-                    "upc TEXT," + \
-                    "name TEXT," + \
-                    "description TEXT," + \
-                    "image TEXT," + \
-                    "category TEXT," + \
-                    "price TEXT," + \
-                    "disc TEXT," + \
-                    "stock TEXT," + \
-                    "employee TEXT," + \
-                    "open_date TEXT," + \
-                    "update_date TEXT," + \
+                    "url TEXT DEFAULT ''," + \
+                    "tcin TEXT DEFAULT ''," + \
+                    "upc TEXT DEFAULT ''," + \
+                    "name TEXT DEFAULT ''," + \
+                    "description TEXT DEFAULT ''," + \
+                    "image TEXT DEFAULT ''," + \
+                    "category TEXT DEFAULT ''," + \
+                    "price TEXT DEFAULT ''," + \
+                    "disc TEXT DEFAULT ''," + \
+                    "stock TEXT DEFAULT ''," + \
+                    "employee TEXT DEFAULT ''," + \
+                    "open_date TEXT DEFAULT ''," + \
+                    "update_date TEXT DEFAULT ''," + \
                     "is_available integer DEFAULT 1," + \
-                    "last_sold TEXT," + \
-                    "last_price TEXT);"
+                    "last_sold TEXT DEFAULT ''," + \
+                    "last_price TEXT DEFAULT '');"
         print(sql_query)
         cur.execute(sql_query)
         conn.commit()
