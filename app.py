@@ -1665,24 +1665,28 @@ def target():
             print(sql_query)
             cur.execute(sql_query)
             conn.commit()
-            sql_query = "UPDATE 'products_manual' SET " + \
-                        "stock=" + '"' + str(stock) + '", ' + \
-                        "last_sold=" + '"' + datetime.datetime.today().strftime("%Y%m%d%H%M%S") + '", ' + \
-                        "last_price=" + '"' + str(upcDetails['price']) + '"' + \
-                        " WHERE tcin=" + '"' + upcDetails['tcin'] + '" or upc=' + '"' + link + '"'
+
+            sql_query = "UPDATE " + '"' +  table_name_products + '"' + " SET " + \
+                            "stock=" + '"' + str(stock) + '", ' + \
+                            "last_sold=" + '"' + datetime.datetime.today().strftime("%Y%m%d%H%M%S") + '", ' + \
+                            "last_price=" + '"' + str(upcDetails['price']) + '"' + \
+                            " WHERE tcin=" + '"' + upcDetails['tcin'] + '" or upc=' + '"' + link + '"'
             print(sql_query)
-            res = cur.execute(sql_query).fetchall()
-            print(res)
-            conn.commit()
-            if not len(res):
-                sql_query = "UPDATE " + '"' +  table_name_products + '"' + " SET " + \
+            try:
+                cur.execute(sql_query)
+                conn.commit()
+            except:
+                sql_query = "UPDATE 'products_manual' SET " + \
                             "stock=" + '"' + str(stock) + '", ' + \
                             "last_sold=" + '"' + datetime.datetime.today().strftime("%Y%m%d%H%M%S") + '", ' + \
                             "last_price=" + '"' + str(upcDetails['price']) + '"' + \
                             " WHERE tcin=" + '"' + upcDetails['tcin'] + '" or upc=' + '"' + link + '"'
                 print(sql_query)
-                cur.execute(sql_query)
-                conn.commit()
+                try:
+                    cur.execute(sql_query)
+                    conn.commit()
+                except:
+                    print("not updated")
             zpl = printlabel(upcDetails['upc'], upcDetails['name'], upcDetails['price'], disc)
 
             try:
